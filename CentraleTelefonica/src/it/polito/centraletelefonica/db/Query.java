@@ -1,55 +1,97 @@
 package it.polito.centraletelefonica.db;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Query {
 
-	private  String query;
-	private  QueryType type;
+	private String query;
+	private QueryType type;
+	private Object[] wildcards;
+
+	/**
+	 * Constructor for a simple query
+	 * 
+	 * @param query
+	 *            query to run
+	 * @param type
+	 *            type of query
+	 */
 
 	public Query(String query, QueryType type) {
 		this.query = query;
 		this.type = type;
 	}
 
+	/**
+	 * Constructor for a query that needs a prepared statement
+	 * 
+	 * @param query
+	 *            query to run
+	 * @param type
+	 *            type of query
+	 * @param wildcards
+	 *            parameters for prepared statement
+	 */
+
+	public Query(String query, QueryType type, Object[] wildcards) {
+		this.query = query;
+		this.type = type;
+		this.wildcards = wildcards;
+	}
+
 	public final Object executeQuery(Connection connection) {
 
-		switch (type) {
-		
-		case SELECT:
-			return executeSelectQuery();
-		case UPDATE:
-			return executeUpdateQuery();
-		case DELETE:
-			return executeDeleteQuery();
-		case ISERT_INTO:
-			return executeInsertQuery();
-		
-		default:
-			break;
+		if (type == QueryType.SELECT) {
+			return executeSelectQuery(connection);
+		}
+
+		return executeUpdateQuery(connection);
+
+	}
+
+	private Object executeSelectQuery(Connection connection) {
+
+		try (PreparedStatement ps = connection.prepareStatement(query)) {
+
+			if (wildcards != null) {
+				for (int i = 0; i < wildcards.length; i++) {
+					ps.setObject(i + 1, wildcards[i]);
+				}
+			}
+
+			ResultSet rs = ps.executeQuery();
+			return rs;
+
+		}
+
+		catch (SQLException e) {
+			e.printStackTrace();
 		}
 
 		return null;
-
 	}
 
-	private static Object executeSelectQuery() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	private Object executeUpdateQuery(Connection connection) {
 
-	private static Object executeUpdateQuery() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		try (PreparedStatement ps = connection.prepareStatement(query)) {
 
-	private static Object executeDeleteQuery() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+			if (wildcards != null) {
+				for (int i = 0; i < wildcards.length; i++) {
+					ps.setObject(i + 1, wildcards[i]);
+				}
+			}
 
-	private static Object executeInsertQuery() {
-		// TODO Auto-generated method stub
+			return ps.executeUpdate();
+
+		}
+
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 		return null;
 	}
 

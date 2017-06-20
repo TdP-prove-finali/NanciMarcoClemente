@@ -5,12 +5,12 @@ import java.util.Map;
 import it.polito.centraletelefonica.model.Operatore;
 
 public class OperatoreDAO implements DAO {
-	
-	
+
 	private static Map<Database, Database> dbMap;
 
 	@Override
 	public void insert(Object obj) {
+		Query query = new Query("", QueryType.INSERT_INTO, null);
 		Operatore op = (Operatore) obj;
 
 	}
@@ -30,13 +30,13 @@ public class OperatoreDAO implements DAO {
 	@Override
 	public void getObject(Object primaryKey) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void loadAll() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
