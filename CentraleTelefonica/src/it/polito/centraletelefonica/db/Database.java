@@ -23,6 +23,10 @@ public class Database {
 		this.type = type;
 		setProperties(name);
 	}
+	
+	public String getName() {
+		return name;
+	}
 
 	private void setProperties(String name) {
 

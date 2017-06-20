@@ -12,4 +12,6 @@ public interface DAO {
 	
 	public void loadAll();
 
+	public void addDatabase(Database dataBase);
+	
 }
