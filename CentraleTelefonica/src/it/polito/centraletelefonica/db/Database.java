@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Properties;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
@@ -17,10 +16,9 @@ public class Database {
 	private static final String USER_SUFFIX = "Username";
 	private static final String PASSWORD_SUFFIX = "Password";
 	private String url, username, password, name;
-	private DATABASE_TYPE type;
-	private List<? extends DAO> daos;
+	private DatabaseType type;
 
-	public Database(String name, DATABASE_TYPE type) {
+	public Database(String name, DatabaseType type) {
 		this.name = name;
 		this.type = type;
 		setProperties(name);
@@ -32,13 +30,13 @@ public class Database {
 		InputStream inputStream = Database.class.getResourceAsStream("dbconfig.properties");
 
 		try {
-
 			config.load(inputStream);
 			url = config.getProperty(name + URL_SUFFIX);
 			username = config.getProperty(name + USER_SUFFIX);
 			password = config.getProperty(name + PASSWORD_SUFFIX);
+		}
 
-		} catch (IOException e) {
+		catch (IOException e) {
 			e.printStackTrace();
 		}
 
@@ -75,7 +73,6 @@ public class Database {
 		return dataSource.getConnection();
 	}
 
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -83,7 +80,6 @@ public class Database {
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
-	
 
 	@Override
 	public boolean equals(Object obj) {
@@ -102,13 +98,9 @@ public class Database {
 		return true;
 	}
 
-	
 	@Override
 	public String toString() {
 		return "Database [name=" + name + "]";
 	}
 
-	
-	
-	
 }

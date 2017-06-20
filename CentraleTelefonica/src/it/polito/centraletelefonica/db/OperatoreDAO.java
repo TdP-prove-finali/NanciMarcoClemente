@@ -2,13 +2,16 @@ package it.polito.centraletelefonica.db;
 
 import java.util.Map;
 
+import it.polito.centraletelefonica.model.Operatore;
+
 public class OperatoreDAO implements DAO {
+	
 	
 	private static Map<Database, Database> dbMap;
 
 	@Override
-	public void instert(Object obj) {
-		// TODO Auto-generated method stub
+	public void insert(Object obj) {
+		Operatore op = (Operatore) obj;
 
 	}
 

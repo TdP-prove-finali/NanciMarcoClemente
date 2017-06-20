@@ -2,7 +2,7 @@ package it.polito.centraletelefonica.db;
 
 public interface DAO {
 
-	public void instert(Object obj);
+	public void insert(Object obj);
 
 	public void update(Object obj);
 

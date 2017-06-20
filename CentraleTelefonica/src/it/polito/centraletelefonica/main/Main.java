@@ -1,6 +1,6 @@
 package it.polito.centraletelefonica.main;
 	
-import it.polito.centraletelefonica.db.DATABASE_TYPE;
+import it.polito.centraletelefonica.db.DatabaseType;
 import it.polito.centraletelefonica.db.Database;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -23,7 +23,7 @@ public class Main extends Application {
 			primaryStage.centerOnScreen();
 			primaryStage.show();
 			
-			Database db = new Database("",DATABASE_TYPE.MYSQL);
+			Database db = new Database("",DatabaseType.MYSQL);
 			System.out.println(db.getConnection().toString());
 			
 		} 

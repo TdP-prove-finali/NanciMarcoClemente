@@ -7,7 +7,7 @@ public class CentraleDAO implements DAO {
 	private static Map<Database, Database> dbMap;
 
 	@Override
-	public void instert(Object obj) {
+	public void insert(Object obj) {
 		// TODO Auto-generated method stub
 
 	}
