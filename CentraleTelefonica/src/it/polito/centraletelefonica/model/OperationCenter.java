@@ -1,5 +1,5 @@
 package it.polito.centraletelefonica.model;
 
-public class Centrale {
+public class OperationCenter {
 
 }
