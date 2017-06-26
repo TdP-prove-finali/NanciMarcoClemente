@@ -1,5 +1,5 @@
 package it.polito.centraletelefonica.model;
 
-public class Operazione {
+public class Worker {
 
 }

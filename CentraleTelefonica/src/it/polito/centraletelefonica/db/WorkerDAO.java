@@ -1,7 +1,5 @@
 package it.polito.centraletelefonica.db;
 
-public enum DatabaseType {
-	
-	MYSQL
+public interface WorkerDAO extends DAO {
 
 }

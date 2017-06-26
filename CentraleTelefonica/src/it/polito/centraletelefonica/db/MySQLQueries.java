@@ -1,7 +1,5 @@
 package it.polito.centraletelefonica.db;
 
-public interface DAO {
+final class MySQLQueries {
 
-
-	
 }
