@@ -1,21 +1,21 @@
 package it.polito.centraletelefonica.db;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
-
-import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 public class MySQLDatabase implements Database {
 
 	private static final String TYPE = "MY_SQL";
-	private ComboPooledDataSource dataSource;
-	private String dbName;
+	private Connection connection;
+	private String dbName, path;
 	private Properties properties;
 
 	public MySQLDatabase(String dbName, Properties properties) {
 		this.setProperties(properties);
 		this.setDbName(dbName);
+		setPath(dbName);
 	}
 
 	public String getDbName() {
@@ -34,26 +34,28 @@ public class MySQLDatabase implements Database {
 		this.properties = properties;
 	}
 
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String dbName) {
+		this.path = Database.MYSQL_PATH + dbName;
+	}
+
 	@Override
 	public Connection getConnection() {
 
-		if (dataSource == null) {
-			
-			dataSource = new ComboPooledDataSource();
-			dataSource.setJdbcUrl(properties.getProperty(Database.JDBC_URL));
-			dataSource.setUser(properties.getProperty(Database.USERNAME));
-			dataSource.setPassword(properties.getProperty(Database.PASSWORD));
-			
+		if (connection == null) {
 			try {
-				return dataSource.getConnection();
-			}
-
-			catch (SQLException e) {
+				connection = DriverManager.getConnection(path, properties);
+				connection = new PersistentConnection(connection);
+				return connection;
+			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
 
-		return null;
+		return connection;
 	}
 
 	@Override
@@ -85,7 +87,5 @@ public class MySQLDatabase implements Database {
 			return false;
 		return true;
 	}
-	
-	
 
 }

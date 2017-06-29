@@ -15,7 +15,6 @@ public interface DAO {
 
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			resultSet = preparedStatement.executeQuery();
-
 		}
 
 		catch (SQLException e) {
