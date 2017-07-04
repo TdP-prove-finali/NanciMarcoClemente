@@ -5,19 +5,22 @@ import it.polito.centraletelefonica.model.Operation;
 public class OperationDAOImplementation implements OperationDAO {
 
 	@Override
-	public void insert(Operation operation) {
+	public int insert(Operation operation) {
+		return 0;
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void update(Operation operation) {
+	public int update(Operation operation) {
+		return 0;
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void delete(int operation) {
+	public int delete(int operation) {
+		return 0;
 		// TODO Auto-generated method stub
 
 	}

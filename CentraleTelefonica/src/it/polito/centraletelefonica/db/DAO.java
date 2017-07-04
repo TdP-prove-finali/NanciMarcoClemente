@@ -49,4 +49,21 @@ public interface DAO {
 
 	}
 
+	default int executeUpdate(String query, Object[] statementParameters, Connection connection) {
+
+		int status = 0;
+
+		try {
+
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			status = preparedStatement.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return status;
+
+	}
+
 }

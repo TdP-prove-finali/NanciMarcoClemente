@@ -5,19 +5,22 @@ import it.polito.centraletelefonica.model.OperationCenter;
 public class OperationCenterDAOImplementation implements OperationCenterDAO {
 
 	@Override
-	public void insert(OperationCenter operationCenter) {
+	public int insert(OperationCenter operationCenter) {
+		return 0;
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void update(OperationCenter operationCenter) {
+	public int update(OperationCenter operationCenter) {
+		return 0;
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void delete(int operationCenterId) {
+	public int delete(int operationCenterId) {
+		return 0;
 		// TODO Auto-generated method stub
 
 	}

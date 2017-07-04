@@ -4,10 +4,10 @@ import it.polito.centraletelefonica.model.Worker;
 
 public interface WorkerDAO extends DAO {
 
-	public void insert(Worker worker);
+	public int insert(Worker worker);
 
-	public void update(Worker worker);
+	public int update(Worker worker);
 
-	public void delete(int workerId);
+	public int delete(int workerId);
 
 }
