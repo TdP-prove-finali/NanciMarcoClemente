@@ -3,13 +3,13 @@ package it.polito.centraletelefonica.model;
 public class Worker {
 
 	private int idWorker;
-	private String firstname;
-	private String surname;
+	private String firstname, surname, fullName;
 
 	public Worker(int idWorker, String firstname, String surname) {
 		this.setIdWorker(idWorker);
 		this.setFirstname(firstname);
 		this.setSurname(surname);
+		this.setFullName(firstname, surname);
 	}
 
 	public int getIdWorker() {
@@ -36,9 +36,17 @@ public class Worker {
 		this.surname = surname;
 	}
 
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String firstname, String surname) {
+		this.fullName = String.join(" ", firstname, surname);
+	}
+
 	@Override
 	public String toString() {
-		return String.join(" ", String.valueOf(idWorker), firstname, surname);
+		return String.join(" ", String.valueOf(idWorker), fullName);
 	}
 
 	@Override
@@ -62,7 +70,5 @@ public class Worker {
 			return false;
 		return true;
 	}
-	
-	
 
 }
