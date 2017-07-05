@@ -6,8 +6,10 @@ public interface OperationCenterDAO extends DAO {
 
 	public int insert(OperationCenter operationCenter);
 
-	public int update(OperationCenter operationCenter);
+	public int updateName(OperationCenter operationCenter);
+	
+	public int updateCordinates(OperationCenter operationCenter);
 
-	public int delete(int operationCenterId);
+	public int delete(String operationCenterId);
 
 }

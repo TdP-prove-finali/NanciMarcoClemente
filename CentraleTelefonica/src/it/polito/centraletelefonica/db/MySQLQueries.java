@@ -16,15 +16,12 @@ final class MySQLQueries {
 
 	/**
 	 * <p> Insert new operation </p> <p> Parameters: </p> <ul> <li> <p>
-	 * IDSegnalazione </p> </li> <li> <p> Segnalazione-Tipo </p> </li> <li> <p>
-	 * Priority </p> </li> <li> <p> DataSegnalazione </p> </li> <li> <p> Urgenza
-	 * </p> </li> <li> <p> Comune </p> </li> <li> <p> Indirizzo </p> </li> <li>
-	 * <p> IDOperatore </p> </li> <li> <p> Operatore </p> </li> <li> <p>
-	 * IDCentrale </p> </li> <li> <p> Centrale </p> </li> </ul>
+	 * IDSegnalazione </p> </li> <li> <p> DataSegnalazione </p> </li> <li> <p>
+	 * Urgenza </p> </li> </ul>
 	 * 
 	 */
 
-	static final String INSERT_NEW_OPERATION = "insert into operazione(IDSegnalazione,Segnalazione-Tipo,Priority,DataSegnalazione,Urgenza,Comune,Indirizzo,IDOperatore,Operatore,IDCentrale,Centrale) values(?,?,?,?,?,?,?,?,?,?,?)";
+	static final String INSERT_NEW_OPERATION = "insert into operazione(IDSegnalazione,DataSegnalazione,Urgenza) values(?,?,?)";
 
 	/**
 	 * <p> Insert new operation center </p> <p> Parameters: </p> <ul> <li> <p>
