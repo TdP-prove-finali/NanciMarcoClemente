@@ -5,27 +5,32 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public interface DAO {
+public abstract class DAO {
 
-	default ResultSet executeQuery(String query, Connection connection) {
+	Database database = null;
+
+	public DAO(Database database) {
+		this.database = database;
+	}
+
+	public Database getDatabase() {
+		return database;
+	}
+
+	ResultSet executeQuery(String query, Connection connection) {
 
 		ResultSet resultSet = null;
-
 		try {
-
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			resultSet = preparedStatement.executeQuery();
-		}
-
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 		return resultSet;
 
 	}
 
-	default ResultSet executeQuery(String query, Object[] statementParameters, Connection connection) {
+	public ResultSet executeQuery(String query, Object[] statementParameters, Connection connection) {
 
 		ResultSet resultSet = null;
 
@@ -49,7 +54,7 @@ public interface DAO {
 
 	}
 
-	default int executeUpdate(String query, Object[] statementParameters, Connection connection) {
+	public int executeUpdate(String query, Object[] statementParameters, Connection connection) {
 
 		int status = 0;
 

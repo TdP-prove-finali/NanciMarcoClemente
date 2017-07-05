@@ -3,12 +3,15 @@ package it.polito.centraletelefonica.db;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Properties;
 
 public class MySQLDatabase implements Database {
 
 	private static final String TYPE = "MY_SQL";
-	private Connection connection;
+	private Map<String, DAO> daos;
+	private PersistentConnection persistentConnection;
 	private String dbName, path;
 	private Properties properties;
 
@@ -42,20 +45,37 @@ public class MySQLDatabase implements Database {
 		this.path = Database.MYSQL_PATH + dbName;
 	}
 
+	public void addDao(Map<String, DAO> daos) {
+		getDaos().putAll(daos);
+	}
+
+	public void addDao(String daoName, DAO dao) {
+		if (!getDaos().containsKey(daoName)) {
+			getDaos().put(daoName, dao);
+		}
+	}
+
+	public Map<String, DAO> getDaos() {
+		if (daos == null) {
+			daos = new LinkedHashMap<>();
+		}
+
+		return daos;
+	}
+
 	@Override
 	public Connection getConnection() {
 
-		if (connection == null) {
+		if (persistentConnection == null) {
 			try {
-				connection = DriverManager.getConnection(path, properties);
-				connection = new PersistentConnection(connection);
-				return connection;
+				persistentConnection = new PersistentConnection(DriverManager.getConnection(path, properties));
+				return persistentConnection;
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
 
-		return connection;
+		return persistentConnection;
 	}
 
 	@Override
