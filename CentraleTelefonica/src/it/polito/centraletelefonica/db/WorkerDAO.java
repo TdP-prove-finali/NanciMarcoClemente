@@ -10,7 +10,6 @@ public class WorkerDAO extends DAO {
 
 	public int insert(Worker worker) {
 		Object[] parameters = new Object[2];
-		System.out.println("");
 		parameters[0] = worker.getIdWorker();
 		parameters[1] = worker.getFullName();
 		return executeUpdate(MySQLQueries.INSERT_NEW_WORKER, parameters, getDatabase().getConnection());
