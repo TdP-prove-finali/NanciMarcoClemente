@@ -7,9 +7,20 @@
 	-fx-background-color: rgb(69.0,69.0,69.0);
 }
 
-.date-picker .text-field {
+.date-picker .text-field, .date-picker .choice-box > .context-menu{
     -fx-background-color: rgb(0.0,150.0,255.0);
-    -fx-border-width: 3px;
+    -fx-border-width: 2px;
     -fx-border-color: whitesmoke ;
+    -fx-text-fill: whitesmoke ;
+}
+
+.center {
+	-fx-background-color: rgb(229,229,229);
+}
+
+.overview-bar {
+	-fx-background-color: whitesmoke ;
+	-fx-border-radius: 100%;
+	-fx-effect: dropshadow(gaussian, black, 4, 0.8, 0.8, 0.8);
 }
 
