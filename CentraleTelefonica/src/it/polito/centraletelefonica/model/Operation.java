@@ -6,25 +6,25 @@ import com.google.maps.model.LatLng;
 
 public class Operation {
 
-	private int operationID;
-	private LocalDate reportingDate;
+	private int id;
+	private LocalDate reportingDate,goalDate;
 	private String urgengy, operationType, priority, city, street;
 	private Worker operator;
 	private OperationCenter operationCenter;
 	private LatLng cordinates;
 
 	public Operation(int operationID, LocalDate reportingDate, String urgengy) {
-		this.setOperationID(operationID);
+		this.setID(operationID);
 		this.setReportingDate(reportingDate);
 		this.setUrgengy(urgengy);
 	}
 
-	public int getOperationID() {
-		return operationID;
+	public int getID() {
+		return id;
 	}
 
-	public void setOperationID(int operationID) {
-		this.operationID = operationID;
+	public void setID(int operationID) {
+		this.id = operationID;
 	}
 
 	public LocalDate getReportingDate() {
@@ -43,11 +43,11 @@ public class Operation {
 		this.urgengy = urgengy;
 	}
 
-	public String getOperationType() {
+	public String getType() {
 		return operationType;
 	}
 
-	public void setOperationType(String operationType) {
+	public void setType(String operationType) {
 		this.operationType = operationType;
 	}
 
@@ -90,17 +90,33 @@ public class Operation {
 	public void setOperationCenter(OperationCenter operationCenter) {
 		this.operationCenter = operationCenter;
 	}
+	
+	public LatLng getCordinates() {
+		return cordinates;
+	}
+
+	public void setCordinates(LatLng cordinates) {
+		this.cordinates = cordinates;
+	}
+	
+	public LocalDate getGoalDate() {
+		return goalDate;
+	}
+
+	public void setGoalDate(LocalDate goalDate) {
+		this.goalDate = goalDate;
+	}
 
 	@Override
 	public String toString() {
-		return String.join(" ", String.valueOf(operationID), reportingDate.toString(), urgengy);
+		return String.join(" ", String.valueOf(id), reportingDate.toString(), urgengy);
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + operationID;
+		result = prime * result + id;
 		return result;
 	}
 
@@ -113,18 +129,14 @@ public class Operation {
 		if (getClass() != obj.getClass())
 			return false;
 		Operation other = (Operation) obj;
-		if (operationID != other.operationID)
+		if (id != other.id)
 			return false;
 		return true;
 	}
 
-	public LatLng getCordinates() {
-		return cordinates;
-	}
+	
 
-	public void setCordinates(LatLng cordinates) {
-		this.cordinates = cordinates;
-	}
+	
 	
 	
 

@@ -10,23 +10,24 @@ public class OperationDAO extends DAO {
 
 	public int insert(Operation operation) {
 		Object[] statementParameters = new Object[3];
-		statementParameters[0] = operation.getOperationID();
+		statementParameters[0] = operation.getID();
 		statementParameters[1] = operation.getReportingDate();
-		statementParameters[2] = operation.getUrgengy();
+		statementParameters[2] = operation.getGoalDate();
+		statementParameters[3] = operation.getUrgengy();
 		return executeUpdate(MySQLQueries.INSERT_NEW_OPERATION, statementParameters, getDatabase().getConnection());
 	}
 
 	public int updateType(Operation operation) {
 		Object[] statementParameters = new Object[2];
-		statementParameters[0] = operation.getOperationType();
-		statementParameters[1] = operation.getOperationID();
+		statementParameters[0] = operation.getType();
+		statementParameters[1] = operation.getID();
 		return executeUpdate(MySQLQueries.UPDATE_OPERATION_TYPE, statementParameters, getDatabase().getConnection());
 	}
 
 	public int updatePriority(Operation operation) {
 		Object[] statementParameters = new Object[2];
 		statementParameters[0] = operation.getPriority();
-		statementParameters[1] = operation.getOperationID();
+		statementParameters[1] = operation.getID();
 		return executeUpdate(MySQLQueries.UPDATE_OPERATION_PRIORITY, statementParameters,
 				getDatabase().getConnection());
 	}
@@ -34,14 +35,14 @@ public class OperationDAO extends DAO {
 	public int updateUrgency(Operation operation) {
 		Object[] statementParameters = new Object[2];
 		statementParameters[0] = operation.getUrgengy();
-		statementParameters[1] = operation.getOperationID();
+		statementParameters[1] = operation.getID();
 		return executeUpdate(MySQLQueries.UPDATE_OPERATION_URGENCY, statementParameters, getDatabase().getConnection());
 	}
 
 	public int updateCity(Operation operation) {
 		Object[] statementParameters = new Object[2];
 		statementParameters[0] = operation.getCity();
-		statementParameters[1] = operation.getOperationID();
+		statementParameters[1] = operation.getID();
 		return executeUpdate(MySQLQueries.UPDATE_OPERATION_CITY, statementParameters, getDatabase().getConnection());
 	}
 
@@ -50,7 +51,7 @@ public class OperationDAO extends DAO {
 		statementParameters[0] = operation.getStreet();
 		statementParameters[1] = operation.getCordinates().lat;
 		statementParameters[2] = operation.getCordinates().lng;
-		statementParameters[3] = operation.getOperationID();
+		statementParameters[3] = operation.getID();
 		return executeUpdate(MySQLQueries.UPDATE_OPERATION_CENTER_CORDINATES, statementParameters,
 				getDatabase().getConnection());
 	}
@@ -59,7 +60,7 @@ public class OperationDAO extends DAO {
 		Object[] statementParameters = new Object[3];
 		statementParameters[0] = operation.getOperationCenter().getOperationCenterID();
 		statementParameters[1] = operation.getOperationCenter().getOperationCenterName();
-		statementParameters[2] = operation.getOperationID();
+		statementParameters[2] = operation.getID();
 		return executeUpdate(MySQLQueries.UPDATE_OPERATION_OPERATION_CENTER, statementParameters,
 				getDatabase().getConnection());
 	}
@@ -68,7 +69,7 @@ public class OperationDAO extends DAO {
 		Object[] statementParameters = new Object[2];
 		statementParameters[0] = operation.getOperator().getIdWorker();
 		statementParameters[1] = operation.getOperator().getFullName();
-		statementParameters[2] = operation.getOperationID();
+		statementParameters[2] = operation.getID();
 		return executeUpdate(MySQLQueries.UPDATE_OPERATION_WORKER, statementParameters, getDatabase().getConnection());
 	}
 

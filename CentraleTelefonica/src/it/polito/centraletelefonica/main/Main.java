@@ -15,10 +15,11 @@ public class Main extends Application {
              
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("MainView.fxml"));
 			BorderPane root = loader.load();
-			Scene scene = new Scene(root, 400, 400);
+			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.centerOnScreen();
+			primaryStage.setTitle("Centrale Telefonica");
 			primaryStage.show();
 
 		}
