@@ -12,26 +12,26 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polito.centraletelefonica.main.MainController">
+<BorderPane xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polito.centraletelefonica.controller.OverViewController">
    <left>
       <VBox prefHeight="200.0" prefWidth="210.0" styleClass="menuLeft" BorderPane.alignment="CENTER">
          <children>
-            <Button contentDisplay="CENTER" mnemonicParsing="false" prefHeight="51.0" prefWidth="210.0" text="Overview" textFill="#0080ff">
+            <Button fx:id="btnOverview" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#openRelativeAnalitycs" prefHeight="51.0" prefWidth="210.0" text="Overview" textFill="#0080ff">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="214.0" text="Operations" textFill="WHITE">
+            <Button fx:id="btnOperations" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#openRelativeAnalitycs" prefHeight="51.0" prefWidth="214.0" text="Operations" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button contentDisplay="CENTER" layoutX="10.0" layoutY="35.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="214.0" text="Operation Centers" textFill="WHITE">
+            <Button fx:id="btnOperationsCenter" contentDisplay="CENTER" layoutX="10.0" layoutY="35.0" mnemonicParsing="false" onMouseClicked="#openRelativeAnalitycs" prefHeight="51.0" prefWidth="214.0" text="Operation Centers" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button contentDisplay="CENTER" layoutX="10.0" layoutY="60.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="217.0" text="Worker" textFill="WHITE">
+            <Button fx:id="btnWorkers" contentDisplay="CENTER" layoutX="10.0" layoutY="60.0" mnemonicParsing="false" onMouseClicked="#openRelativeAnalitycs" prefHeight="51.0" prefWidth="217.0" text="Workers" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
@@ -54,8 +54,8 @@
                   </Label>
                   <HBox alignment="CENTER_RIGHT" prefHeight="52.0" prefWidth="528.0" spacing="20.0">
                      <children>
-                        <DatePicker prefHeight="30.0" prefWidth="200.0" promptText="From..." />
-                        <DatePicker prefHeight="30.0" prefWidth="200.0" promptText="To..." />
+                        <DatePicker fx:id="dateFrom" prefHeight="30.0" prefWidth="200.0" promptText="From..." />
+                        <DatePicker fx:id="dateTo" prefHeight="30.0" prefWidth="200.0" promptText="To..." />
                      </children>
                      <HBox.margin>
                         <Insets right="20.0" />
@@ -63,14 +63,14 @@
                   </HBox>
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" styleClass="overview-bar">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" styleClass="overview-bar">
                <children>
                   <VBox prefHeight="100.0" prefWidth="174.0">
                      <children>
                         <HBox alignment="TOP_CENTER" prefHeight="25.0" prefWidth="100.0" spacing="10.0">
                            <children>
                               <Label prefHeight="17.0" prefWidth="96.0" text="Titolo lungo" />
-                              <Label layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="72.0" text="+100.00%" textFill="GREEN">
+                              <Label fx:id="lblFirstPercentage" layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="72.0" text="+100.00%" textFill="GREEN">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -92,7 +92,7 @@
                         <HBox alignment="TOP_CENTER" prefHeight="25.0" prefWidth="100.0" spacing="10.0">
                            <children>
                               <Label prefHeight="17.0" prefWidth="96.0" text="Titolo lungo" />
-                              <Label layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="72.0" text="+100.00%" textFill="GREEN">
+                              <Label fx:id="lblSecondPercentage" layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="72.0" text="+100.00%" textFill="GREEN">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -111,7 +111,7 @@
                         <HBox alignment="TOP_CENTER" prefHeight="25.0" prefWidth="100.0" spacing="10.0">
                            <children>
                               <Label prefHeight="17.0" prefWidth="96.0" text="Titolo lungo" />
-                              <Label layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="72.0" text="+100.00%" textFill="GREEN">
+                              <Label fx:id="lblThirdPercentage" layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="72.0" text="+100.00%" textFill="GREEN">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -130,7 +130,7 @@
                         <HBox alignment="TOP_CENTER" prefHeight="25.0" prefWidth="100.0" spacing="10.0">
                            <children>
                               <Label prefHeight="17.0" prefWidth="96.0" text="Titolo lungo" />
-                              <Label layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="72.0" text="+100.00%" textFill="GREEN">
+                              <Label fx:id="lblFourthPercentage" layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="72.0" text="+100.00%" textFill="GREEN">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -151,7 +151,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="260.0" prefWidth="640.0" spacing="20.0">
                <children>
-                  <LineChart title="Chart 1">
+                  <LineChart fx:id="chart1" title="Chart 1">
                     <xAxis>
                       <CategoryAxis side="BOTTOM" />
                     </xAxis>
@@ -159,7 +159,7 @@
                       <NumberAxis side="LEFT" />
                     </yAxis>
                   </LineChart>
-                  <LineChart title="Chart 2">
+                  <LineChart fx:id="chart2" title="Chart 2">
                     <xAxis>
                       <CategoryAxis side="BOTTOM" />
                     </xAxis>
@@ -167,7 +167,7 @@
                       <NumberAxis side="LEFT" />
                     </yAxis>
                   </LineChart>
-                  <LineChart title="Chart 3">
+                  <LineChart fx:id="chart3" title="Chart 3">
                     <xAxis>
                       <CategoryAxis side="BOTTOM" />
                     </xAxis>

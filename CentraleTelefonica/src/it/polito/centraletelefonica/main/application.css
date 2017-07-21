@@ -7,20 +7,29 @@
 	-fx-background-color: rgb(69.0,69.0,69.0);
 }
 
+
+.menuLeft>.button:hover {
+	-fx-background-color: rgb(117.0,117.0,117.0);
+}
+
+.menuLeft>.button:pressed {
+	-fx-background-color: rgb(0.0,150.0,255.0);
+}
+
 .date-picker .text-field, .date-picker .choice-box > .context-menu{
     -fx-background-color: rgb(0.0,150.0,255.0);
-    -fx-border-width: 2px;
+    -fx-border-width: 2.0px;
     -fx-border-color: whitesmoke ;
     -fx-text-fill: whitesmoke ;
 }
 
 .center {
-	-fx-background-color: rgb(229,229,229);
+	-fx-background-color: rgb(229.0,229.0,229.0);
 }
 
 .overview-bar {
 	-fx-background-color: whitesmoke ;
-	-fx-border-radius: 100%;
-	-fx-effect: dropshadow(gaussian, black, 4, 0.8, 0.8, 0.8);
+	-fx-border-radius: 100.0%;
+	-fx-effect: dropshadow(gaussian, grey, 4.0, 0.8, 0.8, 0.8);
 }
 

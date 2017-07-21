@@ -6,21 +6,25 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.fxml.FXMLLoader;
 
-public class Main extends Application {
+public class App extends Application {
+
+	private static Stage stage;
 
 	@Override
-	public void start(Stage primaryStage) {
+	public void start(Stage stage) {
+		
+		App.stage = stage;
 
 		try {
-             
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("MainView.fxml"));
+
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("OverView.fxml"));
 			BorderPane root = loader.load();
-			Scene scene = new Scene(root);
+			Scene scene = new Scene(root, 1200, 600);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			primaryStage.setScene(scene);
-			primaryStage.centerOnScreen();
-			primaryStage.setTitle("Centrale Telefonica");
-			primaryStage.show();
+			App.stage.setScene(scene);
+			App.stage.centerOnScreen();
+			App.stage.setTitle("Centrale Telefonica");
+			App.stage.show();
 
 		}
 
@@ -31,5 +35,9 @@ public class Main extends Application {
 
 	public static void main(String[] args) {
 		launch(args);
+	}
+
+	public static Stage getStage() {
+		return stage;
 	}
 }
