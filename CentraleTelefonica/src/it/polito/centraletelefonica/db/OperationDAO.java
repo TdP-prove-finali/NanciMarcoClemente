@@ -13,7 +13,7 @@ public class OperationDAO extends DAO {
 		statementParameters[0] = operation.getID();
 		statementParameters[1] = operation.getReportingDate();
 		statementParameters[2] = operation.getGoalDate();
-		statementParameters[3] = operation.getUrgengy();
+		statementParameters[3] = operation.getUrgency();
 		return executeUpdate(MySQLQueries.INSERT_NEW_OPERATION, statementParameters, getDatabase().getConnection());
 	}
 
@@ -34,7 +34,7 @@ public class OperationDAO extends DAO {
 
 	public int updateUrgency(Operation operation) {
 		Object[] statementParameters = new Object[2];
-		statementParameters[0] = operation.getUrgengy();
+		statementParameters[0] = operation.getUrgency();
 		statementParameters[1] = operation.getID();
 		return executeUpdate(MySQLQueries.UPDATE_OPERATION_URGENCY, statementParameters, getDatabase().getConnection());
 	}
