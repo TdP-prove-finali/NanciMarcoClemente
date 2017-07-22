@@ -5,6 +5,8 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.PieChart.Data;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -52,20 +54,20 @@ public class OverViewController extends Controller {
 	private LineChart<?, ?> chart1;
 
 	@FXML
-	private LineChart<?, ?> chart2;
+	private PieChart chartType;
 
 	@FXML
-	private LineChart<?, ?> chart3;
+	private PieChart chartArea;
 
 	@FXML
 	void openRelativeAnalitycs(MouseEvent event) {
 
 		if (event.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
-          
+
 			Node node = (Node) event.getSource();
 			String nodeID = node.getId();
 			changeScene(nodeID);
-			
+
 		}
 
 	}
@@ -86,8 +88,22 @@ public class OverViewController extends Controller {
 		assert lblThirdPercentage != null : "fx:id=\"lblThirdPercentage\" was not injected: check your FXML file 'OverView.fxml'.";
 		assert lblFourthPercentage != null : "fx:id=\"lblFourthPercentage\" was not injected: check your FXML file 'OverView.fxml'.";
 		assert chart1 != null : "fx:id=\"chart1\" was not injected: check your FXML file 'OverView.fxml'.";
-		assert chart2 != null : "fx:id=\"chart2\" was not injected: check your FXML file 'OverView.fxml'.";
-		assert chart3 != null : "fx:id=\"chart3\" was not injected: check your FXML file 'OverView.fxml'.";
+		assert chartType != null : "fx:id=\"chartType\" was not injected: check your FXML file 'OverView.fxml'.";
+		assert chartArea != null : "fx:id=\"chartArea\" was not injected: check your FXML file 'OverView.fxml'.";
+
+		// add data to chartType
+
+		chartType.getData().add(new Data("Prop 1", 25));
+		chartType.getData().add(new Data("Prop 2", 25));
+		chartType.getData().add(new Data("Prop 3", 25));
+		chartType.getData().add(new Data("Prop 4", 25));
+
+		// Add data to chartArea
+
+		chartArea.getData().add(new Data("Prop 1", 25));
+		chartArea.getData().add(new Data("Prop 1", 25));
+		chartArea.getData().add(new Data("Prop 1", 25));
+		chartArea.getData().add(new Data("Prop 1", 25));
 
 	}
 }
