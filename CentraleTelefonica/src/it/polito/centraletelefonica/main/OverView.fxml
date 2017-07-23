@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polito.centraletelefonica.controller.OverViewController">
+<BorderPane xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polito.centraletelefonica.controller.OverViewController">
    <left>
       <VBox prefHeight="200.0" prefWidth="210.0" styleClass="menuLeft" BorderPane.alignment="CENTER">
          <children>
@@ -152,7 +152,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="260.0" prefWidth="640.0" spacing="20.0">
                <children>
-                  <LineChart fx:id="chart1" title="Open vs Closed">
+                  <LineChart fx:id="chart1" onMouseClicked="#openInNewTab" title="Open vs Closed">
                     <xAxis>
                       <CategoryAxis side="BOTTOM" />
                     </xAxis>
@@ -160,8 +160,8 @@
                       <NumberAxis side="LEFT" />
                     </yAxis>
                   </LineChart>
-                  <PieChart fx:id="chartType" legendVisible="false" title="Type" />
-                  <PieChart fx:id="chartArea" layoutX="340.0" layoutY="10.0" legendVisible="false" title="Area" />
+                  <PieChart fx:id="chartType" legendVisible="false" onMouseClicked="#openInNewTab" title="Type" />
+                  <PieChart fx:id="chartArea" layoutX="340.0" layoutY="10.0" legendVisible="false" onMouseClicked="#openInNewTab" title="Area" />
                </children>
                <VBox.margin>
                   <Insets left="20.0" right="20.0" />

@@ -71,6 +71,20 @@ public class OverViewController extends Controller {
 		}
 
 	}
+	
+	@FXML
+    void openInNewTab(MouseEvent event) {
+		
+		if (event.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
+			
+			Node node = (Node) event.getSource();
+			String nodeID = node.getId();
+			showPopUpChart(node, nodeID);
+			
+		}
+
+
+    }
 
 	@FXML
 	void initialize() {
