@@ -93,6 +93,26 @@ abstract class Controller {
 		return false;
 	}
 
+	boolean showSearchTool() {
+
+		Stage stage = new Stage();
+		FXMLLoader loader = new FXMLLoader(App.class.getResource("Search.fxml"));
+		BorderPane root;
+		Scene scene = null;
+		try {
+			root = loader.load();
+			scene = new Scene(root);
+			scene.getStylesheets().add(App.class.getResource("application.css").toExternalForm());
+			stage.setScene(scene);
+			stage.show();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return false;
+	}
+
 	private Scene createScene(String nodeID) {
 
 		if (getIdFxMap().containsKey(nodeID)) {
@@ -146,6 +166,7 @@ abstract class Controller {
 			idFx.put("chart1", "PopUpChart.fxml");
 			idFx.put("chartType", "PopUpChart.fxml");
 			idFx.put("chartArea", "PopUpChart.fxml");
+			idFx.put("btnPaths", "PathsView.fxml");
 
 		}
 
@@ -164,6 +185,7 @@ abstract class Controller {
 			idCss.put("chart1", "application.css");
 			idCss.put("chartType", "application.css");
 			idCss.put("chartArea", "application.css");
+			idCss.put("btnPaths", "application.css");
 
 		}
 

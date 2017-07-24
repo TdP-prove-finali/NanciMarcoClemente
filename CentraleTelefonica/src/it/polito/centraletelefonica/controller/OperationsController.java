@@ -57,10 +57,15 @@ public class OperationsController extends Controller {
 
 	@FXML
 	private TableColumn<Operation, String> colPriority;
+	
+	@FXML
+	private Button btnPaths;
 
 	// Empty line
 	private final ObservableList<Operation> data = FXCollections
 			.observableArrayList(new Operation(String.valueOf(0), LocalDate.now(), "False"));
+
+	
 
 	@FXML
 	void openRelativeAnalitycs(MouseEvent event) {
@@ -79,7 +84,7 @@ public class OperationsController extends Controller {
 	void search(KeyEvent event) {
 
 		if (event.getEventType().equals(KeyEvent.KEY_PRESSED)) {
-			System.out.println("Search");
+			showSearchTool();
 		}
 
 	}
@@ -111,6 +116,7 @@ public class OperationsController extends Controller {
 		assert colID != null : "fx:id=\"colID\" was not injected: check your FXML file 'OperationsView.fxml'.";
 		assert colReporting != null : "fx:id=\"colReporting\" was not injected: check your FXML file 'OperationsView.fxml'.";
 		assert colPriority != null : "fx:id=\"colPriority\" was not injected: check your FXML file 'OperationsView.fxml'.";
+        assert btnPaths != null : "fx:id=\"btnPaths\" was not injected: check your FXML file 'OverView.fxml'.";
 		colID.setCellValueFactory(new PropertyValueFactory<>("ID"));
 		colReporting.setCellValueFactory(new PropertyValueFactory<>("reportingDate"));
 		colPriority.setCellValueFactory(new PropertyValueFactory<>("urgency"));

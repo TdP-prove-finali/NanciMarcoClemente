@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polito.centraletelefonica.controller.WorkersController">
+<BorderPane xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polito.centraletelefonica.controller.PathsController">
    <left>
       <VBox prefHeight="200.0" prefWidth="210.0" styleClass="menuLeft" BorderPane.alignment="CENTER">
          <children>
@@ -30,14 +30,14 @@
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="btnWorkers" contentDisplay="CENTER" layoutX="10.0" layoutY="60.0" mnemonicParsing="false" onMouseClicked="#openRelativeAnalitycs" prefHeight="51.0" prefWidth="217.0" text="Workers" textFill="#0080ff">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Button>
-            <Button fx:id="btnPaths" contentDisplay="CENTER" layoutX="10.0" layoutY="163.0" mnemonicParsing="false" onMouseClicked="#openRelativeAnalitycs" prefHeight="51.0" prefWidth="217.0" text="Paths" textFill="WHITE">
+            <Button fx:id="btnWorkers" contentDisplay="CENTER" layoutX="10.0" layoutY="60.0" mnemonicParsing="false" onMouseClicked="#openRelativeAnalitycs" prefHeight="51.0" prefWidth="217.0" text="Workers" textFill="WHITE">
                <font>
                   <Font size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnPaths" contentDisplay="CENTER" layoutX="10.0" layoutY="163.0" mnemonicParsing="false" onMouseClicked="#openRelativeAnalitycs" prefHeight="51.0" prefWidth="217.0" text="Paths" textFill="#0080ff">
+               <font>
+                  <Font name="System Bold" size="14.0" />
                </font>
             </Button>
          </children>
@@ -48,7 +48,7 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="83.0" prefWidth="599.0" styleClass="boxCenterUp">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="52.0" prefWidth="168.0" text="Workers" textFill="WHITE">
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="52.0" prefWidth="168.0" text="Paths" textFill="WHITE">
                      <HBox.margin>
                         <Insets left="15.0" right="15.0" />
                      </HBox.margin>
@@ -68,10 +68,10 @@
                </children>
             </HBox>
             <TableView prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-              <columns>
-                <TableColumn prefWidth="117.0" text="Worker id" />
-                <TableColumn prefWidth="121.0" text="Nominativo" />
-              </columns>
+               <columns>
+                  <TableColumn prefWidth="117.0" text="Worker id" />
+                  <TableColumn prefWidth="121.0" text="Nominativo" />
+               </columns>
             </TableView>
          </children>
       </VBox>

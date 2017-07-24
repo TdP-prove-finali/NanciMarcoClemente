@@ -33,6 +33,9 @@ public class OverViewController extends Controller {
 
 	@FXML
 	private Button btnWorkers;
+	
+	@FXML
+    private Button btnPaths;
 
 	@FXML
 	private DatePicker dateFrom;
@@ -105,6 +108,7 @@ public class OverViewController extends Controller {
 		assert chart1 != null : "fx:id=\"chart1\" was not injected: check your FXML file 'OverView.fxml'.";
 		assert chartType != null : "fx:id=\"chartType\" was not injected: check your FXML file 'OverView.fxml'.";
 		assert chartArea != null : "fx:id=\"chartArea\" was not injected: check your FXML file 'OverView.fxml'.";
+        assert btnPaths != null : "fx:id=\"btnPaths\" was not injected: check your FXML file 'OverView.fxml'.";
 
 		// Line chart
 

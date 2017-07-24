@@ -1,3 +1,7 @@
+.root {
+    -fx-font-size: 14 px ;
+}
+
 
 .boxCenterUp {
 	-fx-background-color: rgb(0.0,128.0,255.0);

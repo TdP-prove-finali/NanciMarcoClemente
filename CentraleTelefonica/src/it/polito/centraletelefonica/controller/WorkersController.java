@@ -35,14 +35,17 @@ public class WorkersController extends Controller {
 	private DatePicker dateTo;
 
 	@FXML
+	private Button btnPaths;
+
+	@FXML
 	void openRelativeAnalitycs(MouseEvent event) {
-		
+
 		if (event.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
-	          
+
 			Node node = (Node) event.getSource();
 			String nodeID = node.getId();
 			changeScene(nodeID);
-			
+
 		}
 
 	}
@@ -55,6 +58,7 @@ public class WorkersController extends Controller {
 		assert btnWorkers != null : "fx:id=\"btnWorkers\" was not injected: check your FXML file 'WorkersView.fxml'.";
 		assert dateFrom != null : "fx:id=\"dateFrom\" was not injected: check your FXML file 'WorkersView.fxml'.";
 		assert dateTo != null : "fx:id=\"dateTo\" was not injected: check your FXML file 'WorkersView.fxml'.";
+		assert btnPaths != null : "fx:id=\"btnPaths\" was not injected: check your FXML file 'OverView.fxml'.";
 
 	}
 }

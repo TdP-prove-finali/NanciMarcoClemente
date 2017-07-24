@@ -35,6 +35,9 @@ public class OperationsCenterController extends Controller {
 	private DatePicker dateTo;
 
 	@FXML
+	private Button btnPaths;
+
+	@FXML
 	void openRelativeAnalitycs(MouseEvent event) {
 
 		if (event.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
@@ -55,6 +58,6 @@ public class OperationsCenterController extends Controller {
 		assert btnWorkers != null : "fx:id=\"btnWorkers\" was not injected: check your FXML file 'OperationCenterView.fxml'.";
 		assert dateFrom != null : "fx:id=\"dateFrom\" was not injected: check your FXML file 'OperationCenterView.fxml'.";
 		assert dateTo != null : "fx:id=\"dateTo\" was not injected: check your FXML file 'OperationCenterView.fxml'.";
-
+		assert btnPaths != null : "fx:id=\"btnPaths\" was not injected: check your FXML file 'OverView.fxml'.";
 	}
 }
