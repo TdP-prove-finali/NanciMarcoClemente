@@ -7,14 +7,15 @@ import java.util.List;
 import java.util.Map;
 
 import it.polito.centraletelefonica.main.App;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.chart.PieChart.Data;
+import javafx.scene.chart.XYChart.Series;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -25,6 +26,7 @@ abstract class Controller {
 	// Same for css file
 	private Map<String, String> idCss;
 
+	@SuppressWarnings("unchecked")
 	boolean showPopUpChart(Node node, String nodeId) {
 
 		Stage stage = new Stage();
@@ -44,14 +46,40 @@ abstract class Controller {
 				PieChart pie = new PieChart();
 				PieChart pie1 = new PieChart();
 				pie = (PieChart) node;
-				pie1.getData().addAll(pie.getData());
+
+				for (Data data : pie.getData()) {
+					String name = data.getName();
+					double value = data.getPieValue();
+					Data d = new Data(name, value);
+					pie1.getData().add(d);
+				}
+
+				String title = pie.getTitle();
+				pie1.setTitle(title);
 				root.setCenter(pie1);
 			}
 
 			if (node instanceof LineChart<?, ?>) {
-				LineChart<?, ?> lineChart = new LineChart<>(null, null);
-				lineChart = (LineChart<?, ?>) node;
-				root.setCenter(lineChart);
+				NumberAxis xAxis = new NumberAxis();
+				NumberAxis yAxis = new NumberAxis();
+				LineChart<Number, Number> line1 = new LineChart<>(xAxis, yAxis);
+				LineChart<Number, Number> line2 = new LineChart<>(xAxis, yAxis);
+				XYChart.Series<Number, Number> clonedSeries = new XYChart.Series<>();
+				line1 = (LineChart<Number, Number>) node;
+				List<Series<Number, Number>> data = new LinkedList<>(line1.getData());
+
+				for (Series<Number, Number> series : data) {
+					for (javafx.scene.chart.XYChart.Data<Number, Number> dat : series.getData()) {
+						clonedSeries.getData().add(dat);
+					}
+
+				}
+
+				String title = line1.getTitle();
+				line2.setTitle(title);
+				clonedSeries.setName(line1.getData().get(0).getName());
+				line2.getData().add(clonedSeries);
+				root.setCenter(line2);
 
 			}
 

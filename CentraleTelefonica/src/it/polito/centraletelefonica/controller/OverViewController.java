@@ -5,8 +5,10 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.PieChart.Data;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -51,7 +53,7 @@ public class OverViewController extends Controller {
 	private Label lblFourthPercentage;
 
 	@FXML
-	private LineChart<?, ?> chart1;
+	private LineChart<Number, Number> chart1;
 
 	@FXML
 	private PieChart chartType;
@@ -71,20 +73,19 @@ public class OverViewController extends Controller {
 		}
 
 	}
-	
+
 	@FXML
-    void openInNewTab(MouseEvent event) {
-		
+	void openInNewTab(MouseEvent event) {
+
 		if (event.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
-			
+
 			Node node = (Node) event.getSource();
 			String nodeID = node.getId();
 			showPopUpChart(node, nodeID);
-			
+
 		}
 
-
-    }
+	}
 
 	@FXML
 	void initialize() {
@@ -104,6 +105,26 @@ public class OverViewController extends Controller {
 		assert chart1 != null : "fx:id=\"chart1\" was not injected: check your FXML file 'OverView.fxml'.";
 		assert chartType != null : "fx:id=\"chartType\" was not injected: check your FXML file 'OverView.fxml'.";
 		assert chartArea != null : "fx:id=\"chartArea\" was not injected: check your FXML file 'OverView.fxml'.";
+
+		// Line chart
+
+		NumberAxis xAxis = new NumberAxis();
+		NumberAxis yAxis = new NumberAxis();
+		XYChart.Series<Number, Number> series = new XYChart.Series<>();
+		series.getData().add(new XYChart.Data<Number, Number>(1, 23));
+        series.getData().add(new XYChart.Data<Number, Number>(2, 14));
+        series.getData().add(new XYChart.Data<Number, Number>(3, 15));
+        series.getData().add(new XYChart.Data<Number, Number>(4, 24));
+        series.getData().add(new XYChart.Data<Number, Number>(5, 34));
+        series.getData().add(new XYChart.Data<Number, Number>(6, 36));
+        series.getData().add(new XYChart.Data<Number, Number>(7, 22));
+        series.getData().add(new XYChart.Data<Number, Number>(8, 45));
+        series.getData().add(new XYChart.Data<Number, Number>(9, 43));
+        series.getData().add(new XYChart.Data<Number, Number>(10, 17));
+        series.getData().add(new XYChart.Data<Number, Number>(11, 29));
+        series.getData().add(new XYChart.Data<Number, Number>(12, 25));
+		series.setName("Open");
+		chart1.getData().add(series);
 
 		// add data to chartType
 
