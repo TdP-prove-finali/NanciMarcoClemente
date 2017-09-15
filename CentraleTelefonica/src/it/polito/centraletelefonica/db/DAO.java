@@ -61,6 +61,11 @@ public abstract class DAO {
 		try {
 
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			
+			for (int i = 0; i < statementParameters.length; i++) {
+				preparedStatement.setObject(i + 1, statementParameters[i]);
+			}
+			
 			status = preparedStatement.executeUpdate();
 
 		} catch (SQLException e) {

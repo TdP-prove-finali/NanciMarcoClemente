@@ -4,6 +4,21 @@ package it.polito.centraletelefonica.db;
 
 final class MySQLQueries {
 
+	// *** BULK SELECT ***
+
+	/**
+	 * <p> Get all workers from db</p>
+	 */
+
+	static final String GET_ALL_WORKERS = "select * from operatori";
+	
+	/**
+	 * <p> Get all centers from db</p>
+	 */
+	
+	static final String GET_ALL_CENTERS = "select * from centrali";
+	
+
 	// *** INSERT SECTION ***
 
 	/**
@@ -12,7 +27,7 @@ final class MySQLQueries {
 	 * 
 	 */
 
-	static final String INSERT_NEW_WORKER = "insert into operatore(IDOperatore,Nome) values(?,?)";
+	static final String INSERT_NEW_WORKER = "insert into operatori(OperatoreID,Nominativo) values(?,?)";
 
 	/**
 	 * <p> Insert new operation </p> <p> Parameters: </p> <ul> <li> <p>

@@ -25,6 +25,8 @@ abstract class Controller {
 	private Map<String, String> idFx;
 	// Same for css file
 	private Map<String, String> idCss;
+	// map for scenes (key = nodeId)
+	private Map<String, Scene> scenes;
 
 	@SuppressWarnings("unchecked")
 	boolean showPopUpChart(Node node, String nodeId) {
@@ -115,28 +117,42 @@ abstract class Controller {
 
 	private Scene createScene(String nodeID) {
 
-		if (getIdFxMap().containsKey(nodeID)) {
-			String fileName = getIdFxMap().get(nodeID);
-			FXMLLoader loader = new FXMLLoader(App.class.getResource(fileName));
-			BorderPane root;
-			Scene scene = null;
-			try {
-				root = loader.load();
-				double previousWidth = App.getStage().getScene().getWidth();
-				double previousHeight = App.getStage().getScene().getHeight();
-				scene = new Scene(root, previousWidth, previousHeight);
-				if (getIdCss().containsKey(nodeID)) {
-					String cssFileName = getIdCss().get(nodeID);
-					scene.getStylesheets().add(App.class.getResource(cssFileName).toExternalForm());
-					return scene;
+		if (!getScenes().containsKey(nodeID)) {
+
+			if (getIdFxMap().containsKey(nodeID)) {
+				String fileName = getIdFxMap().get(nodeID);
+				FXMLLoader loader = new FXMLLoader(App.class.getResource(fileName));
+				BorderPane root;
+				Scene scene = null;
+				try {
+					root = loader.load();
+					double previousWidth = App.getStage().getScene().getWidth();
+					double previousHeight = App.getStage().getScene().getHeight();
+					scene = new Scene(root, previousWidth, previousHeight);
+					if (getIdCss().containsKey(nodeID)) {
+						String cssFileName = getIdCss().get(nodeID);
+						scene.getStylesheets().add(App.class.getResource(cssFileName).toExternalForm());
+						getScenes().put(nodeID, scene);
+						return scene;
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
-			} catch (IOException e) {
-				e.printStackTrace();
 			}
+
 		}
 
-		return null;
+		return getScenes().get(nodeID);
 
+	}
+
+	private Map<String, Scene> getScenes() {
+
+		if (scenes == null) {
+			scenes = new LinkedHashMap<String, Scene>();
+		}
+
+		return scenes;
 	}
 
 	boolean changeScene(String nodeID) {

@@ -58,8 +58,8 @@ public class OperationDAO extends DAO {
 
 	public int updateOperationCenter(Operation operation) {
 		Object[] statementParameters = new Object[3];
-		statementParameters[0] = operation.getOperationCenter().getOperationCenterID();
-		statementParameters[1] = operation.getOperationCenter().getOperationCenterName();
+		statementParameters[0] = operation.getOperationCenter().getId();
+		statementParameters[1] = operation.getOperationCenter().getName();
 		statementParameters[2] = operation.getID();
 		return executeUpdate(MySQLQueries.UPDATE_OPERATION_OPERATION_CENTER, statementParameters,
 				getDatabase().getConnection());
@@ -67,7 +67,7 @@ public class OperationDAO extends DAO {
 
 	public int updateOperationWorker(Operation operation) {
 		Object[] statementParameters = new Object[2];
-		statementParameters[0] = operation.getOperator().getIdWorker();
+		statementParameters[0] = operation.getOperator().getId();
 		statementParameters[1] = operation.getOperator().getFullName();
 		statementParameters[2] = operation.getID();
 		return executeUpdate(MySQLQueries.UPDATE_OPERATION_WORKER, statementParameters, getDatabase().getConnection());

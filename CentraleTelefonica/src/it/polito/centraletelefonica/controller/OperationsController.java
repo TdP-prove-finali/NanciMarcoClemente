@@ -16,6 +16,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -52,20 +53,24 @@ public class OperationsController extends Controller {
 	@FXML
 	private TableColumn<Operation, String> colID;
 
+	/*
+	 * Per rendere il parametro non editabile fai riferimento nel
+	 * setCellValueFactory a reportingDate e non alla property e cambia da
+	 * String a localDate la variabile
+	 */
+
 	@FXML
-	private TableColumn<Operation, LocalDate> colReporting;
+	private TableColumn<Operation, String> colReporting;
 
 	@FXML
 	private TableColumn<Operation, String> colPriority;
-	
+
 	@FXML
 	private Button btnPaths;
 
 	// Empty line
 	private final ObservableList<Operation> data = FXCollections
 			.observableArrayList(new Operation(String.valueOf(0), LocalDate.now(), "False"));
-
-	
 
 	@FXML
 	void openRelativeAnalitycs(MouseEvent event) {
@@ -116,10 +121,12 @@ public class OperationsController extends Controller {
 		assert colID != null : "fx:id=\"colID\" was not injected: check your FXML file 'OperationsView.fxml'.";
 		assert colReporting != null : "fx:id=\"colReporting\" was not injected: check your FXML file 'OperationsView.fxml'.";
 		assert colPriority != null : "fx:id=\"colPriority\" was not injected: check your FXML file 'OperationsView.fxml'.";
-        assert btnPaths != null : "fx:id=\"btnPaths\" was not injected: check your FXML file 'OverView.fxml'.";
+		assert btnPaths != null : "fx:id=\"btnPaths\" was not injected: check your FXML file 'OverView.fxml'.";
 		colID.setCellValueFactory(new PropertyValueFactory<>("ID"));
-		colReporting.setCellValueFactory(new PropertyValueFactory<>("reportingDate"));
+		colReporting.setCellValueFactory(new PropertyValueFactory<>("reportingProperty"));
 		colPriority.setCellValueFactory(new PropertyValueFactory<>("urgency"));
+		colID.setCellFactory(TextFieldTableCell.forTableColumn());
+		colReporting.setCellFactory(TextFieldTableCell.forTableColumn());
 
 	}
 }

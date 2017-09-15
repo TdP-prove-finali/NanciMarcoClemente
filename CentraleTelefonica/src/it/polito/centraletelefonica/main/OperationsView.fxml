@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polito.centraletelefonica.controller.OperationsController">
+<BorderPane xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polito.centraletelefonica.controller.OperationsController">
 	<left>
 		<VBox prefHeight="200.0" prefWidth="210.0" styleClass="menuLeft" BorderPane.alignment="CENTER">
 			<children>
@@ -72,8 +72,12 @@
 						<TableColumn fx:id="colID" prefWidth="120.0" text="ID" />
 						<TableColumn prefWidth="120.0" text="TYPE" />
 						<TableColumn fx:id="colPriority" prefWidth="120.0" text="PRIORITY" />
+                  <TableColumn prefWidth="120.0" text="TIME AVARAGE" />
+                  <TableColumn prefWidth="120.0" text="ST. DEVIATION" />
 						<TableColumn fx:id="colReporting" prefWidth="120.0" text="START DATE" />
 						<TableColumn prefWidth="120.0" text="GOAL DATE" />
+                  <TableColumn prefWidth="120.0" text="CLOSING DATE" />
+                  <TableColumn prefWidth="120.0" text="STATUS" />
 						<TableColumn prefWidth="120.0" text="CITY" />
 						<TableColumn prefWidth="120.0" text="STREET" />
 						<TableColumn prefWidth="120.0" text="WORKER ID" />

@@ -1,5 +1,5 @@
 .root {
-    -fx-font-size: 14 px ;
+    -fx-font-size: 14.0 px ;
 }
 
 
@@ -38,7 +38,9 @@
 	-fx-effect: dropshadow(gaussian, grey, 4.0, 0.8, 0.8, 0.8);
 }
 
-#operationTable .table-column {
+
+#operationTable .table-column, #tableWorker .table-column {
   -fx-alignment: CENTER;
 }
+
 

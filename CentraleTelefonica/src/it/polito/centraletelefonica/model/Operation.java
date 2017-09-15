@@ -6,7 +6,7 @@ import com.google.maps.model.LatLng;
 
 public class Operation {
 
-	private String id;
+	private String id, reportingProperty;
 	private LocalDate reportingDate, goalDate;
 	private String urgency, operationType, priority, city, street;
 	private Worker operator;
@@ -17,6 +17,15 @@ public class Operation {
 		this.setID(operationID);
 		this.setReportingDate(reportingDate);
 		this.setUrgency(urgency);
+		this.setReportingProperty(reportingDate);
+	}
+
+	private void setReportingProperty(LocalDate reportingDate) {
+		this.reportingProperty = reportingDate.toString();
+	}
+	
+	public String getReportingProperty() {
+		return reportingProperty;
 	}
 
 	public String getID() {

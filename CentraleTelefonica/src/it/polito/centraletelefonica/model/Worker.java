@@ -2,22 +2,24 @@ package it.polito.centraletelefonica.model;
 
 public class Worker {
 
-	private int idWorker;
+	private String id;
 	private String firstname, surname, fullName;
+	private int numeroChiusure;
+	private OperationCenter centraleServizio;
 
-	public Worker(int idWorker, String firstname, String surname) {
-		this.setIdWorker(idWorker);
+	public Worker(String idWorker, String firstname, String surname) {
+		this.setId(idWorker);
 		this.setFirstname(firstname);
 		this.setSurname(surname);
 		this.setFullName(firstname, surname);
 	}
 
-	public int getIdWorker() {
-		return idWorker;
+	public String getId() {
+		return id;
 	}
 
-	public void setIdWorker(int idWorker) {
-		this.idWorker = idWorker;
+	public void setId(String idWorker) {
+		this.id = idWorker;
 	}
 
 	public String getFirstname() {
@@ -44,16 +46,32 @@ public class Worker {
 		this.fullName = String.join(" ", firstname, surname);
 	}
 
+	public int getNumeroChiusure() {
+		return numeroChiusure;
+	}
+
+	public void setNumeroChiusure(int numeroChiusure) {
+		this.numeroChiusure = numeroChiusure;
+	}
+
+	public OperationCenter getCentraleServizio() {
+		return centraleServizio;
+	}
+
+	public void setCentraleServizio(OperationCenter centraleServizio) {
+		this.centraleServizio = centraleServizio;
+	}
+
 	@Override
 	public String toString() {
-		return String.join(" ", String.valueOf(idWorker), fullName);
+		return String.join(" ", String.valueOf(id), fullName);
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + idWorker;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -66,7 +84,10 @@ public class Worker {
 		if (getClass() != obj.getClass())
 			return false;
 		Worker other = (Worker) obj;
-		if (idWorker != other.idWorker)
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}
