@@ -16,6 +16,8 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.PieChart.Data;
 import javafx.scene.chart.XYChart.Series;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -144,6 +146,12 @@ abstract class Controller {
 
 		return getScenes().get(nodeID);
 
+	}
+
+	public void showAlert(String messaggio) {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setContentText(messaggio);
+		alert.show();
 	}
 
 	private Map<String, Scene> getScenes() {

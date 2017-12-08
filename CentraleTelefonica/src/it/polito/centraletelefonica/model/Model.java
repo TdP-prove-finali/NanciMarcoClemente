@@ -1,68 +1,42 @@
 package it.polito.centraletelefonica.model;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ThreadLocalRandom;
+import java.time.LocalDate;
 
-import it.polito.centraletelefonica.db.Database;
-import it.polito.centraletelefonica.db.MySQLDatabase;
-import it.polito.centraletelefonica.db.OperationCenterDAO;
-import it.polito.centraletelefonica.db.WorkerDAO;
+import it.polito.centraletelefonica.db.OperationDAO;
 
 public class Model {
 
-	private static final String DB_CENTRALE = "centraletelefonica";
-	private static Map<String, Database> databases;
-	private static Map<String, OperationCenter> centers;
-
-	public static List<Worker> getAllWorkers() {
-		WorkerDAO dao = new WorkerDAO(getDatabase(DB_CENTRALE));
-		return dao.getAllWorkers(getCenters());
+	public int getClosedOperation(LocalDate from, LocalDate to) {
+		OperationDAO operationDAO = new OperationDAO();
+		return operationDAO.getClosedOperationCount(from, to);
 	}
 
-	public static List<OperationCenter> getAllCenters() {
-		OperationCenterDAO dao = new OperationCenterDAO(getDatabase(DB_CENTRALE));
-		return dao.getAllCenters(getCenters());
+	public int getOpenedOperation(LocalDate from, LocalDate to) {
+		OperationDAO operationDAO = new OperationDAO();
+		return operationDAO.getOpenedOperationCount(from, to);
 	}
 
-	private static Map<String, OperationCenter> getCenters() {
+	public String getClosedBefore(LocalDate from, LocalDate to, String periodoPrecedente, int chiusurePeriodo,
+			boolean closing) {
 
-		if (centers == null) {
-			centers = new LinkedHashMap<>();
-		}
-
-		return centers;
-	}
-
-	private static Database getDatabase(String dbCentrale) {
-
-		if (databases == null) {
-
-			databases = new LinkedHashMap<String, Database>();
-			databases.put(dbCentrale, new MySQLDatabase(dbCentrale, null));
-			return databases.get(dbCentrale);
-
-		}
-
-		if (!databases.containsKey(dbCentrale)) {
-			databases.put(dbCentrale, new MySQLDatabase(dbCentrale, null));
-			return databases.get(dbCentrale);
-		}
-
-		return databases.get(dbCentrale);
-	}
-
-	public static void createWorker(String nominativo) {
-
-		String id = "" + nominativo.charAt(0) + nominativo.charAt(3) + nominativo.charAt(5) + nominativo.charAt(7);
-		id += "" + ThreadLocalRandom.current().nextInt(1000000, 9999999);
-		id = id.replace(" ", "T");
-		id = id.toUpperCase();
-		Worker worker = new Worker(id, nominativo.split(" ")[0], nominativo.split(" ")[1]);
-		WorkerDAO dao = new WorkerDAO(getDatabase(DB_CENTRALE));
-		dao.insert(worker);
-
+		from = periodoPrecedente.compareTo("Settimana") == 0 ? from.minusWeeks(1) : from;
+		from = periodoPrecedente.compareTo("Mese") == 0 ? from.minusMonths(1) : from;
+		from = periodoPrecedente.compareTo("Trimestre") == 0 ? from.minusMonths(3) : from;
+		from = periodoPrecedente.compareTo("Quadrimestre") == 0 ? from.minusMonths(4) : from;
+		from = periodoPrecedente.compareTo("Semestre") == 0 ? from.minusMonths(6) : from;
+		from = periodoPrecedente.compareTo("Anno") == 0 ? from.minusYears(1) : from;
+		to = periodoPrecedente.compareTo("Settimana") == 0 ? from.minusWeeks(1) : to;
+		to = periodoPrecedente.compareTo("Mese") == 0 ? from.minusMonths(1) : to;
+		to = periodoPrecedente.compareTo("Trimestre") == 0 ? from.minusMonths(3) : to;
+		to = periodoPrecedente.compareTo("Quadrimestre") == 0 ? from.minusMonths(4) : to;
+		to = periodoPrecedente.compareTo("Semestre") == 0 ? from.minusMonths(6) : to;
+		to = periodoPrecedente.compareTo("Anno") == 0 ? from.minusYears(1) : to;
+		OperationDAO operationDAO = new OperationDAO();
+		int chiusurePrecedenti = closing ? operationDAO.getClosedOperationCount(from, to)
+				: operationDAO.getOpenedOperationCount(from, to);
+		double percentuale = (double) (chiusurePeriodo - chiusurePrecedenti) / chiusurePrecedenti;
+		percentuale = Double.isNaN(percentuale) ? 0 : percentuale;
+		return String.valueOf(percentuale).concat("%");
 	}
 
 }

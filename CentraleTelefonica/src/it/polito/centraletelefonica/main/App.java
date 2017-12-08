@@ -1,5 +1,7 @@
 package it.polito.centraletelefonica.main;
 
+import it.polito.centraletelefonica.controller.OverViewController;
+import it.polito.centraletelefonica.model.Model;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -24,6 +26,9 @@ public class App extends Application {
 			App.stage.setScene(scene);
 			App.stage.centerOnScreen();
 			App.stage.setTitle("Centrale Telefonica");
+			OverViewController controller = loader.getController();
+			Model model = new Model();
+			controller.setModel(model);
 			App.stage.show();
 
 		}

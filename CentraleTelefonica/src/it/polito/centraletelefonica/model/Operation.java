@@ -6,58 +6,38 @@ import com.google.maps.model.LatLng;
 
 public class Operation {
 
-	private String id, reportingProperty;
-	private LocalDate reportingDate, goalDate;
-	private String urgency, operationType, priority, city, street;
-	private Worker operator;
+	private String id;
+	private OperationTipology tipology;
+	private String priority;
+	private LocalDate dataSegnalazione;
+	private LocalDate dataObiettivo;
+	private LocalDate dataChiusura;
+	private String comune;
+	private String indirizzo;
+	private LatLng coordinate;
 	private OperationCenter operationCenter;
-	private LatLng cordinates;
 
-	public Operation(String operationID, LocalDate reportingDate, String urgency) {
-		this.setID(operationID);
-		this.setReportingDate(reportingDate);
-		this.setUrgency(urgency);
-		this.setReportingProperty(reportingDate);
+	public Operation(String id, OperationTipology tipology, LatLng coordinate, OperationCenter operationCenter) {
+		this.id = id;
+		this.tipology = tipology;
+		this.coordinate = coordinate;
+		this.operationCenter = operationCenter;
 	}
 
-	private void setReportingProperty(LocalDate reportingDate) {
-		this.reportingProperty = reportingDate.toString();
-	}
-	
-	public String getReportingProperty() {
-		return reportingProperty;
-	}
-
-	public String getID() {
+	public String getId() {
 		return id;
 	}
 
-	public void setID(String operationID) {
-		this.id = operationID;
+	public void setId(String id) {
+		this.id = id;
 	}
 
-	public LocalDate getReportingDate() {
-		return reportingDate;
+	public OperationTipology getTipology() {
+		return tipology;
 	}
 
-	public void setReportingDate(LocalDate reportingDate) {
-		this.reportingDate = reportingDate;
-	}
-
-	public String getUrgency() {
-		return urgency;
-	}
-
-	public void setUrgency(String urgengy) {
-		this.urgency = urgengy;
-	}
-
-	public String getType() {
-		return operationType;
-	}
-
-	public void setType(String operationType) {
-		this.operationType = operationType;
+	public void setTipology(OperationTipology tipology) {
+		this.tipology = tipology;
 	}
 
 	public String getPriority() {
@@ -68,28 +48,44 @@ public class Operation {
 		this.priority = priority;
 	}
 
-	public String getCity() {
-		return city;
+	public LocalDate getDataSegnalazione() {
+		return dataSegnalazione;
 	}
 
-	public void setCity(String city) {
-		this.city = city;
+	public void setDataSegnalazione(LocalDate dataSegnalazione) {
+		this.dataSegnalazione = dataSegnalazione;
 	}
 
-	public String getStreet() {
-		return street;
+	public LocalDate getDataObiettivo() {
+		return dataObiettivo;
 	}
 
-	public void setStreet(String street) {
-		this.street = street;
+	public void setDataObiettivo(LocalDate dataObiettivo) {
+		this.dataObiettivo = dataObiettivo;
 	}
 
-	public Worker getOperator() {
-		return operator;
+	public String getComune() {
+		return comune;
 	}
 
-	public void setOperator(Worker operator) {
-		this.operator = operator;
+	public void setComune(String comune) {
+		this.comune = comune;
+	}
+
+	public String getIndirizzo() {
+		return indirizzo;
+	}
+
+	public void setIndirizzo(String indirizzo) {
+		this.indirizzo = indirizzo;
+	}
+
+	public LatLng getCoordinate() {
+		return coordinate;
+	}
+
+	public void setCoordinate(LatLng coordinate) {
+		this.coordinate = coordinate;
 	}
 
 	public OperationCenter getOperationCenter() {
@@ -100,25 +96,12 @@ public class Operation {
 		this.operationCenter = operationCenter;
 	}
 
-	public LatLng getCordinates() {
-		return cordinates;
+	public LocalDate getDataChiusura() {
+		return dataChiusura;
 	}
 
-	public void setCordinates(LatLng cordinates) {
-		this.cordinates = cordinates;
-	}
-
-	public LocalDate getGoalDate() {
-		return goalDate;
-	}
-
-	public void setGoalDate(LocalDate goalDate) {
-		this.goalDate = goalDate;
-	}
-
-	@Override
-	public String toString() {
-		return String.join(" ", String.valueOf(id), reportingDate.toString(), urgency);
+	public void setDataChiusura(LocalDate dataChiusura) {
+		this.dataChiusura = dataChiusura;
 	}
 
 	@Override

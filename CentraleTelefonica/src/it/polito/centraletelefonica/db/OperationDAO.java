@@ -1,82 +1,57 @@
 package it.polito.centraletelefonica.db;
 
-import it.polito.centraletelefonica.model.Operation;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class OperationDAO extends DAO {
 
-	public OperationDAO(Database database) {
-		super(database);
+	public int getOpenedOperationCount(LocalDate from, LocalDate to) {
+
+		int result = 0;
+
+		try {
+			PreparedStatement preparedStatement = persistentConnection.prepareStatement(Queries.OPEND_FORM_TO);
+			preparedStatement.setDate(1, Date.valueOf(from));
+			preparedStatement.setDate(2, Date.valueOf(to));
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				result = resultSet.getInt("opened");
+			}
+
+		}
+
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return result;
 	}
 
-	public int insert(Operation operation) {
-		Object[] statementParameters = new Object[3];
-		statementParameters[0] = operation.getID();
-		statementParameters[1] = operation.getReportingDate();
-		statementParameters[2] = operation.getGoalDate();
-		statementParameters[3] = operation.getUrgency();
-		return executeUpdate(MySQLQueries.INSERT_NEW_OPERATION, statementParameters, getDatabase().getConnection());
-	}
+	public int getClosedOperationCount(LocalDate from, LocalDate to) {
 
-	public int updateType(Operation operation) {
-		Object[] statementParameters = new Object[2];
-		statementParameters[0] = operation.getType();
-		statementParameters[1] = operation.getID();
-		return executeUpdate(MySQLQueries.UPDATE_OPERATION_TYPE, statementParameters, getDatabase().getConnection());
-	}
+		int result = 0;
 
-	public int updatePriority(Operation operation) {
-		Object[] statementParameters = new Object[2];
-		statementParameters[0] = operation.getPriority();
-		statementParameters[1] = operation.getID();
-		return executeUpdate(MySQLQueries.UPDATE_OPERATION_PRIORITY, statementParameters,
-				getDatabase().getConnection());
-	}
+		try {
+			PreparedStatement preparedStatement = persistentConnection.prepareStatement(Queries.CLOSED_FROM_TO);
+			preparedStatement.setDate(1, Date.valueOf(from));
+			preparedStatement.setDate(2, Date.valueOf(to));
+			ResultSet resultSet = preparedStatement.executeQuery();
 
-	public int updateUrgency(Operation operation) {
-		Object[] statementParameters = new Object[2];
-		statementParameters[0] = operation.getUrgency();
-		statementParameters[1] = operation.getID();
-		return executeUpdate(MySQLQueries.UPDATE_OPERATION_URGENCY, statementParameters, getDatabase().getConnection());
-	}
+			while (resultSet.next()) {
+				result = resultSet.getInt("chiusure");
+			}
 
-	public int updateCity(Operation operation) {
-		Object[] statementParameters = new Object[2];
-		statementParameters[0] = operation.getCity();
-		statementParameters[1] = operation.getID();
-		return executeUpdate(MySQLQueries.UPDATE_OPERATION_CITY, statementParameters, getDatabase().getConnection());
-	}
+		}
 
-	public int updateCordinates(Operation operation) {
-		Object[] statementParameters = new Object[4];
-		statementParameters[0] = operation.getStreet();
-		statementParameters[1] = operation.getCordinates().lat;
-		statementParameters[2] = operation.getCordinates().lng;
-		statementParameters[3] = operation.getID();
-		return executeUpdate(MySQLQueries.UPDATE_OPERATION_CENTER_CORDINATES, statementParameters,
-				getDatabase().getConnection());
-	}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
 
-	public int updateOperationCenter(Operation operation) {
-		Object[] statementParameters = new Object[3];
-		statementParameters[0] = operation.getOperationCenter().getId();
-		statementParameters[1] = operation.getOperationCenter().getName();
-		statementParameters[2] = operation.getID();
-		return executeUpdate(MySQLQueries.UPDATE_OPERATION_OPERATION_CENTER, statementParameters,
-				getDatabase().getConnection());
-	}
-
-	public int updateOperationWorker(Operation operation) {
-		Object[] statementParameters = new Object[2];
-		statementParameters[0] = operation.getOperator().getId();
-		statementParameters[1] = operation.getOperator().getFullName();
-		statementParameters[2] = operation.getID();
-		return executeUpdate(MySQLQueries.UPDATE_OPERATION_WORKER, statementParameters, getDatabase().getConnection());
-	}
-
-	public int delete(int operationID) {
-		Object[] statementParameters = new Object[1];
-		statementParameters[0] = operationID;
-		return executeUpdate(MySQLQueries.DELETE_OPERATION, statementParameters, getDatabase().getConnection());
+		return result;
 	}
 
 }
