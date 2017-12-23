@@ -67,7 +67,6 @@ abstract class Controller {
 				NumberAxis xAxis = new NumberAxis();
 				NumberAxis yAxis = new NumberAxis();
 				LineChart<Number, Number> line1 = new LineChart<>(xAxis, yAxis);
-				LineChart<Number, Number> line2 = new LineChart<>(xAxis, yAxis);
 				XYChart.Series<Number, Number> clonedSeries = new XYChart.Series<>();
 				line1 = (LineChart<Number, Number>) node;
 				List<Series<Number, Number>> data = new LinkedList<>(line1.getData());
@@ -80,10 +79,8 @@ abstract class Controller {
 				}
 
 				String title = line1.getTitle();
-				line2.setTitle(title);
 				clonedSeries.setName(line1.getData().get(0).getName());
-				line2.getData().add(clonedSeries);
-				root.setCenter(line2);
+				root.setCenter(line1);
 
 			}
 

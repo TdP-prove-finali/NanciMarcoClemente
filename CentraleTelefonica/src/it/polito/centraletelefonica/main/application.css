@@ -39,8 +39,4 @@
 }
 
 
-#operationTable .table-column, #tableWorker .table-column {
-  -fx-alignment: CENTER;
-}
-
 

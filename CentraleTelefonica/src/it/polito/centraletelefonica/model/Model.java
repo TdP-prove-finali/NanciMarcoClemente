@@ -1,42 +1,64 @@
 package it.polito.centraletelefonica.model;
 
 import java.time.LocalDate;
-
 import it.polito.centraletelefonica.db.OperationDAO;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.chart.PieChart.Data;
 
 public class Model {
 
-	public int getClosedOperation(LocalDate from, LocalDate to) {
+	public void getAreaPercentage(LocalDate from, LocalDate to, ObservableList<Data> dati) {
 		OperationDAO operationDAO = new OperationDAO();
-		return operationDAO.getClosedOperationCount(from, to);
+		operationDAO.getAreaPercentage(from, to, dati);
 	}
 
-	public int getOpenedOperation(LocalDate from, LocalDate to) {
-		OperationDAO operationDAO = new OperationDAO();
-		return operationDAO.getOpenedOperationCount(from, to);
+	public void getTypePercentage(LocalDate from, LocalDate to, ObservableList<Data> dati) {
+		OperationDAO dao = new OperationDAO();
+		dao.setTypePercentage(from, to, dati);
 	}
 
-	public String getClosedBefore(LocalDate from, LocalDate to, String periodoPrecedente, int chiusurePeriodo,
-			boolean closing) {
-
-		from = periodoPrecedente.compareTo("Settimana") == 0 ? from.minusWeeks(1) : from;
-		from = periodoPrecedente.compareTo("Mese") == 0 ? from.minusMonths(1) : from;
-		from = periodoPrecedente.compareTo("Trimestre") == 0 ? from.minusMonths(3) : from;
-		from = periodoPrecedente.compareTo("Quadrimestre") == 0 ? from.minusMonths(4) : from;
-		from = periodoPrecedente.compareTo("Semestre") == 0 ? from.minusMonths(6) : from;
-		from = periodoPrecedente.compareTo("Anno") == 0 ? from.minusYears(1) : from;
-		to = periodoPrecedente.compareTo("Settimana") == 0 ? from.minusWeeks(1) : to;
-		to = periodoPrecedente.compareTo("Mese") == 0 ? from.minusMonths(1) : to;
-		to = periodoPrecedente.compareTo("Trimestre") == 0 ? from.minusMonths(3) : to;
-		to = periodoPrecedente.compareTo("Quadrimestre") == 0 ? from.minusMonths(4) : to;
-		to = periodoPrecedente.compareTo("Semestre") == 0 ? from.minusMonths(6) : to;
-		to = periodoPrecedente.compareTo("Anno") == 0 ? from.minusYears(1) : to;
+	public ObservableList<ChiusureRow> getChiusure(String periodoSelezionato) {
+		
+		ObservableList<ChiusureRow> result = FXCollections.observableArrayList();
 		OperationDAO operationDAO = new OperationDAO();
-		int chiusurePrecedenti = closing ? operationDAO.getClosedOperationCount(from, to)
-				: operationDAO.getOpenedOperationCount(from, to);
-		double percentuale = (double) (chiusurePeriodo - chiusurePrecedenti) / chiusurePrecedenti;
-		percentuale = Double.isNaN(percentuale) ? 0 : percentuale;
-		return String.valueOf(percentuale).concat("%");
+
+		if (periodoSelezionato.compareToIgnoreCase("Mese") == 0) {
+			result.addAll(operationDAO.getChiuseMese());
+			double mediaSuMese = operationDAO.getMediaChiuseMese();
+			for (ChiusureRow chiusureRow : result) {
+				chiusureRow.setMediaMese(Math.ceil(mediaSuMese));
+				double diff = Math.ceil((chiusureRow.getOpConcluse() - mediaSuMese) / 100);
+				chiusureRow.setDiffPunti(diff);
+			}
+		}
+		
+		return result;
+	}
+
+	public ObservableList<NuoveRow> getNuove(String periodoSelezionato) {
+
+		ObservableList<NuoveRow> result = FXCollections.observableArrayList();
+		OperationDAO operationDAO = new OperationDAO();
+
+		if (periodoSelezionato.compareToIgnoreCase("Mese") == 0) {
+			result.addAll(operationDAO.getNuoveMese());
+			double mediaSuMese = operationDAO.mediaSuMese();
+			for (NuoveRow nuoveRow : result) {
+				nuoveRow.setMediaMese(Math.ceil(mediaSuMese));
+				double diff = Math.ceil((nuoveRow.getNuoveSegnalazioni() - mediaSuMese) / 100);
+				nuoveRow.setDiffPunti(diff);
+			}
+			return result;
+		}
+
+		if (periodoSelezionato.compareToIgnoreCase("Trimestre") == 0)
+			return operationDAO.getNuoveTrimestre();
+
+		if (periodoSelezionato.compareToIgnoreCase("Quadimestre") == 0)
+			return operationDAO.getNuoveQuadrimestre();
+
+		return operationDAO.getNuoveSemestre();
 	}
 
 }

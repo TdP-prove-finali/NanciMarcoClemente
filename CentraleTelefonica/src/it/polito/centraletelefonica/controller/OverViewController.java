@@ -4,19 +4,23 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+import it.polito.centraletelefonica.model.ChiusureRow;
 import it.polito.centraletelefonica.model.Model;
+import it.polito.centraletelefonica.model.NuoveRow;
+import it.polito.centraletelefonica.model.TabRow;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.PieChart.Data;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
 public class OverViewController extends Controller {
@@ -61,7 +65,7 @@ public class OverViewController extends Controller {
 	private Label lblFourthPercentage;
 
 	@FXML
-	private LineChart<Number, Number> chart1;
+	private LineChart<LocalDate, Number> chart1;
 
 	@FXML
 	private PieChart chartType;
@@ -78,31 +82,76 @@ public class OverViewController extends Controller {
 	@FXML
 	private ComboBox<String> boxPeriodo;
 
+	@FXML
+	private TableView<ChiusureRow> tabChiusure;
+
+	@FXML
+	private TableColumn<TabRow, String> colPeriodoChiusure;
+
+	@FXML
+	private TableColumn<TabRow, String> colPeriodo;
+
+	@FXML
+	private TableColumn<ChiusureRow, Integer> colOp;
+
+	@FXML
+	private TableColumn<ChiusureRow, Integer> colOpConcluse;
+
+	@FXML
+	private TableColumn<TabRow, Double> colMediaPeriodo;
+
+	@FXML
+	private TableColumn<TabRow, Double> colMediaConcluse;
+
+	@FXML
+	private TableColumn<TabRow, Double> colDiffPunti;
+
+	@FXML
+	private TableColumn<TabRow, Double> colDiffPuntiConcluse;
+
+	@FXML
+	private TableView<NuoveRow> tabNuove;
+
+	@FXML
+	private TableColumn<NuoveRow, Integer> colNuove;
+
+	@FXML
+	private TableView<?> tabCarico;
+
+	@FXML
+	private Button btnStatistiche;
+
 	private Model model;
 
 	@FXML
-	void setAll(ActionEvent event) {
+	void calcolaStatistiche(ActionEvent event) {
 
 		LocalDate from = dateFrom.getValue();
 		LocalDate to = dateTo.getValue();
+		String periodoSelezionato = boxPeriodo.getValue();
 
+		// Effettuo tra i giorni selezionati(grafici)
 		if (from != null && to != null) {
-			if (to.compareTo(LocalDate.now()) <= 0) {
-				String periodoPrecedente = boxPeriodo.getValue();
-				if (periodoPrecedente.compareTo("Seleziona periodo") != 0) {
-					int chiusurePeriodo = model.getClosedOperation(from, to);
-					int nuovePeriodo = model.getOpenedOperation(from, to);
-					lblAmountClosed.setText(String.valueOf(chiusurePeriodo));
-					lblAmountOpen.setText(String.valueOf(nuovePeriodo));
-					lblFirstPercentage
-							.setText(model.getClosedBefore(from, to, periodoPrecedente, chiusurePeriodo, true));
-					lblSecondPercentage
-							.setText(model.getClosedBefore(from, to, periodoPrecedente, chiusurePeriodo, false));
+			if (from.compareTo(to) <= 0) {
+				if (from.compareTo(LocalDate.now()) <= 0 && to.compareTo(LocalDate.now()) <= 0) {
+					model.getAreaPercentage(from, to, chartArea.getData());
+					model.getTypePercentage(from, to, chartType.getData());
 				} else
-					showAlert("Devi selezionare un periodo di confronto per poter effettuare un analisi.");
+					showAlert("niente previsioni per il futuro!");
+
 			} else
-				showAlert("Analisi impossibile per periodi futuri");
+				showAlert("la data di partenza deve essere precedente alla data d'arrivo");
+
 		}
+
+		// Effettuo analisi sui periodi(tabelle)
+		else if (periodoSelezionato.compareTo("Seleziona periodo") != 0) {
+			tabChiusure.setItems(model.getChiusure(periodoSelezionato));
+			tabNuove.setItems(model.getNuove(periodoSelezionato));
+		}
+
+		else
+			showAlert("devi selezionare un periodo");
 
 	}
 
@@ -147,52 +196,55 @@ public class OverViewController extends Controller {
 		assert lblSecondPercentage != null : "fx:id=\"lblSecondPercentage\" was not injected: check your FXML file 'OverView.fxml'.";
 		assert lblThirdPercentage != null : "fx:id=\"lblThirdPercentage\" was not injected: check your FXML file 'OverView.fxml'.";
 		assert lblFourthPercentage != null : "fx:id=\"lblFourthPercentage\" was not injected: check your FXML file 'OverView.fxml'.";
-		assert chart1 != null : "fx:id=\"chart1\" was not injected: check your FXML file 'OverView.fxml'.";
 		assert chartType != null : "fx:id=\"chartType\" was not injected: check your FXML file 'OverView.fxml'.";
 		assert chartArea != null : "fx:id=\"chartArea\" was not injected: check your FXML file 'OverView.fxml'.";
 		assert btnPaths != null : "fx:id=\"btnPaths\" was not injected: check your FXML file 'OverView.fxml'.";
 		assert lblAmountOpen != null : "fx:id=\"lblAmountOpen\" was not injected: check your FXML file 'OverView.fxml'.";
 		assert lblAmountClosed != null : "fx:id=\"lblAmountClosed\" was not injected: check your FXML file 'OverView.fxml'.";
 		assert boxPeriodo != null : "fx:id=\"boxPeriodo\" was not injected: check your FXML file 'OverView.fxml'.";
+		assert btnStatistiche != null : "fx:id=\"btnStatistiche\" was not injected: check your FXML file 'OverView.fxml'.";
+		assert tabChiusure != null : "fx:id=\"tabChiusure\" was not injected: check your FXML file 'OverView.fxml'.";
+		assert tabNuove != null : "fx:id=\"tabNuove\" was not injected: check your FXML file 'OverView.fxml'.";
+		assert tabCarico != null : "fx:id=\"tabCarico\" was not injected: check your FXML file 'OverView.fxml'.";
+		assert colPeriodo != null : "fx:id=\"colPeriodo\" was not injected: check your FXML file 'OverView.fxml'.";
+		assert colOpConcluse != null : "fx:id=\"colOpConcluse\" was not injected: check your FXML file 'OverView.fxml'.";
+		assert colMediaPeriodo != null : "fx:id=\"colMediaPeriodo\" was not injected: check your FXML file 'OverView.fxml'.";
+		assert colDiffPunti != null : "fx:id=\"colDiffPunti\" was not injected: check your FXML file 'OverView.fxml'.";
+		assert colNuove != null : "fx:id=\"colNuove\" was not injected: check your FXML file 'OverView.fxml'.";
+		assert colPeriodoChiusure != null : "fx:id=\"colPeriodoChiusure\" was not injected: check your FXML file 'OverView.fxml'.";
+		assert colMediaConcluse != null : "fx:id=\"colMediaConcluse\" was not injected: check your FXML file 'OverView.fxml'.";
+		assert colDiffPuntiConcluse != null : "fx:id=\"colDiffPuntiConcluse\" was not injected: check your FXML file 'OverView.fxml'.";
+
+		colPeriodo.setCellValueFactory(new PropertyValueFactory<TabRow, String>("periodo"));
+		colPeriodoChiusure.setCellValueFactory(new PropertyValueFactory<TabRow, String>("periodo"));
+		colOpConcluse.setCellValueFactory(new PropertyValueFactory<ChiusureRow, Integer>("opConcluse"));
+		colMediaPeriodo.setCellValueFactory(new PropertyValueFactory<TabRow, Double>("mediaPeriodo"));
+		colMediaConcluse.setCellValueFactory(new PropertyValueFactory<TabRow, Double>("mediaPeriodo"));
+		colDiffPunti.setCellValueFactory(new PropertyValueFactory<TabRow, Double>("diffPunti"));
+		colDiffPuntiConcluse.setCellValueFactory(new PropertyValueFactory<TabRow, Double>("diffPunti"));
+		colNuove.setCellValueFactory(new PropertyValueFactory<NuoveRow, Integer>("nuoveSegnalazioni"));
 
 		// Box section
-		boxPeriodo.getItems().addAll("Seleziona periodo", "Settimana", "Mese", "Trimestre", "Quadrimestre", "Semestre",
-				"Anno");
+		boxPeriodo.getItems().addAll("Seleziona periodo", "Mese", "Trimestre", "Quadrimestre", "Semestre");
 		boxPeriodo.setValue("Seleziona periodo");
-
-		// Line chart
-
-		NumberAxis xAxis = new NumberAxis();
-		NumberAxis yAxis = new NumberAxis();
-		XYChart.Series<Number, Number> series = new XYChart.Series<>();
-		series.getData().add(new XYChart.Data<Number, Number>(1, 23));
-		series.getData().add(new XYChart.Data<Number, Number>(2, 14));
-		series.getData().add(new XYChart.Data<Number, Number>(3, 15));
-		series.getData().add(new XYChart.Data<Number, Number>(4, 24));
-		series.getData().add(new XYChart.Data<Number, Number>(5, 34));
-		series.getData().add(new XYChart.Data<Number, Number>(6, 36));
-		series.getData().add(new XYChart.Data<Number, Number>(7, 22));
-		series.getData().add(new XYChart.Data<Number, Number>(8, 45));
-		series.getData().add(new XYChart.Data<Number, Number>(9, 43));
-		series.getData().add(new XYChart.Data<Number, Number>(10, 17));
-		series.getData().add(new XYChart.Data<Number, Number>(11, 29));
-		series.getData().add(new XYChart.Data<Number, Number>(12, 25));
-		series.setName("Open");
-		chart1.getData().add(series);
 
 		// add data to chartType
 
-		chartType.getData().add(new Data("Prop 1", 25));
-		chartType.getData().add(new Data("Prop 2", 25));
-		chartType.getData().add(new Data("Prop 3", 25));
-		chartType.getData().add(new Data("Prop 4", 25));
+		chartType.getData().add(new Data("Armadi e Permutatori", 12.5));
+		chartType.getData().add(new Data("Danneggiamento", 12.5));
+		chartType.getData().add(new Data("HD - Caduta connessione", 12.5));
+		chartType.getData().add(new Data("HD - Generico Fonia", 12.5));
+		chartType.getData().add(new Data("Manutenzione", 12.5));
+		chartType.getData().add(new Data("RA - Linea Interrotta", 12.5));
+		chartType.getData().add(new Data("RA - Router", 12.5));
+		chartType.getData().add(new Data("RA -Tensioni estranee in linea", 12.5));
 
 		// Add data to chartArea
 
-		chartArea.getData().add(new Data("Prop 1", 25));
-		chartArea.getData().add(new Data("Prop 1", 25));
-		chartArea.getData().add(new Data("Prop 1", 25));
-		chartArea.getData().add(new Data("Prop 1", 25));
+		chartArea.getData().add(new Data("TO-CENTROURB", 25));
+		chartArea.getData().add(new Data("TO-CROCETTA", 25));
+		chartArea.getData().add(new Data("TO-LINGOTTO", 25));
+		chartArea.getData().add(new Data("TO-LUCENTO", 25));
 
 	}
 
