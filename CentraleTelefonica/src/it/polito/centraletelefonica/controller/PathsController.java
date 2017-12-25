@@ -65,8 +65,9 @@ public class PathsController extends Controller {
 		assert dateFrom != null : "fx:id=\"dateFrom\" was not injected: check your FXML file 'PathsView.fxml'.";
 		assert dateTo != null : "fx:id=\"dateTo\" was not injected: check your FXML file 'PathsView.fxml'.";
 		assert webView != null : "fx:id=\"webView\" was not injected: check your FXML file 'PathsView.fxml'.";
+		System.setProperty("java.net.useSystemProxies", "true");
 		WebEngine engine = webView.getEngine();
-		engine.load("map.html");
+		engine.load(getClass().getResource("map.html").toString());
 		
 	}
 }
