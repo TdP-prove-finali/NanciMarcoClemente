@@ -136,7 +136,7 @@ class Queries {
 
 	public static final String CHIUSURE_PER_MESE = "select Mese, count(Mese) n_chiusure\r\n" + "from operazioni\r\n"
 			+ "where DataChiusura <= DataObiettivo\r\n" + "group by Mese\r\n" + "order by Mese;";
-	
+
 	/**
 	 * <p>
 	 * Seleziona la media mensile di chiusure
@@ -152,5 +152,18 @@ class Queries {
 	public static final String MEDIA_CHIUSE_MESE = "select sum(sub1.op_mese)/12 avg_mensile from(\r\n"
 			+ "select count(Mese) op_mese from operazioni\r\n" + "where DataChiusura <= DataObiettivo\r\n"
 			+ "group by Mese \r\n" + "order by Mese) sub1;";
+
+	/**
+	 * <p>Seleziona tutto dalla tabella centrali</p>
+	 * <p>Risultati:</p>
+	 * <ol><li>CentraleID</li>
+	 * <li>Nome</li>
+	 * <li>Indirizzo</li>
+	 * <li>Latitude</li>
+	 * <li>Longitude</li>
+	 * <li>NumeroOperatori</li></ol>
+	 */
+
+	public static final String GET_ALL_CENTERS = "select * from centrali";
 
 }

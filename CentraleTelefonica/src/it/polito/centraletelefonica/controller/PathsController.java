@@ -7,6 +7,8 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 
 public class PathsController extends Controller {
 
@@ -38,6 +40,9 @@ public class PathsController extends Controller {
 	private DatePicker dateTo;
 
 	@FXML
+	private WebView webView;
+
+	@FXML
 	void openRelativeAnalitycs(MouseEvent event) {
 
 		if (event.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
@@ -59,6 +64,9 @@ public class PathsController extends Controller {
 		assert btnPaths != null : "fx:id=\"btnPaths\" was not injected: check your FXML file 'PathsView.fxml'.";
 		assert dateFrom != null : "fx:id=\"dateFrom\" was not injected: check your FXML file 'PathsView.fxml'.";
 		assert dateTo != null : "fx:id=\"dateTo\" was not injected: check your FXML file 'PathsView.fxml'.";
-
+		assert webView != null : "fx:id=\"webView\" was not injected: check your FXML file 'PathsView.fxml'.";
+		WebEngine engine = webView.getEngine();
+		engine.load("map.html");
+		
 	}
 }

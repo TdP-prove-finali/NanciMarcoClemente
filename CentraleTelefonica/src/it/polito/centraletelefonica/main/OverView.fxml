@@ -34,11 +34,6 @@
 						<Font size="14.0" />
 					</font>
 				</Button>
-				<Button fx:id="btnWorkers" contentDisplay="CENTER" layoutX="10.0" layoutY="60.0" mnemonicParsing="false" onMouseClicked="#openRelativeAnalitycs" prefHeight="51.0" prefWidth="217.0" text="Workers" textFill="WHITE" VBox.vgrow="ALWAYS">
-					<font>
-						<Font size="14.0" />
-					</font>
-				</Button>
             <Button fx:id="btnPaths" contentDisplay="CENTER" layoutX="10.0" layoutY="163.0" mnemonicParsing="false" onMouseClicked="#openRelativeAnalitycs" prefHeight="51.0" prefWidth="217.0" text="Paths" textFill="WHITE">
                <font>
                   <Font size="14.0" />
@@ -64,13 +59,13 @@
 							<children>
 								<DatePicker fx:id="dateFrom" editable="false" prefHeight="30.0" prefWidth="200.0" promptText="From..." HBox.hgrow="ALWAYS" />
 								<DatePicker fx:id="dateTo" editable="false" prefHeight="30.0" prefWidth="200.0" promptText="To..." HBox.hgrow="ALWAYS" />
-                        <ComboBox fx:id="boxPeriodo" prefWidth="180.0" />
+                        <ComboBox fx:id="boxPeriodo" prefWidth="180.0" styleClass="btnMenu" />
 							</children>
 							<HBox.margin>
 								<Insets right="20.0" />
 							</HBox.margin>
 						</HBox>
-                  <Button fx:id="btnStatistiche" mnemonicParsing="false" onAction="#calcolaStatistiche" text="Calcola Statistiche">
+                  <Button fx:id="btnStatistiche" mnemonicParsing="false" onAction="#calcolaStatistiche" styleClass="btnMenu" text="Calcola Statistiche">
                      <HBox.margin>
                         <Insets right="20.0" />
                      </HBox.margin>
@@ -79,6 +74,9 @@
                <VBox.margin>
                   <Insets />
                </VBox.margin>
+               <padding>
+                  <Insets bottom="5.0" top="5.0" />
+               </padding>
 				</HBox>
 				<HBox alignment="CENTER_LEFT" prefHeight="260.0" prefWidth="640.0" spacing="20.0" VBox.vgrow="ALWAYS">
 					<children>
@@ -120,22 +118,6 @@
                               <TableColumn fx:id="colNuove" prefWidth="75.0" text="N_SEGNALAZIONI " />
                               <TableColumn fx:id="colMediaPeriodo" prefWidth="75.0" text="MEDIA_SU_PERIODO " />
                               <TableColumn fx:id="colDiffPunti" prefWidth="75.0" text="DIFFERENZA_IN_PUNTI" />
-                           </columns>
-                           <columnResizePolicy>
-                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                           </columnResizePolicy>
-                        </TableView>
-                        <Label text="RESOCONTO CARICO LAVORATIVO">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <TableView fx:id="tabCarico" prefHeight="200.0" prefWidth="200.0">
-                           <columns>
-                              <TableColumn prefWidth="75.0" text="PERIODO_SELEZIONATO " />
-                              <TableColumn prefWidth="75.0" text="ORE_LAVORO " />
-                              <TableColumn prefWidth="75.0" text="MEDIA_SU_PERIODO " />
-                              <TableColumn prefWidth="75.0" text="DIFFERENZA_IN_PUNTI" />
                            </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

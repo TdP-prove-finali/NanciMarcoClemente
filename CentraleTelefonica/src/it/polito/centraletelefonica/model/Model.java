@@ -1,6 +1,8 @@
 package it.polito.centraletelefonica.model;
 
 import java.time.LocalDate;
+
+import it.polito.centraletelefonica.db.OperationCenterDAO;
 import it.polito.centraletelefonica.db.OperationDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,7 +21,7 @@ public class Model {
 	}
 
 	public ObservableList<ChiusureRow> getChiusure(String periodoSelezionato) {
-		
+
 		ObservableList<ChiusureRow> result = FXCollections.observableArrayList();
 		OperationDAO operationDAO = new OperationDAO();
 
@@ -32,7 +34,7 @@ public class Model {
 				chiusureRow.setDiffPunti(diff);
 			}
 		}
-		
+
 		return result;
 	}
 
@@ -59,6 +61,11 @@ public class Model {
 			return operationDAO.getNuoveQuadrimestre();
 
 		return operationDAO.getNuoveSemestre();
+	}
+
+	public static ObservableList<OperationCenter> getAllCenters() {
+		OperationCenterDAO dao = new OperationCenterDAO();
+		return FXCollections.observableArrayList(dao.getAllOperationCenter());
 	}
 
 }

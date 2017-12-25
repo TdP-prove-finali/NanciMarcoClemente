@@ -2,12 +2,17 @@ package it.polito.centraletelefonica.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import it.polito.centraletelefonica.model.Model;
+import it.polito.centraletelefonica.model.OperationCenter;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
@@ -41,16 +46,24 @@ public class OperationsCenterController extends Controller {
 	private DatePicker dateTo;
 
 	@FXML
-	private TableView<?> table;
+	private TableView<OperationCenter> table;
 
 	@FXML
-	private TableColumn<?, ?> colId;
+	private TableColumn<OperationCenter, String> colId;
 
 	@FXML
-	private TableColumn<?, ?> colNome;
+	private TableColumn<OperationCenter, String> colNome;
 
 	@FXML
-	private TableColumn<?, ?> colIndirizzo;
+	private TableColumn<OperationCenter, String> colIndirizzo;
+
+	@FXML
+	private TableColumn<OperationCenter, Integer> colOperatori;
+
+	@FXML
+	void addCenter(ActionEvent event) {
+
+	}
 
 	@FXML
 	void manageRow(KeyEvent event) {
@@ -83,6 +96,14 @@ public class OperationsCenterController extends Controller {
 		assert colId != null : "fx:id=\"colId\" was not injected: check your FXML file 'OperationCenterView.fxml'.";
 		assert colNome != null : "fx:id=\"colNome\" was not injected: check your FXML file 'OperationCenterView.fxml'.";
 		assert colIndirizzo != null : "fx:id=\"colIndirizzo\" was not injected: check your FXML file 'OperationCenterView.fxml'.";
+		assert colOperatori != null : "fx:id=\"colOperatori\" was not injected: check your FXML file 'OperationCenterView.fxml'.";
+
+		colId.setCellValueFactory(new PropertyValueFactory<OperationCenter, String>("id"));
+		colNome.setCellValueFactory(new PropertyValueFactory<OperationCenter, String>("name"));
+		colIndirizzo.setCellValueFactory(new PropertyValueFactory<OperationCenter, String>("street"));
+		colOperatori.setCellValueFactory(new PropertyValueFactory<OperationCenter, Integer>("numOperatori"));
+
+		table.setItems(Model.getAllCenters());
 
 	}
 }

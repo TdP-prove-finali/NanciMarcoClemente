@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polito.centraletelefonica.controller.OperationsController">
+<BorderPane xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polito.centraletelefonica.controller.OperationsController">
 	<left>
 		<VBox prefHeight="200.0" prefWidth="210.0" styleClass="menuLeft" BorderPane.alignment="CENTER">
 			<children>
@@ -26,11 +26,6 @@
 					</font>
 				</Button>
 				<Button fx:id="btnOperationsCenter" contentDisplay="CENTER" layoutX="10.0" layoutY="35.0" mnemonicParsing="false" onMouseClicked="#openRelativeAnalitycs" prefHeight="51.0" prefWidth="214.0" text="Operation Centers" textFill="WHITE">
-					<font>
-						<Font size="14.0" />
-					</font>
-				</Button>
-				<Button fx:id="btnWorkers" contentDisplay="CENTER" layoutX="10.0" layoutY="60.0" mnemonicParsing="false" onMouseClicked="#openRelativeAnalitycs" prefHeight="51.0" prefWidth="217.0" text="Workers" textFill="WHITE">
 					<font>
 						<Font size="14.0" />
 					</font>
@@ -58,6 +53,11 @@
 						</Label>
 						<HBox alignment="CENTER_RIGHT" prefHeight="52.0" prefWidth="528.0" spacing="20.0">
 							<children>
+                        <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#addOperation" prefHeight="45.0" prefWidth="45.0" styleClass="btnMenu" text="+">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Button>
 								<DatePicker fx:id="dateFrom" prefHeight="30.0" prefWidth="200.0" promptText="From..." />
 								<DatePicker fx:id="dateTo" prefHeight="30.0" prefWidth="200.0" promptText="To..." />
 							</children>
@@ -80,8 +80,6 @@
                   <TableColumn prefWidth="120.0" text="STATUS" />
 						<TableColumn prefWidth="120.0" text="CITY" />
 						<TableColumn prefWidth="120.0" text="STREET" />
-						<TableColumn prefWidth="120.0" text="WORKER ID" />
-						<TableColumn prefWidth="120.0" text="WORKER" />
 						<TableColumn prefWidth="120.0" text="CENTER" />
 					</columns>
 				</TableView>
