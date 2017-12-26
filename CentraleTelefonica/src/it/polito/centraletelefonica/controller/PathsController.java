@@ -5,6 +5,8 @@ import java.util.ResourceBundle;
 
 import com.google.maps.model.LatLng;
 
+import it.polito.centraletelefonica.model.Model;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -46,6 +48,19 @@ public class PathsController extends Controller {
 	private WebView webView;
 
 	@FXML
+	private Button btnAddMarker;
+
+	private WebEngine engine;
+
+	@FXML
+	void addMarker(ActionEvent event) {
+		engine.executeScript("addMarker(" + 45.0425553 + ", " + 7.673394899999999 + "" + ")");
+		engine.executeScript("createRoute(" + 45.0702376 + ", " + 7.684295600000041 + ", " + 45.1031432 + ", "
+				+ 7.663839199999984 + ", \"violet\" )");
+
+	}
+
+	@FXML
 	void openRelativeAnalitycs(MouseEvent event) {
 
 		if (event.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
@@ -68,10 +83,13 @@ public class PathsController extends Controller {
 		assert dateFrom != null : "fx:id=\"dateFrom\" was not injected: check your FXML file 'PathsView.fxml'.";
 		assert dateTo != null : "fx:id=\"dateTo\" was not injected: check your FXML file 'PathsView.fxml'.";
 		assert webView != null : "fx:id=\"webView\" was not injected: check your FXML file 'PathsView.fxml'.";
-		System.setProperty("java.net.useSystemProxies", "true");
-		WebEngine engine = webView.getEngine();
-		engine.load(getClass().getResource("map.html").toString());
-//		engine.executeScript(MapJS.addOperationMarker("titolo", new LatLng(45.0702376, 7.6308604686812025)));
-		
+		assert btnAddMarker != null : "fx:id=\"btnAddMarker\" was not injected: check your FXML file 'PathsView.fxml'.";
+
+		engine = webView.getEngine();
+		if (Model.connectionAvaible())
+			engine.load(getClass().getResource("map.html").toString());
+		else
+			engine.load(getClass().getResource("404.html").toString());
+
 	}
 }

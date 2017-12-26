@@ -1,5 +1,11 @@
 package it.polito.centraletelefonica.model;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.NetworkInterface;
+import java.net.URL;
 import java.time.LocalDate;
 
 import it.polito.centraletelefonica.db.OperationCenterDAO;
@@ -9,6 +15,20 @@ import javafx.collections.ObservableList;
 import javafx.scene.chart.PieChart.Data;
 
 public class Model {
+
+	public static boolean connectionAvaible() {
+
+		try {
+			URL url = new URL("http://www.google.com");
+			HttpURLConnection con = (HttpURLConnection) url.openConnection();
+			con.connect();
+			return con.getResponseCode() == 200;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return false;
+	}
 
 	public void getAreaPercentage(LocalDate from, LocalDate to, ObservableList<Data> dati) {
 		OperationDAO operationDAO = new OperationDAO();

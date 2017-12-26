@@ -1,76 +1,29 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    <title>Simple markers</title>
-    <style>
-      /* Always set the map height explicitly to define the size of the div
+<head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<script src="map.js"></script>
+<title>Simple markers</title>
+<style>
+/* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
-      #map {
-        height: 100%;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="map"></div>
-    <script>
-
-      function initMap() {
-        
-        var urb = {lat: 45.0702376, lng: 7.684295600000041};
-        var crocetta = {lat:45.0692365, lng:7.674955599999976};
-        var lingotto = {lat:45.0158213, lng:7.627964499999962};
-        var lucento = {lat:45.1031432, lng:7.663839199999984};
-       
-        var opCentersImg = {
-        url: "https://www.florence-forestnews.com/wp-content/uploads/2017/08/blue_tower.png",
-        scaledSize: new google.maps.Size(30, 30), // scaled size
-        origin: new google.maps.Point(0,0), // origin
-        anchor: new google.maps.Point(0,0) // anchor
-        };
-
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 12,
-          center: urb
-        });
-
-        var marker = new google.maps.Marker({
-          position: urb,
-          map: map,
-          icon: opCentersImg
-        });
-        
-        var marker1 = new google.maps.Marker({
-          position: crocetta,
-          map: map,
-          icon: opCentersImg
-        });
-        
-         var marker2 = new google.maps.Marker({
-          position: lingotto,
-          map: map,
-          icon: opCentersImg
-        });
-        
-         var marker3 = new google.maps.Marker({
-          position: lucento,
-          map: map,
-          icon: opCentersImg
-        });
-        
-        
-        
-      }
-    </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTt64RteMQQxOH5hpCYTcrANObd5QNmr8&callback=initMap">
-    </script>
-  </body>
+#map {
+	height: 100%;
+}
+/* Optional: Makes the sample page fill the window. */
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+</style>
+</head>
+<body>
+	<div id="map"></div>
+	<script async defer
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTt64RteMQQxOH5hpCYTcrANObd5QNmr8&callback=initMap">
+		
+	</script>
+</body>
 </html>
