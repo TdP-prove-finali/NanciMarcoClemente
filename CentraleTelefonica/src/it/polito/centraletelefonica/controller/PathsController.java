@@ -2,6 +2,9 @@ package it.polito.centraletelefonica.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import com.google.maps.model.LatLng;
+
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -68,6 +71,7 @@ public class PathsController extends Controller {
 		System.setProperty("java.net.useSystemProxies", "true");
 		WebEngine engine = webView.getEngine();
 		engine.load(getClass().getResource("map.html").toString());
+//		engine.executeScript(MapJS.addOperationMarker("titolo", new LatLng(45.0702376, 7.6308604686812025)));
 		
 	}
 }

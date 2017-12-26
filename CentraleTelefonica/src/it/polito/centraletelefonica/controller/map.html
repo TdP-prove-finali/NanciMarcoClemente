@@ -23,18 +23,50 @@
     <script>
 
       function initMap() {
-        var myLatLng = {lat: 45.0702376, lng: 7.684295600000041};
+        
+        var urb = {lat: 45.0702376, lng: 7.684295600000041};
+        var crocetta = {lat:45.0692365, lng:7.674955599999976};
+        var lingotto = {lat:45.0158213, lng:7.627964499999962};
+        var lucento = {lat:45.1031432, lng:7.663839199999984};
+       
+        var opCentersImg = {
+        url: "https://www.florence-forestnews.com/wp-content/uploads/2017/08/blue_tower.png",
+        scaledSize: new google.maps.Size(30, 30), // scaled size
+        origin: new google.maps.Point(0,0), // origin
+        anchor: new google.maps.Point(0,0) // anchor
+        };
 
         var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 4,
-          center: myLatLng
+          zoom: 12,
+          center: urb
         });
 
         var marker = new google.maps.Marker({
-          position: myLatLng,
+          position: urb,
           map: map,
-          title: 'TO-CENTROURB'
+          icon: opCentersImg
         });
+        
+        var marker1 = new google.maps.Marker({
+          position: crocetta,
+          map: map,
+          icon: opCentersImg
+        });
+        
+         var marker2 = new google.maps.Marker({
+          position: lingotto,
+          map: map,
+          icon: opCentersImg
+        });
+        
+         var marker3 = new google.maps.Marker({
+          position: lucento,
+          map: map,
+          icon: opCentersImg
+        });
+        
+        
+        
       }
     </script>
     <script async defer
