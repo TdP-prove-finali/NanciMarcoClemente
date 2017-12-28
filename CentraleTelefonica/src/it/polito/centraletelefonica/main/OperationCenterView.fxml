@@ -55,7 +55,7 @@
                         <Insets right="20.0" />
                      </HBox.margin>
                      <children>
-                        <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#addCenter" prefHeight="45.0" prefWidth="45.0" styleClass="btnMenu" text="+">
+                        <Button fx:id="btnAdd" mnemonicParsing="false" onMouseClicked="#openRelativeAnalitycs" prefHeight="45.0" prefWidth="45.0" styleClass="btnMenu" text="+">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -64,7 +64,7 @@
                   </HBox>
                </children>
             </HBox>
-            <TableView id="tableCentrali" fx:id="table" onKeyPressed="#manageRow" VBox.vgrow="ALWAYS">
+            <TableView id="tableCentrali" fx:id="table" VBox.vgrow="ALWAYS">
               <columns>
                 <TableColumn fx:id="colId" minWidth="-1.0" prefWidth="108.0" text="Centrale ID" />
                 <TableColumn fx:id="colNome" minWidth="-1.0" prefWidth="107.0" text="Nome" />

@@ -38,6 +38,9 @@ public class OperationsCenterController extends Controller {
 
 	@FXML
 	private Button btnPaths;
+	
+	@FXML
+    private Button btnAdd;
 
 	@FXML
 	private DatePicker dateFrom;
@@ -60,15 +63,6 @@ public class OperationsCenterController extends Controller {
 	@FXML
 	private TableColumn<OperationCenter, Integer> colOperatori;
 
-	@FXML
-	void addCenter(ActionEvent event) {
-
-	}
-
-	@FXML
-	void manageRow(KeyEvent event) {
-
-	}
 
 	@FXML
 	void openRelativeAnalitycs(MouseEvent event) {
@@ -97,7 +91,9 @@ public class OperationsCenterController extends Controller {
 		assert colNome != null : "fx:id=\"colNome\" was not injected: check your FXML file 'OperationCenterView.fxml'.";
 		assert colIndirizzo != null : "fx:id=\"colIndirizzo\" was not injected: check your FXML file 'OperationCenterView.fxml'.";
 		assert colOperatori != null : "fx:id=\"colOperatori\" was not injected: check your FXML file 'OperationCenterView.fxml'.";
+        assert btnAdd != null : "fx:id=\"btnAdd\" was not injected: check your FXML file 'OperationCenterView.fxml'.";
 
+		
 		colId.setCellValueFactory(new PropertyValueFactory<OperationCenter, String>("id"));
 		colNome.setCellValueFactory(new PropertyValueFactory<OperationCenter, String>("name"));
 		colIndirizzo.setCellValueFactory(new PropertyValueFactory<OperationCenter, String>("street"));

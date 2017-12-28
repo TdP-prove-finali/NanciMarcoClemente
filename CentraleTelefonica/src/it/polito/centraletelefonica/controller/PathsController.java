@@ -55,9 +55,14 @@ public class PathsController extends Controller {
 	@FXML
 	void addMarker(ActionEvent event) {
 		engine.executeScript("addMarker(" + 45.0425553 + ", " + 7.673394899999999 + "" + ")");
-		engine.executeScript("createRoute(" + 45.0702376 + ", " + 7.684295600000041 + ", " + 45.1031432 + ", "
-				+ 7.663839199999984 + ", \"violet\" )");
-
+		engine.executeScript("calculateDistanceTime(" + 45.0702376 + ", " + 7.684295600000041 + ", " + 45.1031432 + ", "
+				+ 7.663839199999984 + ")");
+		long t0 = System.currentTimeMillis();
+		while((t0 + 2000) > System.currentTimeMillis()) {
+			
+		}
+		String res = (String) engine.executeScript("getRes()");
+		System.out.println(res);
 	}
 
 	@FXML

@@ -188,6 +188,7 @@ abstract class Controller {
 			idFx.put("chartType", "PopUpChart.fxml");
 			idFx.put("chartArea", "PopUpChart.fxml");
 			idFx.put("btnPaths", "PathsView.fxml");
+			idFx.put("btnAdd", "AddCenter.fxml");
 
 		}
 
@@ -207,6 +208,7 @@ abstract class Controller {
 			idCss.put("chartType", "application.css");
 			idCss.put("chartArea", "application.css");
 			idCss.put("btnPaths", "application.css");
+			idCss.put("btnAdd", "application.css");
 
 		}
 

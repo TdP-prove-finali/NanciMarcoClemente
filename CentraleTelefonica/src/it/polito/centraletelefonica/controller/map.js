@@ -5,6 +5,9 @@ var lingotto = "";
 var urb = "";
 var lucento = "";
 
+/* Response for travel time */
+var res = "";
+
 function initMap() {
 
 	urb = {
@@ -123,6 +126,51 @@ function addMarker(latitude, longitude) {
 
 }
 
-function returnTest(){
-	return 2;
+function calculateDistanceTime(latStart, lngStart, latEnd, lngEnd) {
+
+	var origin = new google.maps.LatLng(latStart, lngStart);
+	var destination = new google.maps.LatLng(latEnd, lngEnd);
+	var service = new google.maps.DistanceMatrixService();
+
+	function calc(fn) {
+		res += "Entro in calc\n";
+		service.getDistanceMatrix({
+			origins : [ origin ],
+			destinations : [ destination ],
+			travelMode : 'DRIVING',
+			drivingOptions : {
+				departureTime : new Date(Date.now() + 0), // for the time
+				// N
+				// milliseconds from
+				// now.
+				trafficModel : 'optimistic'
+			},
+			avoidHighways : Boolean,
+			avoidTolls : Boolean,
+		}, function(results, status) {
+			res += "Entro nella funzione callback\n";
+			if (status == 'OK') {
+				res += "Status OK\n";
+				fn(results + status);
+			}
+			fn(status);
+		});
+		
+		res += "Eseguito calc()\n";
+	}
+
+	calc(function(resu){
+		res = resu;
+	});
+	
+	var t0 = new Date().getTime();
+	
+	while((t0 + 2000) > new Date().getTime()) {
+		
+	}
+
+}
+
+function getRes(){
+	return res;
 }
