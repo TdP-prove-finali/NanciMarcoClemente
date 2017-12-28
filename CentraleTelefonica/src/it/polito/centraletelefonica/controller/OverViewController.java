@@ -241,15 +241,8 @@ public class OverViewController extends Controller {
 
 		// Add data to chartArea
 
-		chartArea.getData().add(new Data("TO-CENTROURB", 25));
-		chartArea.getData().add(new Data("TO-CROCETTA", 25));
-		chartArea.getData().add(new Data("TO-LINGOTTO", 25));
-		chartArea.getData().add(new Data("TO-LUCENTO", 25));
+		chartArea.getData().addAll(Model.initPieArea());
 
 	}
 
-	public void setModel(Model model) {
-		this.model = model;
-
-	}
 }

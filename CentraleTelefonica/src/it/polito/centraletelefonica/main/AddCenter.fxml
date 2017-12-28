@@ -37,7 +37,7 @@
                   <TextField fx:id="txtOperatori" />
                   <HBox alignment="CENTER_RIGHT">
                      <children>
-                        <Button fx:id="btnCrea" mnemonicParsing="false" onAction="#creaCentrale" text="Crea centrale" />
+                        <Button fx:id="btnCrea" mnemonicParsing="false" onAction="#creaCentrale" styleClass="btnMenu" text="Crea centrale" />
                      </children>
                   </HBox>
                </children>

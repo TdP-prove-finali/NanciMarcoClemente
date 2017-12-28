@@ -154,16 +154,37 @@ class Queries {
 			+ "group by Mese \r\n" + "order by Mese) sub1;";
 
 	/**
-	 * <p>Seleziona tutto dalla tabella centrali</p>
-	 * <p>Risultati:</p>
-	 * <ol><li>CentraleID</li>
+	 * <p>
+	 * Seleziona tutto dalla tabella centrali
+	 * </p>
+	 * <p>
+	 * Risultati:
+	 * </p>
+	 * <ol>
+	 * <li>CentraleID</li>
 	 * <li>Nome</li>
 	 * <li>Indirizzo</li>
 	 * <li>Latitude</li>
 	 * <li>Longitude</li>
-	 * <li>NumeroOperatori</li></ol>
+	 * <li>NumeroOperatori</li>
+	 * </ol>
 	 */
 
 	public static final String GET_ALL_CENTERS = "select * from centrali";
+
+	/**
+	 * SIMPLE INSERT OF A NEW CENTER<br>
+	 * Paramaters:<br>
+	 * <ol>
+	 * <li>id</li>
+	 * <li>nome</li>
+	 * <li>indirizzo</li>
+	 * <li>latitude</li>
+	 * <li>longitude</li>
+	 * <li>numeroOperatori</li>
+	 * </ol>
+	 */
+
+	public static final String INSERT_CENTER = "insert into centrali(CentraleID,Nome,Indirizzo,Latitude,Longitude,NumeroOperatori) values(?,?,?,?,?,?)";
 
 }

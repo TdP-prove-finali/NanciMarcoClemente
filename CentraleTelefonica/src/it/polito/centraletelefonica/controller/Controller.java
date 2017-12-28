@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import it.polito.centraletelefonica.main.App;
+import it.polito.centraletelefonica.model.Model;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -29,6 +30,7 @@ abstract class Controller {
 	private Map<String, String> idCss;
 	// map for scenes (key = nodeId)
 	private Map<String, Scene> scenes;
+	protected Model model;
 
 	@SuppressWarnings("unchecked")
 	boolean showPopUpChart(Node node, String nodeId) {
@@ -125,6 +127,11 @@ abstract class Controller {
 				Scene scene = null;
 				try {
 					root = loader.load();
+					Controller controller = loader.getController();
+					if (controller != null) {
+						controller.setModel(new Model());
+					}
+
 					double previousWidth = App.getStage().getScene().getWidth();
 					double previousHeight = App.getStage().getScene().getHeight();
 					scene = new Scene(root, previousWidth, previousHeight);
@@ -143,6 +150,10 @@ abstract class Controller {
 
 		return getScenes().get(nodeID);
 
+	}
+
+	public void setModel(Model model) {
+		this.model = model;
 	}
 
 	public void showAlert(String messaggio) {
