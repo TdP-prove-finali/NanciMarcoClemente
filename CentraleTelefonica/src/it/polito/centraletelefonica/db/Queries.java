@@ -187,4 +187,15 @@ class Queries {
 
 	public static final String INSERT_CENTER = "insert into centrali(CentraleID,Nome,Indirizzo,Latitude,Longitude,NumeroOperatori) values(?,?,?,?,?,?)";
 
+	/**
+	 * SIMPLE SELECT FROM TIPOLOGIE<br>
+	 * Risultati:<br>
+	 * <ol>
+	 * <li>tipo</li>
+	 * <li>durata_media</li>
+	 * <li>varianza</li>
+	 * <li>operatori_richiesti</li>
+	 * </ol>
+	 */
+	public static final String GET_ALL_TYPE = "select * from tipologie";
 }

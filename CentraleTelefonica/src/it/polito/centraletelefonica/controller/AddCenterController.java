@@ -1,11 +1,15 @@
 package it.polito.centraletelefonica.controller;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
@@ -74,9 +78,18 @@ public class AddCenterController extends Controller {
 			showAlert(responseOperatori);
 			check = false;
 		}
-		
+
 		if (check) {
-			model.addCentrale(id,nome,indirizzo,numOp);
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setHeaderText("Vuoi aggiungere la nuova centrale?");
+			Optional<ButtonType> btn = alert.showAndWait();
+			if (btn.get() == ButtonType.OK) {
+				Alert confAlert = new Alert(AlertType.INFORMATION);
+				confAlert.setHeaderText("Centrale aggiunta");
+				model.addCentrale(id, nome, indirizzo, numOp);
+				confAlert.show();
+			}
+
 		}
 
 	}

@@ -3,9 +3,9 @@ package it.polito.centraletelefonica.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.google.maps.model.LatLng;
-
 import it.polito.centraletelefonica.model.Model;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -48,21 +48,13 @@ public class PathsController extends Controller {
 	private WebView webView;
 
 	@FXML
-	private Button btnAddMarker;
+	private Button btnCentrali;
 
 	private WebEngine engine;
 
 	@FXML
-	void addMarker(ActionEvent event) {
-		engine.executeScript("addMarker(" + 45.0425553 + ", " + 7.673394899999999 + "" + ")");
-		engine.executeScript("calculateDistanceTime(" + 45.0702376 + ", " + 7.684295600000041 + ", " + 45.1031432 + ", "
-				+ 7.663839199999984 + ")");
-		long t0 = System.currentTimeMillis();
-		while((t0 + 2000) > System.currentTimeMillis()) {
-			
-		}
-		String res = (String) engine.executeScript("getRes()");
-		System.out.println(res);
+	void mostraCentrali(ActionEvent event) {
+		engine.executeScript(Model.initMap());
 	}
 
 	@FXML
@@ -88,11 +80,13 @@ public class PathsController extends Controller {
 		assert dateFrom != null : "fx:id=\"dateFrom\" was not injected: check your FXML file 'PathsView.fxml'.";
 		assert dateTo != null : "fx:id=\"dateTo\" was not injected: check your FXML file 'PathsView.fxml'.";
 		assert webView != null : "fx:id=\"webView\" was not injected: check your FXML file 'PathsView.fxml'.";
-		assert btnAddMarker != null : "fx:id=\"btnAddMarker\" was not injected: check your FXML file 'PathsView.fxml'.";
+		assert btnCentrali != null : "fx:id=\"btnAddMarker\" was not injected: check your FXML file 'PathsView.fxml'.";
 
 		engine = webView.getEngine();
-		if (Model.connectionAvaible())
+		if (Model.connectionAvaible()) {
 			engine.load(getClass().getResource("map.html").toString());
+		}
+
 		else
 			engine.load(getClass().getResource("404.html").toString());
 

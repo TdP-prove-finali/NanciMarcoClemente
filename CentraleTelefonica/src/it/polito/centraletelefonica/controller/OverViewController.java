@@ -13,7 +13,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
-import javafx.scene.chart.PieChart.Data;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -230,14 +229,7 @@ public class OverViewController extends Controller {
 
 		// add data to chartType
 
-		chartType.getData().add(new Data("Armadi e Permutatori", 12.5));
-		chartType.getData().add(new Data("Danneggiamento", 12.5));
-		chartType.getData().add(new Data("HD - Caduta connessione", 12.5));
-		chartType.getData().add(new Data("HD - Generico Fonia", 12.5));
-		chartType.getData().add(new Data("Manutenzione", 12.5));
-		chartType.getData().add(new Data("RA - Linea Interrotta", 12.5));
-		chartType.getData().add(new Data("RA - Router", 12.5));
-		chartType.getData().add(new Data("RA -Tensioni estranee in linea", 12.5));
+		chartType.getData().addAll(Model.initPieType());
 
 		// Add data to chartArea
 

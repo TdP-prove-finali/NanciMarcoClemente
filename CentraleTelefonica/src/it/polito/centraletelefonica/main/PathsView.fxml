@@ -61,15 +61,18 @@
                   </HBox>
                </children>
             </HBox>
-            <WebView fx:id="webView" minHeight="-Infinity" minWidth="-1.0" prefHeight="502.0" prefWidth="680.0" VBox.vgrow="ALWAYS" />
-            <HBox alignment="CENTER_RIGHT" prefWidth="200.0">
+            <HBox alignment="CENTER_LEFT" prefWidth="200.0" style="-fx-background-color: beige;">
                <children>
-                  <Button fx:id="btnAddMarker" mnemonicParsing="false" onAction="#addMarker" text="Button" />
+                  <Button fx:id="btnCentrali" mnemonicParsing="false" onAction="#mostraCentrali" styleClass="btnMenu" text="Mostra Centrali" />
                </children>
                <VBox.margin>
-                  <Insets bottom="5.0" right="20.0" />
+                  <Insets />
                </VBox.margin>
+               <padding>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </padding>
             </HBox>
+            <WebView fx:id="webView" minHeight="-Infinity" minWidth="-1.0" prefHeight="502.0" prefWidth="680.0" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
    </center>

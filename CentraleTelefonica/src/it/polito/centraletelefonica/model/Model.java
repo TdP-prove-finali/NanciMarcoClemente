@@ -13,8 +13,10 @@ import com.google.maps.errors.ApiException;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.LatLng;
 
+import it.polito.centraletelefonica.controller.MapJS;
 import it.polito.centraletelefonica.db.OperationCenterDAO;
 import it.polito.centraletelefonica.db.OperationDAO;
+import it.polito.centraletelefonica.db.TipologieDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.PieChart.Data;
@@ -127,8 +129,8 @@ public class Model {
 			return "NOME NULL";
 		if (nome.isEmpty())
 			return "NOME EMPTY";
-		// if (nome.substring(0, 4) != "TO-")
-		// return "INVALID NOME PREFIX";
+		if (nome.substring(0, 3).compareTo("TO-") != 0)
+			return "INVALID NOME PREFIX";
 
 		return "OK";
 	}
@@ -196,6 +198,15 @@ public class Model {
 	public static ObservableList<Data> initPieArea() {
 		OperationCenterDAO dao = new OperationCenterDAO();
 		return FXCollections.observableArrayList(dao.initPieArea());
+	}
+
+	public static ObservableList<Data> initPieType() {
+		TipologieDAO dao = new TipologieDAO();
+		return FXCollections.observableArrayList(dao.initPieType());
+	}
+
+	public static String initMap() {
+		return MapJS.initMap();
 	}
 
 }
