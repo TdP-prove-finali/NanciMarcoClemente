@@ -198,4 +198,7 @@ class Queries {
 	 * </ol>
 	 */
 	public static final String GET_ALL_TYPE = "select * from tipologie";
+
+	public static final String GET_ALL_OPERATIONS = "select *\r\n" + "from operazioni op,tipologie,centrali c\r\n"
+			+ "where SegnalazioneTipo = tipo\r\n" + "and op.CentraleID=c.CentraleID;";
 }

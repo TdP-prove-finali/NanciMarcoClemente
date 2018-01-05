@@ -70,17 +70,18 @@
 				<TableView id="operationTable" fx:id="table" editable="true" onKeyPressed="#addRow" prefWidth="680.0" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
 					<columns>
 						<TableColumn fx:id="colID" prefWidth="120.0" text="ID" />
-						<TableColumn prefWidth="120.0" text="TYPE" />
+						<TableColumn fx:id="colType" prefWidth="120.0" text="TYPE" />
 						<TableColumn fx:id="colPriority" prefWidth="120.0" text="PRIORITY" />
-                  <TableColumn prefWidth="120.0" text="TIME AVARAGE" />
-                  <TableColumn prefWidth="120.0" text="ST. DEVIATION" />
+                  <TableColumn fx:id="colAverage" prefWidth="120.0" text="TIME AVARAGE" />
+                  <TableColumn fx:id="colDeviation" prefWidth="120.0" text="ST. DEVIATION" />
 						<TableColumn fx:id="colReporting" prefWidth="120.0" text="START DATE" />
-						<TableColumn prefWidth="120.0" text="GOAL DATE" />
-                  <TableColumn prefWidth="120.0" text="CLOSING DATE" />
-                  <TableColumn prefWidth="120.0" text="STATUS" />
-						<TableColumn prefWidth="120.0" text="CITY" />
-						<TableColumn prefWidth="120.0" text="STREET" />
-						<TableColumn prefWidth="120.0" text="CENTER" />
+						<TableColumn fx:id="colGoal" prefWidth="120.0" text="GOAL DATE" />
+                  <TableColumn fx:id="colClosing" prefWidth="120.0" text="CLOSING DATE" />
+                  <TableColumn fx:id="colStatus" prefWidth="120.0" text="STATUS" />
+						<TableColumn fx:id="colCity" prefWidth="120.0" text="CITY" />
+						<TableColumn fx:id="colIndirizzo" prefWidth="120.0" text="STREET" />
+						<TableColumn fx:id="colCenter" prefWidth="120.0" text="CENTER" />
+                  <TableColumn fx:id="colOperatoriRIchiesti" prefWidth="75.0" text="OPERATORI RICHIESTI" />
 					</columns>
 				</TableView>
 			</children>

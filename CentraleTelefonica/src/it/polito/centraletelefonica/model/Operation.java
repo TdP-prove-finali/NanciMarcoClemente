@@ -7,21 +7,28 @@ import com.google.maps.model.LatLng;
 public class Operation {
 
 	private String id;
-	private OperationTipology tipology;
 	private String priority;
 	private LocalDate dataSegnalazione;
 	private LocalDate dataObiettivo;
 	private LocalDate dataChiusura;
 	private String comune;
 	private String indirizzo;
+	private String stato;
 	private LatLng coordinate;
 	private OperationCenter operationCenter;
+	private String tipo;
+	private double media;
+	private double varianza;
+	private int operatoriRichiesti;
 
-	public Operation(String id, OperationTipology tipology, LatLng coordinate, OperationCenter operationCenter) {
+	public Operation(String id, LatLng coordinate, OperationCenter operationCenter) {
 		this.id = id;
-		this.tipology = tipology;
 		this.coordinate = coordinate;
 		this.operationCenter = operationCenter;
+	}
+
+	public String getTipo() {
+		return tipo;
 	}
 
 	public String getId() {
@@ -32,13 +39,6 @@ public class Operation {
 		this.id = id;
 	}
 
-	public OperationTipology getTipology() {
-		return tipology;
-	}
-
-	public void setTipology(OperationTipology tipology) {
-		this.tipology = tipology;
-	}
 
 	public String getPriority() {
 		return priority;
@@ -104,6 +104,34 @@ public class Operation {
 		this.dataChiusura = dataChiusura;
 	}
 
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	public double getMedia() {
+		return media;
+	}
+
+	public void setMedia(double media) {
+		this.media = media;
+	}
+
+	public double getVarianza() {
+		return varianza;
+	}
+
+	public void setVarianza(double varianza) {
+		this.varianza = varianza;
+	}
+
+	public int getOperatoriRichiesti() {
+		return operatoriRichiesti;
+	}
+
+	public void setOperatoriRichiesti(int operatoriRichiesti) {
+		this.operatoriRichiesti = operatoriRichiesti;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -127,6 +155,14 @@ public class Operation {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public String getStato() {
+		return stato;
+	}
+
+	public void setStato(String stato) {
+		this.stato = stato;
 	}
 
 }

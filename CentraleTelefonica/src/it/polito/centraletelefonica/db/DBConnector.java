@@ -6,7 +6,7 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 public class DBConnector {
 
-	private static final String JDBC_URL = "jdbc:mysql://localhost/centraletelefonica?user=root";
+	private static final String JDBC_URL = "jdbc:mysql://localhost/centraletelefonica?user=root&zeroDateTimeBehavior=convertToNull";
 	private static ComboPooledDataSource dataSource;
 	private static PersistentConnection persistentConnection;
 

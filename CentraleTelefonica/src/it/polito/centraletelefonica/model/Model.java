@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,6 +21,7 @@ import it.polito.centraletelefonica.db.TipologieDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.PieChart.Data;
+import javafx.util.Callback;
 
 public class Model {
 
@@ -207,6 +209,11 @@ public class Model {
 
 	public static String initMap() {
 		return MapJS.initMap();
+	}
+
+	public static List<Operation> getAllOperations() {
+		OperationDAO dao = new OperationDAO();
+		return dao.getAll();
 	}
 
 }
