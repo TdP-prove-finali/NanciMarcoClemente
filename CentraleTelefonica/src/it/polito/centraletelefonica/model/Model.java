@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -214,6 +216,70 @@ public class Model {
 	public static List<Operation> getAllOperations() {
 		OperationDAO dao = new OperationDAO();
 		return dao.getAll();
+	}
+
+	public static List<String> getAllType() {
+		OperationDAO dao = new OperationDAO();
+		return dao.getAllType();
+	}
+
+	public void creaOperazione(String id, String tipo, String prio, String indirizzo) {
+
+		try {
+			GeoApiContext context = new GeoApiContext.Builder().apiKey("AIzaSyBTt64RteMQQxOH5hpCYTcrANObd5QNmr8")
+					.build();
+			GeocodingResult[] results = GeocodingApi.geocode(context, indirizzo).await();
+			LatLng coo = results[0].geometry.location;
+			OperationCenter center = getCloserCenter(coo);
+			Operation operation = new Operation(id, coo, center);
+			operation.setTipo(tipo);
+			operation.setPriority(prio);
+			operation.setIndirizzo(indirizzo);
+			operation.setDataSegnalazione(LocalDate.now());
+			LocalDate ob = null;
+			ob = tipo == "Bassa" ? LocalDate.now().plusDays(3) : LocalDate.now();
+			ob = tipo == "Media" ? LocalDate.now().plusDays(2) : LocalDate.now();
+			ob = tipo == "Alta" ? LocalDate.now().plusDays(1) : LocalDate.now();
+			operation.setDataObiettivo(ob);
+			operation.setDataChiusura(LocalDate.of(0, 1, 1));
+			operation.setComune("Torino");
+			operation.setStato("Open");
+			OperationDAO dao = new OperationDAO();
+			dao.insertOperation(operation);
+
+		} catch (ApiException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	private OperationCenter getCloserCenter(LatLng coo) {
+
+		List<OperationCenter> list = new LinkedList<>(new OperationCenterDAO().getAllOperationCenter());
+		OperationCenter result = null;
+
+		for (Iterator<OperationCenter> iterator = list.iterator(); iterator.hasNext();) {
+			OperationCenter operationCenter = iterator.next();
+			double minDistance = Double.MAX_VALUE;
+			double xPowDist = Math.pow(coo.lat - operationCenter.getLatLng().lat, 2);
+			double yPowDist = Math.pow(coo.lng - operationCenter.getLatLng().lng, 2);
+			double dist = Math.sqrt(xPowDist + yPowDist);
+
+			if (minDistance > dist) {
+				minDistance = dist;
+				result = operationCenter;
+			}
+
+		}
+
+		return result;
 	}
 
 }

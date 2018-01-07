@@ -40,6 +40,9 @@ public class OperationsController extends Controller {
 
 	@FXML
 	private Button btnPaths;
+	
+	@FXML
+    private Button btnAddOp;
 
 	@FXML
 	private DatePicker dateFrom;
@@ -90,16 +93,6 @@ public class OperationsController extends Controller {
 	private TableColumn<Operation, Integer> colOperatoriRIchiesti;
 
 	@FXML
-	void addOperation(ActionEvent event) {
-
-	}
-
-	@FXML
-	void addRow(KeyEvent event) {
-
-	}
-
-	@FXML
 	void openRelativeAnalitycs(MouseEvent event) {
 
 		if (event.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
@@ -113,17 +106,13 @@ public class OperationsController extends Controller {
 	}
 
 	@FXML
-	void search(KeyEvent event) {
-
-	}
-
-	@FXML
 	void initialize() {
 		assert btnOverview != null : "fx:id=\"btnOverview\" was not injected: check your FXML file 'OperationsView.fxml'.";
 		assert btnOperations != null : "fx:id=\"btnOperations\" was not injected: check your FXML file 'OperationsView.fxml'.";
 		assert btnOperationsCenter != null : "fx:id=\"btnOperationsCenter\" was not injected: check your FXML file 'OperationsView.fxml'.";
 		assert btnWorkers != null : "fx:id=\"btnWorkers\" was not injected: check your FXML file 'OperationsView.fxml'.";
 		assert btnPaths != null : "fx:id=\"btnPaths\" was not injected: check your FXML file 'OperationsView.fxml'.";
+        assert btnAddOp != null : "fx:id=\"btnAddOp\" was not injected: check your FXML file 'OperationsView.fxml'.";
 		assert dateFrom != null : "fx:id=\"dateFrom\" was not injected: check your FXML file 'OperationsView.fxml'.";
 		assert dateTo != null : "fx:id=\"dateTo\" was not injected: check your FXML file 'OperationsView.fxml'.";
 		assert table != null : "fx:id=\"table\" was not injected: check your FXML file 'OperationsView.fxml'.";
@@ -140,22 +129,22 @@ public class OperationsController extends Controller {
 		assert colIndirizzo != null : "fx:id=\"colIndirizzo\" was not injected: check your FXML file 'OperationsView.fxml'.";
 		assert colCenter != null : "fx:id=\"colCenter\" was not injected: check your FXML file 'OperationsView.fxml'.";
 		assert colOperatoriRIchiesti != null : "fx:id=\"colOperatoriRIchiesti\" was not injected: check your FXML file 'OperationsView.fxml'.";
-		
+
 		colID.setCellValueFactory(new PropertyValueFactory<Operation, String>("id"));
 		colType.setCellValueFactory(new PropertyValueFactory<Operation, String>("tipo"));
-        colPriority.setCellValueFactory(new PropertyValueFactory<>("priority"));
-        colAverage.setCellValueFactory(new PropertyValueFactory<>("media"));
-        colDeviation.setCellValueFactory(new PropertyValueFactory<>("varianza"));
-        colReporting.setCellValueFactory(new PropertyValueFactory<>("dataSegnalazione"));
-        colGoal.setCellValueFactory(new PropertyValueFactory<>("dataObiettivo"));
-        colClosing.setCellValueFactory(new PropertyValueFactory<>("dataChiusura"));
-        colStatus.setCellValueFactory(new PropertyValueFactory<>("stato"));
-        colCity.setCellValueFactory(new PropertyValueFactory<>("comune"));
-        colIndirizzo.setCellValueFactory(new PropertyValueFactory<>("indirizzo"));
-        colCenter.setCellValueFactory(new PropertyValueFactory<>("operationCenter"));
-        colOperatoriRIchiesti.setCellValueFactory(new PropertyValueFactory<>("operatoriRichiesti"));
-        
-        table.getItems().addAll(FXCollections.observableArrayList(Model.getAllOperations()));
-        
+		colPriority.setCellValueFactory(new PropertyValueFactory<>("priority"));
+		colAverage.setCellValueFactory(new PropertyValueFactory<>("media"));
+		colDeviation.setCellValueFactory(new PropertyValueFactory<>("varianza"));
+		colReporting.setCellValueFactory(new PropertyValueFactory<>("dataSegnalazione"));
+		colGoal.setCellValueFactory(new PropertyValueFactory<>("dataObiettivo"));
+		colClosing.setCellValueFactory(new PropertyValueFactory<>("dataChiusura"));
+		colStatus.setCellValueFactory(new PropertyValueFactory<>("stato"));
+		colCity.setCellValueFactory(new PropertyValueFactory<>("comune"));
+		colIndirizzo.setCellValueFactory(new PropertyValueFactory<>("indirizzo"));
+		colCenter.setCellValueFactory(new PropertyValueFactory<>("operationCenter"));
+		colOperatoriRIchiesti.setCellValueFactory(new PropertyValueFactory<>("operatoriRichiesti"));
+
+		table.getItems().addAll(FXCollections.observableArrayList(Model.getAllOperations()));
+
 	}
 }

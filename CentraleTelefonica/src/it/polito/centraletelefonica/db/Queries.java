@@ -201,4 +201,7 @@ class Queries {
 
 	public static final String GET_ALL_OPERATIONS = "select *\r\n" + "from operazioni op,tipologie,centrali c\r\n"
 			+ "where SegnalazioneTipo = tipo\r\n" + "and op.CentraleID=c.CentraleID;";
+
+	public static final String INSERT_OPERATION = "insert into operazioni(SegnalazioneID,SegnalazioneTipo,Priority,DataSegnalazione,DataObiettivo,DataChiusura,Stato,Comune,Indirizzo,Latitude,Longitude,CentraleID) values(?,?,?,?,?,?,?,?,?,?,?,?);";
+
 }

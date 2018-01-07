@@ -39,7 +39,7 @@
 		</VBox>
 	</left>
 	<center>
-		<VBox onKeyPressed="#search" prefHeight="565.0" prefWidth="680.0" styleClass="center" BorderPane.alignment="CENTER">
+		<VBox prefHeight="565.0" prefWidth="680.0" styleClass="center" BorderPane.alignment="CENTER">
 			<children>
 				<HBox alignment="CENTER_LEFT" prefHeight="83.0" prefWidth="599.0" styleClass="boxCenterUp">
 					<children>
@@ -53,7 +53,7 @@
 						</Label>
 						<HBox alignment="CENTER_RIGHT" prefHeight="52.0" prefWidth="528.0" spacing="20.0">
 							<children>
-                        <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#addOperation" prefHeight="45.0" prefWidth="45.0" styleClass="btnMenu" text="+">
+                        <Button fx:id="btnAddOp" mnemonicParsing="false" onMouseClicked="#openRelativeAnalitycs" prefHeight="45.0" prefWidth="45.0" styleClass="btnMenu" text="+">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -67,7 +67,7 @@
 						</HBox>
 					</children>
 				</HBox>
-				<TableView id="operationTable" fx:id="table" editable="true" onKeyPressed="#addRow" prefWidth="680.0" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
+				<TableView id="operationTable" fx:id="table" editable="true" prefWidth="680.0" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
 					<columns>
 						<TableColumn fx:id="colID" prefWidth="120.0" text="ID" />
 						<TableColumn fx:id="colType" prefWidth="120.0" text="TYPE" />

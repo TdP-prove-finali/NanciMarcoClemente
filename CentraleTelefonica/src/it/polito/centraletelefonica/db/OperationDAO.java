@@ -197,6 +197,8 @@ public class OperationDAO extends DAO {
 				operation.setTipo(tipo);
 				operation.setMedia(media);
 				operation.setComune(city);
+				operation.setIndirizzo(resultSet.getString("Indirizzo"));
+				operation.setPriority(resultSet.getString("Priority"));
 				operation.setVarianza(varianza);
 				operation.setOperatoriRichiesti(operatoriRichiesti);
 				operazioni.add(operation);
@@ -207,6 +209,48 @@ public class OperationDAO extends DAO {
 		}
 
 		return operazioni;
+	}
+
+	public List<String> getAllType() {
+		List<String> tipi = new LinkedList<>();
+		try {
+			PreparedStatement preparedStatement = persistentConnection.prepareStatement(Queries.GET_ALL_TYPE);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				tipi.add(resultSet.getString("tipo"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return tipi;
+	}
+
+	public void insertOperation(Operation operation) {
+
+		try {
+			PreparedStatement preparedStatement = persistentConnection.prepareStatement(Queries.INSERT_OPERATION);
+			preparedStatement.setString(1, operation.getId());
+			preparedStatement.setString(2, operation.getTipo());
+			preparedStatement.setString(3, operation.getPriority());
+			preparedStatement.setDate(4, Date.valueOf(operation.getDataSegnalazione()));
+			preparedStatement.setDate(5, Date.valueOf(operation.getDataObiettivo()));
+			preparedStatement.setDate(6, Date.valueOf(operation.getDataChiusura()));
+			preparedStatement.setString(7, operation.getStato());
+			preparedStatement.setString(8, operation.getComune());
+			preparedStatement.setString(9, operation.getIndirizzo());
+			preparedStatement.setDouble(10, operation.getCoordinate().lat);
+			preparedStatement.setDouble(11, operation.getCoordinate().lng);
+			preparedStatement.setString(12, operation.getOperationCenter().getId());
+
+			preparedStatement.executeUpdate();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 }
