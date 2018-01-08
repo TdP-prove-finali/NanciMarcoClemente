@@ -51,7 +51,7 @@
 								<Font name="System Bold" size="14.0" />
 							</font>
 						</Label>
-						<HBox alignment="CENTER_RIGHT" prefHeight="52.0" prefWidth="528.0" spacing="20.0">
+						<HBox alignment="CENTER_RIGHT" prefHeight="52.0" spacing="20.0">
 							<children>
                         <Button fx:id="btnAddOp" mnemonicParsing="false" onMouseClicked="#openRelativeAnalitycs" prefHeight="45.0" prefWidth="45.0" styleClass="btnMenu" text="+">
                            <font>
@@ -60,6 +60,7 @@
                         </Button>
 								<DatePicker fx:id="dateFrom" prefHeight="30.0" prefWidth="200.0" promptText="From..." />
 								<DatePicker fx:id="dateTo" prefHeight="30.0" prefWidth="200.0" promptText="To..." />
+                        <Button fx:id="btnFiltro" minWidth="100.0" mnemonicParsing="false" onAction="#filtra" styleClass="btnMenu" text="Applica filtro" />
 							</children>
 							<HBox.margin>
 								<Insets right="20.0" />

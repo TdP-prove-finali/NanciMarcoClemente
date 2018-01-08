@@ -103,8 +103,9 @@ class Queries {
 	 * </ol>
 	 */
 
-	public static final String NUOVE_PER_MESE = "select Mese, count(Mese) n_operazioni\r\n" + "from operazioni\r\n"
-			+ "group by Mese\r\n" + "order by Mese";
+	public static final String NUOVE_PER_MESE = "select t.mese, count(t.mese) n_operazioni \r\n"
+			+ "from operazioni, tempo t\r\n" + "where DataSegnalazione = t.`data`\r\n" + "group by t.mese \r\n"
+			+ "order by t.mese";
 
 	/**
 	 * <p>
@@ -118,8 +119,9 @@ class Queries {
 	 * </ol>
 	 */
 
-	public static final String MEDIA_NUOVE_MENSILE = "select sum(sub1.op_mese)/12 avg_mensile from(\r\n"
-			+ "select count(Mese) op_mese \r\n" + "from operazioni\r\n" + "group by Mese\r\n" + "order by Mese) sub1;";
+	public static final String MEDIA_NUOVE_MENSILE = "select sum(sub1.op_mese)/12 avg_mensile \r\n" + "from(\r\n"
+			+ "select count(t.mese) op_mese \r\n" + "from operazioni, tempo t \r\n"
+			+ "where DataSegnalazione = t.`data`\r\n" + "group by t.mese\r\n" + "order by t.mese) sub1;";
 
 	/**
 	 * <p>
@@ -134,8 +136,9 @@ class Queries {
 	 * </ol>
 	 */
 
-	public static final String CHIUSURE_PER_MESE = "select Mese, count(Mese) n_chiusure\r\n" + "from operazioni\r\n"
-			+ "where DataChiusura <= DataObiettivo\r\n" + "group by Mese\r\n" + "order by Mese;";
+	public static final String CHIUSURE_PER_MESE = "select t.mese, count(t.mese) n_chiusure \r\n"
+			+ "from operazioni, tempo t\r\n" + "where DataChiusura <= DataObiettivo \r\n"
+			+ "and DataSegnalazione = t.`data`\r\n" + "group by t.mese \r\n" + "order by t.mese;";
 
 	/**
 	 * <p>
@@ -149,9 +152,10 @@ class Queries {
 	 * </ol>
 	 */
 
-	public static final String MEDIA_CHIUSE_MESE = "select sum(sub1.op_mese)/12 avg_mensile from(\r\n"
-			+ "select count(Mese) op_mese from operazioni\r\n" + "where DataChiusura <= DataObiettivo\r\n"
-			+ "group by Mese \r\n" + "order by Mese) sub1;";
+	public static final String MEDIA_CHIUSE_MESE = "select sum(sub1.op_mese)/12 avg_mensile \r\n" + "from(\r\n"
+			+ "select count(t.mese) op_mese \r\n" + "from operazioni, tempo t\r\n"
+			+ "where DataChiusura <= DataObiettivo\r\n" + "and DataSegnalazione = t.`data`\r\n" + "group by t.mese\r\n"
+			+ "order by t.mese) sub1;";
 
 	/**
 	 * <p>
@@ -204,4 +208,12 @@ class Queries {
 
 	public static final String INSERT_OPERATION = "insert into operazioni(SegnalazioneID,SegnalazioneTipo,Priority,DataSegnalazione,DataObiettivo,DataChiusura,Stato,Comune,Indirizzo,Latitude,Longitude,CentraleID) values(?,?,?,?,?,?,?,?,?,?,?,?);";
 
+	public static final String GET_OPERATION_FROM = "select * \r\n" + "from operazioni op, tipologie t, centrali c\r\n"
+			+ "where DataSegnalazione >= ? and SegnalazioneTipo = t.tipo and op.CentraleID = c.CentraleID";
+
+	public static final String GET_OPERATION_TO = "select * from operazioni op, tipologie "
+			+ "	where DataSegnalazione <= ? and SegnalazioneTipo = t.tipo and op.CentraleID = c.CentraleID";
+
+	public static final String GET_OPERATION_BETWEEN = "select * from operazioni op, tipologie t, centrali c"
+			+ "	where DataSegnalazione between ? and ? and SegnalazioneTipo = t.tipo and op.CentraleID = c.CentraleID;";
 }

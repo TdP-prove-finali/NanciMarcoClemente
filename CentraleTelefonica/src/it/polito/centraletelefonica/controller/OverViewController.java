@@ -120,14 +120,14 @@ public class OverViewController extends Controller {
 	@FXML
 	private Button btnStatistiche;
 
-	private Model model;
-
 	@FXML
 	void calcolaStatistiche(ActionEvent event) {
 
 		LocalDate from = dateFrom.getValue();
 		LocalDate to = dateTo.getValue();
 		String periodoSelezionato = boxPeriodo.getValue();
+
+		System.out.println(model);
 
 		// Effettuo tra i giorni selezionati(grafici)
 		if (from != null && to != null) {

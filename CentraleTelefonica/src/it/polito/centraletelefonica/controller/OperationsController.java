@@ -40,15 +40,18 @@ public class OperationsController extends Controller {
 
 	@FXML
 	private Button btnPaths;
-	
+
 	@FXML
-    private Button btnAddOp;
+	private Button btnAddOp;
 
 	@FXML
 	private DatePicker dateFrom;
 
 	@FXML
 	private DatePicker dateTo;
+
+	@FXML
+	private Button btnFiltro;
 
 	@FXML
 	private TableView<Operation> table;
@@ -93,6 +96,33 @@ public class OperationsController extends Controller {
 	private TableColumn<Operation, Integer> colOperatoriRIchiesti;
 
 	@FXML
+	void filtra(ActionEvent event) {
+
+		LocalDate from = dateFrom.getValue();
+		LocalDate to = dateTo.getValue();
+
+		if (from == null && to == null) {
+			showAlert("Devi selezionare un periodo");
+		}
+
+		else if (from != null && to == null) {
+			table.getItems().clear();
+			table.getItems().addAll(FXCollections.observableArrayList(model.getOperationsFrom(from)));
+		}
+
+		else if (from == null && to != null) {
+			table.getItems().clear();
+			table.getItems().addAll(FXCollections.observableArrayList(model.getOperationsTo(to)));
+		}
+
+		else {
+			table.getItems().clear();
+			table.getItems().addAll(FXCollections.observableArrayList(model.getOperationsFromTo(from, to)));
+		}
+
+	}
+
+	@FXML
 	void openRelativeAnalitycs(MouseEvent event) {
 
 		if (event.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
@@ -112,7 +142,7 @@ public class OperationsController extends Controller {
 		assert btnOperationsCenter != null : "fx:id=\"btnOperationsCenter\" was not injected: check your FXML file 'OperationsView.fxml'.";
 		assert btnWorkers != null : "fx:id=\"btnWorkers\" was not injected: check your FXML file 'OperationsView.fxml'.";
 		assert btnPaths != null : "fx:id=\"btnPaths\" was not injected: check your FXML file 'OperationsView.fxml'.";
-        assert btnAddOp != null : "fx:id=\"btnAddOp\" was not injected: check your FXML file 'OperationsView.fxml'.";
+		assert btnAddOp != null : "fx:id=\"btnAddOp\" was not injected: check your FXML file 'OperationsView.fxml'.";
 		assert dateFrom != null : "fx:id=\"dateFrom\" was not injected: check your FXML file 'OperationsView.fxml'.";
 		assert dateTo != null : "fx:id=\"dateTo\" was not injected: check your FXML file 'OperationsView.fxml'.";
 		assert table != null : "fx:id=\"table\" was not injected: check your FXML file 'OperationsView.fxml'.";
@@ -129,6 +159,7 @@ public class OperationsController extends Controller {
 		assert colIndirizzo != null : "fx:id=\"colIndirizzo\" was not injected: check your FXML file 'OperationsView.fxml'.";
 		assert colCenter != null : "fx:id=\"colCenter\" was not injected: check your FXML file 'OperationsView.fxml'.";
 		assert colOperatoriRIchiesti != null : "fx:id=\"colOperatoriRIchiesti\" was not injected: check your FXML file 'OperationsView.fxml'.";
+		assert btnFiltro != null : "fx:id=\"btnFiltro\" was not injected: check your FXML file 'OperationsView.fxml'.";
 
 		colID.setCellValueFactory(new PropertyValueFactory<Operation, String>("id"));
 		colType.setCellValueFactory(new PropertyValueFactory<Operation, String>("tipo"));

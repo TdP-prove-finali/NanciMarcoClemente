@@ -282,4 +282,19 @@ public class Model {
 		return result;
 	}
 
+	public List<Operation> getOperationsFrom(LocalDate from) {
+		OperationDAO dao = new OperationDAO();
+		return dao.getOperationFrom(from);
+	}
+
+	public List<Operation> getOperationsTo(LocalDate to) {
+		OperationDAO dao = new OperationDAO();
+		return dao.getOperationTo(to);
+	}
+
+	public List<Operation> getOperationsFromTo(LocalDate from, LocalDate to) {
+		OperationDAO dao = new OperationDAO();
+		return dao.getOperationBetween(from,to);
+	}
+
 }

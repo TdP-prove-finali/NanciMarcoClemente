@@ -253,4 +253,180 @@ public class OperationDAO extends DAO {
 
 	}
 
+	public List<Operation> getOperationFrom(LocalDate from) {
+		
+		List<Operation> operazioni = new LinkedList<>();
+
+		try {
+			PreparedStatement preparedStatement = persistentConnection.prepareStatement(Queries.GET_OPERATION_FROM);
+			preparedStatement.setDate(1, Date.valueOf(from));
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+
+				while (resultSet.next()) {
+					String id = resultSet.getString("SegnalazioneID");
+					String tipo = resultSet.getString("SegnalazioneTipo");
+					double media = resultSet.getDouble("durata_media");
+					double varianza = resultSet.getDouble("varianza");
+					int operatoriRichiesti = resultSet.getInt("operatori_richiesti");
+					LatLng coordinate = new LatLng(resultSet.getDouble("op.Latitude"),
+							resultSet.getDouble("op.Longitude"));
+					String idCentrale = resultSet.getString("op.CentraleID");
+					String name = resultSet.getString("nome");
+					String street = resultSet.getString("indirizzo");
+					LatLng latLng = new LatLng(resultSet.getDouble("c.Latitude"), resultSet.getDouble("c.Longitude"));
+					int numOperatori = resultSet.getInt("NumeroOperatori");
+					LocalDate reportingDate = resultSet.getDate("DataSegnalazione").toLocalDate();
+					LocalDate goalDate = resultSet.getDate("DataObiettivo").toLocalDate();
+					Date d = resultSet.getDate("DataChiusura");
+					OperationCenter operationCenter = new OperationCenter(idCentrale, name, street, latLng,
+							numOperatori);
+					Operation operation = new Operation(id, coordinate, operationCenter);
+					LocalDate closingDate = null;
+					String stato = resultSet.getString("Stato");
+					String city = resultSet.getString("Comune");
+					if (d != null) {
+						closingDate = d.toLocalDate();
+						operation.setDataChiusura(closingDate);
+					}
+
+					operation.setDataSegnalazione(reportingDate);
+					operation.setDataObiettivo(goalDate);
+					operation.setStato(stato);
+					operation.setTipo(tipo);
+					operation.setMedia(media);
+					operation.setComune(city);
+					operation.setIndirizzo(resultSet.getString("Indirizzo"));
+					operation.setPriority(resultSet.getString("Priority"));
+					operation.setVarianza(varianza);
+					operation.setOperatoriRichiesti(operatoriRichiesti);
+					operazioni.add(operation);
+				}
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return operazioni;
+	}
+
+	public List<Operation> getOperationTo(LocalDate to) {
+		List<Operation> operazioni = new LinkedList<>();
+
+		try {
+			PreparedStatement preparedStatement = persistentConnection.prepareStatement(Queries.GET_OPERATION_TO);
+			preparedStatement.setDate(1, Date.valueOf(to));
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+
+				while (resultSet.next()) {
+					String id = resultSet.getString("SegnalazioneID");
+					String tipo = resultSet.getString("SegnalazioneTipo");
+					double media = resultSet.getDouble("durata_media");
+					double varianza = resultSet.getDouble("varianza");
+					int operatoriRichiesti = resultSet.getInt("operatori_richiesti");
+					LatLng coordinate = new LatLng(resultSet.getDouble("op.Latitude"),
+							resultSet.getDouble("op.Longitude"));
+					String idCentrale = resultSet.getString("op.CentraleID");
+					String name = resultSet.getString("nome");
+					String street = resultSet.getString("indirizzo");
+					LatLng latLng = new LatLng(resultSet.getDouble("c.Latitude"), resultSet.getDouble("c.Longitude"));
+					int numOperatori = resultSet.getInt("NumeroOperatori");
+					LocalDate reportingDate = resultSet.getDate("DataSegnalazione").toLocalDate();
+					LocalDate goalDate = resultSet.getDate("DataObiettivo").toLocalDate();
+					Date d = resultSet.getDate("DataChiusura");
+					OperationCenter operationCenter = new OperationCenter(idCentrale, name, street, latLng,
+							numOperatori);
+					Operation operation = new Operation(id, coordinate, operationCenter);
+					LocalDate closingDate = null;
+					String stato = resultSet.getString("Stato");
+					String city = resultSet.getString("Comune");
+					if (d != null) {
+						closingDate = d.toLocalDate();
+						operation.setDataChiusura(closingDate);
+					}
+
+					operation.setDataSegnalazione(reportingDate);
+					operation.setDataObiettivo(goalDate);
+					operation.setStato(stato);
+					operation.setTipo(tipo);
+					operation.setMedia(media);
+					operation.setComune(city);
+					operation.setIndirizzo(resultSet.getString("Indirizzo"));
+					operation.setPriority(resultSet.getString("Priority"));
+					operation.setVarianza(varianza);
+					operation.setOperatoriRichiesti(operatoriRichiesti);
+					operazioni.add(operation);
+				}
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return operazioni;
+	}
+
+	public List<Operation> getOperationBetween(LocalDate from, LocalDate to) {
+		List<Operation> operazioni = new LinkedList<>();
+
+		try {
+			PreparedStatement preparedStatement = persistentConnection.prepareStatement(Queries.GET_OPERATION_BETWEEN);
+			preparedStatement.setDate(1, Date.valueOf(from));
+			preparedStatement.setDate(2, Date.valueOf(to));
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+
+				while (resultSet.next()) {
+					String id = resultSet.getString("SegnalazioneID");
+					String tipo = resultSet.getString("SegnalazioneTipo");
+					double media = resultSet.getDouble("durata_media");
+					double varianza = resultSet.getDouble("varianza");
+					int operatoriRichiesti = resultSet.getInt("operatori_richiesti");
+					LatLng coordinate = new LatLng(resultSet.getDouble("op.Latitude"),
+							resultSet.getDouble("op.Longitude"));
+					String idCentrale = resultSet.getString("op.CentraleID");
+					String name = resultSet.getString("nome");
+					String street = resultSet.getString("indirizzo");
+					LatLng latLng = new LatLng(resultSet.getDouble("c.Latitude"), resultSet.getDouble("c.Longitude"));
+					int numOperatori = resultSet.getInt("NumeroOperatori");
+					LocalDate reportingDate = resultSet.getDate("DataSegnalazione").toLocalDate();
+					LocalDate goalDate = resultSet.getDate("DataObiettivo").toLocalDate();
+					Date d = resultSet.getDate("DataChiusura");
+					OperationCenter operationCenter = new OperationCenter(idCentrale, name, street, latLng,
+							numOperatori);
+					Operation operation = new Operation(id, coordinate, operationCenter);
+					LocalDate closingDate = null;
+					String stato = resultSet.getString("Stato");
+					String city = resultSet.getString("Comune");
+					if (d != null) {
+						closingDate = d.toLocalDate();
+						operation.setDataChiusura(closingDate);
+					}
+
+					operation.setDataSegnalazione(reportingDate);
+					operation.setDataObiettivo(goalDate);
+					operation.setStato(stato);
+					operation.setTipo(tipo);
+					operation.setMedia(media);
+					operation.setComune(city);
+					operation.setIndirizzo(resultSet.getString("Indirizzo"));
+					operation.setPriority(resultSet.getString("Priority"));
+					operation.setVarianza(varianza);
+					operation.setOperatoriRichiesti(operatoriRichiesti);
+					operazioni.add(operation);
+				}
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return operazioni;
+	}
+
 }
