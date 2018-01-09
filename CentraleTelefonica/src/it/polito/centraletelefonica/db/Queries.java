@@ -107,6 +107,10 @@ class Queries {
 			+ "from operazioni, tempo t\r\n" + "where DataSegnalazione = t.`data`\r\n" + "group by t.mese \r\n"
 			+ "order by t.mese";
 
+	public static final String NUOVE_PER_TRIMESTRE = "select t.trimestre, count(t.trimestre) n_operazioni \r\n"
+			+ "from operazioni, tempo t \r\n" + "where DataSegnalazione = t.`data` \r\n" + "group by t.trimestre \r\n"
+			+ "order by t.trimestre";
+
 	/**
 	 * <p>
 	 * Seleziona la media mensile di nuove segnalazioni
@@ -122,6 +126,10 @@ class Queries {
 	public static final String MEDIA_NUOVE_MENSILE = "select sum(sub1.op_mese)/12 avg_mensile \r\n" + "from(\r\n"
 			+ "select count(t.mese) op_mese \r\n" + "from operazioni, tempo t \r\n"
 			+ "where DataSegnalazione = t.`data`\r\n" + "group by t.mese\r\n" + "order by t.mese) sub1;";
+
+	public static final String MEDIA_NUOVE_TRIMESTRE = "select sum(sub1.op_trimestre)/4 avg_trimestre \r\n"
+			+ "from(\r\n" + "select count(t.trimestre) op_trimestre \r\n" + "from operazioni, tempo t \r\n"
+			+ "where DataSegnalazione = t.`data` \r\n" + "group by t.trimestre \r\n" + "order by t.trimestre) sub1;";
 
 	/**
 	 * <p>
@@ -140,6 +148,9 @@ class Queries {
 			+ "from operazioni, tempo t\r\n" + "where DataChiusura <= DataObiettivo \r\n"
 			+ "and DataSegnalazione = t.`data`\r\n" + "group by t.mese \r\n" + "order by t.mese;";
 
+	public static final String CHIUSURE_PER_TRIMESTRE = "select t.trimestre, count(t.trimestre) n_chiusure \r\n"
+			+ "from operazioni, tempo t \r\n" + "where DataChiusura <= DataObiettivo \r\n"
+			+ "and DataSegnalazione = t.`data` \r\n" + "group by t.trimestre \r\n" + "order by t.trimestre;";
 	/**
 	 * <p>
 	 * Seleziona la media mensile di chiusure
@@ -156,6 +167,11 @@ class Queries {
 			+ "select count(t.mese) op_mese \r\n" + "from operazioni, tempo t\r\n"
 			+ "where DataChiusura <= DataObiettivo\r\n" + "and DataSegnalazione = t.`data`\r\n" + "group by t.mese\r\n"
 			+ "order by t.mese) sub1;";
+
+	public static final String MEDIA_CHIUSE_TRIMESTRE = "select sum(sub1.op_trimestre)/4 avg_trimestrale\r\n"
+			+ "from(\r\n" + "select count(t.trimestre) op_trimestre from operazioni, tempo t\r\n"
+			+ "where DataChiusura <= DataObiettivo \r\n" + "and DataSegnalazione = t.`data` \r\n"
+			+ "group by t.mese\r\n" + "order by t.mese) sub1;";
 
 	/**
 	 * <p>
@@ -216,4 +232,5 @@ class Queries {
 
 	public static final String GET_OPERATION_BETWEEN = "select * from operazioni op, tipologie t, centrali c"
 			+ "	where DataSegnalazione between ? and ? and SegnalazioneTipo = t.tipo and op.CentraleID = c.CentraleID;";
+
 }

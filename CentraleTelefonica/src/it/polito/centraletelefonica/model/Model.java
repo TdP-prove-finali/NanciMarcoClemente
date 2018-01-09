@@ -65,6 +65,16 @@ public class Model {
 				chiusureRow.setDiffPunti(diff);
 			}
 		}
+		
+		if (periodoSelezionato.compareToIgnoreCase("Trimestre") == 0) {
+			result.addAll(operationDAO.getChiuseTrimestre());
+			double mediaSuTrimestre = operationDAO.getMediaChiuseTrimestre();
+			for (ChiusureRow chiusureRow : result) {
+				chiusureRow.setMediaMese(Math.ceil(mediaSuTrimestre));
+				double diff = Math.ceil((chiusureRow.getOpConcluse() - mediaSuTrimestre) / 100);
+				chiusureRow.setDiffPunti(diff);
+			}
+		}
 
 		return result;
 	}
@@ -85,8 +95,18 @@ public class Model {
 			return result;
 		}
 
-		if (periodoSelezionato.compareToIgnoreCase("Trimestre") == 0)
-			return operationDAO.getNuoveTrimestre();
+		if (periodoSelezionato.compareToIgnoreCase("Trimestre") == 0) {
+
+			result.addAll(operationDAO.getNuoveTrimestre());
+			double mediaSuTrimestre = operationDAO.mediaSuTrimestre();
+			for (NuoveRow nuoveRow : result) {
+				nuoveRow.setMediaMese(Math.ceil(mediaSuTrimestre));
+				double diff = Math.ceil((nuoveRow.getNuoveSegnalazioni() - mediaSuTrimestre) / 100);
+				nuoveRow.setDiffPunti(diff);
+			}
+			return result;
+
+		}
 
 		if (periodoSelezionato.compareToIgnoreCase("Quadimestre") == 0)
 			return operationDAO.getNuoveQuadrimestre();
@@ -294,7 +314,7 @@ public class Model {
 
 	public List<Operation> getOperationsFromTo(LocalDate from, LocalDate to) {
 		OperationDAO dao = new OperationDAO();
-		return dao.getOperationBetween(from,to);
+		return dao.getOperationBetween(from, to);
 	}
 
 }

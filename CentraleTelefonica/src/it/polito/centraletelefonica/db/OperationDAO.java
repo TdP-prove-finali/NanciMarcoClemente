@@ -98,8 +98,22 @@ public class OperationDAO extends DAO {
 	}
 
 	public ObservableList<NuoveRow> getNuoveTrimestre() {
-		// TODO Auto-generated method stub
-		return null;
+
+		ObservableList<NuoveRow> result = FXCollections.observableArrayList();
+		try {
+			PreparedStatement preparedStatement = persistentConnection.prepareStatement(Queries.NUOVE_PER_TRIMESTRE);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				NuoveRow nuoveRow = new NuoveRow();
+				nuoveRow.setPeriodo(resultSet.getString("t.trimestre"));
+				nuoveRow.setNuoveSegnalazioni(resultSet.getInt("n_operazioni"));
+				result.add(nuoveRow);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+
 	}
 
 	public ObservableList<NuoveRow> getNuoveQuadrimestre() {
@@ -254,7 +268,7 @@ public class OperationDAO extends DAO {
 	}
 
 	public List<Operation> getOperationFrom(LocalDate from) {
-		
+
 		List<Operation> operazioni = new LinkedList<>();
 
 		try {
@@ -427,6 +441,57 @@ public class OperationDAO extends DAO {
 		}
 
 		return operazioni;
+	}
+
+	public double mediaSuTrimestre() {
+
+		double result = 0.0;
+		try {
+			PreparedStatement preparedStatement = persistentConnection.prepareStatement(Queries.MEDIA_NUOVE_TRIMESTRE);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			resultSet.next();
+			result = resultSet.getDouble("avg_trimestre");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public ObservableList<ChiusureRow> getChiuseTrimestre() {
+
+		ObservableList<ChiusureRow> result = FXCollections.observableArrayList();
+		try {
+			PreparedStatement preparedStatement = persistentConnection.prepareStatement(Queries.CHIUSURE_PER_TRIMESTRE);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				ChiusureRow cRow = new ChiusureRow();
+				cRow.setPeriodo(resultSet.getString("t.trimestre"));
+				cRow.setOpConcluse(resultSet.getInt("n_chiusure"));
+				result.add(cRow);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+
+	}
+
+	public double getMediaChiuseTrimestre() {
+
+		double result = 0.0;
+		try {
+			PreparedStatement preparedStatement = persistentConnection.prepareStatement(Queries.MEDIA_CHIUSE_TRIMESTRE);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			resultSet.next();
+			result = resultSet.getDouble("avg_trimestrale");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+
 	}
 
 }
