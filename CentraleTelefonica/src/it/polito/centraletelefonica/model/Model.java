@@ -65,7 +65,7 @@ public class Model {
 				chiusureRow.setDiffPunti(diff);
 			}
 		}
-		
+
 		if (periodoSelezionato.compareToIgnoreCase("Trimestre") == 0) {
 			result.addAll(operationDAO.getChiuseTrimestre());
 			double mediaSuTrimestre = operationDAO.getMediaChiuseTrimestre();
@@ -74,6 +74,14 @@ public class Model {
 				double diff = Math.ceil((chiusureRow.getOpConcluse() - mediaSuTrimestre) / 100);
 				chiusureRow.setDiffPunti(diff);
 			}
+		}
+
+		result.addAll(operationDAO.getChiuseQuadrimestre());
+		double mediaSuQuadrimestre = operationDAO.getMediaChiuseQuadrimestre();
+		for (ChiusureRow chiusureRow : result) {
+			chiusureRow.setMediaMese(mediaSuQuadrimestre);
+			double diff = Math.ceil((chiusureRow.getOpConcluse() - mediaSuQuadrimestre) / 100);
+			chiusureRow.setDiffPunti(diff);
 		}
 
 		return result;
@@ -108,10 +116,20 @@ public class Model {
 
 		}
 
-		if (periodoSelezionato.compareToIgnoreCase("Quadimestre") == 0)
-			return operationDAO.getNuoveQuadrimestre();
+		if (periodoSelezionato.compareToIgnoreCase("Quadrimestre") == 0) {
 
-		return operationDAO.getNuoveSemestre();
+			result.addAll(operationDAO.getNuoveQuadrimestre());
+			double mediaSuQuadrimestre = operationDAO.mediaSuQuadrimestre();
+			for (NuoveRow nuoveRow : result) {
+				nuoveRow.setMediaMese(Math.ceil(mediaSuQuadrimestre));
+				double diff = Math.ceil((nuoveRow.getNuoveSegnalazioni() - mediaSuQuadrimestre) / 100);
+				nuoveRow.setDiffPunti(diff);
+			}
+			return result;
+
+		}
+
+		return result;
 	}
 
 	public static ObservableList<OperationCenter> getAllCenters() {

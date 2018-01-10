@@ -111,6 +111,10 @@ class Queries {
 			+ "from operazioni, tempo t \r\n" + "where DataSegnalazione = t.`data` \r\n" + "group by t.trimestre \r\n"
 			+ "order by t.trimestre";
 
+	public static final String NUOVE_PER_QUADRIMESTRE = "select t.quadrimestre, count(t.quadrimestre) n_operazioni \r\n"
+			+ "from operazioni, tempo t \r\n" + "where DataSegnalazione = t.`data` \r\n"
+			+ "group by t.quadrimestre \r\n" + "order by t.quadrimestre";
+
 	/**
 	 * <p>
 	 * Seleziona la media mensile di nuove segnalazioni
@@ -130,6 +134,11 @@ class Queries {
 	public static final String MEDIA_NUOVE_TRIMESTRE = "select sum(sub1.op_trimestre)/4 avg_trimestre \r\n"
 			+ "from(\r\n" + "select count(t.trimestre) op_trimestre \r\n" + "from operazioni, tempo t \r\n"
 			+ "where DataSegnalazione = t.`data` \r\n" + "group by t.trimestre \r\n" + "order by t.trimestre) sub1;";
+
+	public static final String MEDIA_NUOVE_QUADRIMESTRE = "select sum(sub1.op_trimestre)/4 avg_quadrimestre\r\n"
+			+ "from(select count(t.quadrimestre) op_trimestre \r\n" + "from operazioni, tempo t \r\n"
+			+ "where DataSegnalazione = t.`data` \r\n" + "group by t.quadrimestre \r\n"
+			+ "order by t.quadrimestre) sub1;";
 
 	/**
 	 * <p>
@@ -151,6 +160,11 @@ class Queries {
 	public static final String CHIUSURE_PER_TRIMESTRE = "select t.trimestre, count(t.trimestre) n_chiusure \r\n"
 			+ "from operazioni, tempo t \r\n" + "where DataChiusura <= DataObiettivo \r\n"
 			+ "and DataSegnalazione = t.`data` \r\n" + "group by t.trimestre \r\n" + "order by t.trimestre;";
+
+	public static final String CHIUSURE_PER_QUADRIMESTRE = "select t.quadrimestre, count(t.quadrimestre) n_chiusure \r\n"
+			+ "from operazioni, tempo t \r\n" + "where DataChiusura <= DataObiettivo \r\n"
+			+ "and DataSegnalazione = t.`data` \r\n" + "group by t.quadrimestre \r\n" + "order by t.quadrimestre;";
+
 	/**
 	 * <p>
 	 * Seleziona la media mensile di chiusure
@@ -172,6 +186,11 @@ class Queries {
 			+ "from(\r\n" + "select count(t.trimestre) op_trimestre from operazioni, tempo t\r\n"
 			+ "where DataChiusura <= DataObiettivo \r\n" + "and DataSegnalazione = t.`data` \r\n"
 			+ "group by t.mese\r\n" + "order by t.mese) sub1;";
+
+	public static final String MEDIA_CHIUSE_QUADRIMESTRE = "select sum(sub1.op_trimestre)/4 avg_quadrimestre\r\n"
+			+ "from(\r\n" + "select count(t.quadrimestre) op_trimestre from operazioni, tempo t\r\n"
+			+ "where DataChiusura <= DataObiettivo \r\n" + "and DataSegnalazione = t.`data` \r\n"
+			+ "group by t.quadrimestre \r\n" + "order by t.quadrimestre) sub1;";
 
 	/**
 	 * <p>
