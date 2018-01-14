@@ -52,8 +52,7 @@
                   </Label>
                   <HBox alignment="CENTER_RIGHT" prefHeight="52.0" prefWidth="528.0" spacing="20.0">
                      <children>
-                        <DatePicker fx:id="dateFrom" prefHeight="30.0" prefWidth="200.0" promptText="From..." />
-                        <DatePicker fx:id="dateTo" prefHeight="30.0" prefWidth="200.0" promptText="To..." />
+                        <DatePicker fx:id="dateFrom" prefHeight="30.0" prefWidth="200.0" promptText="Select date" />
                      </children>
                      <HBox.margin>
                         <Insets right="20.0" />
@@ -61,9 +60,11 @@
                   </HBox>
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefWidth="200.0" style="-fx-background-color: beige;">
+            <HBox alignment="CENTER_LEFT" prefWidth="200.0" spacing="10.0" style="-fx-background-color: beige;">
                <children>
                   <Button fx:id="btnCentrali" mnemonicParsing="false" onAction="#mostraCentrali" styleClass="btnMenu" text="Mostra Centrali" />
+                  <Button fx:id="btnMostraOp" mnemonicParsing="false" onAction="#mostraOp" styleClass="btnMenu" text="Operazioni in giornata" />
+                  <Button fx:id="btnDistanze" mnemonicParsing="false" onAction="#saveDistance" styleClass="btnMenu" text="Aggiorna distanze" />
                </children>
                <VBox.margin>
                   <Insets />

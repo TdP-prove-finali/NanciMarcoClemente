@@ -224,7 +224,7 @@ public class OverViewController extends Controller {
 		colNuove.setCellValueFactory(new PropertyValueFactory<NuoveRow, Integer>("nuoveSegnalazioni"));
 
 		// Box section
-		boxPeriodo.getItems().addAll("Seleziona periodo", "Mese", "Trimestre", "Quadrimestre", "Semestre");
+		boxPeriodo.getItems().addAll("Seleziona periodo", "Mese", "Trimestre", "Quadrimestre");
 		boxPeriodo.setValue("Seleziona periodo");
 
 		// add data to chartType

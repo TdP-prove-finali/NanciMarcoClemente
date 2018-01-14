@@ -42,15 +42,37 @@ public class PathsController extends Controller {
 	private DatePicker dateFrom;
 
 	@FXML
-	private DatePicker dateTo;
-
-	@FXML
 	private WebView webView;
 
 	@FXML
 	private Button btnCentrali;
 
+	@FXML
+	private Button btnMostraOp;
+
+	@FXML
+	private Button btnDistanze;
+
 	private WebEngine engine;
+
+	@FXML
+	void saveDistance(ActionEvent event) {
+//               engine.executeScript("calcDist()");
+//               String metri = (String) engine.executeScript("add(10)");
+//               System.out.println("Metri: " + metri);
+               Model.test();
+	}
+
+	@FXML
+	void mostraOp(ActionEvent event) {
+
+		if (dateFrom.getValue() == null)
+			showAlert("Devi selezionare una data per poter visualizzare le operazioni");
+		else {
+			engine.executeScript(Model.addMarkers(dateFrom.getValue()));
+		}
+
+	}
 
 	@FXML
 	void mostraCentrali(ActionEvent event) {
@@ -78,9 +100,10 @@ public class PathsController extends Controller {
 		assert btnWorkers != null : "fx:id=\"btnWorkers\" was not injected: check your FXML file 'PathsView.fxml'.";
 		assert btnPaths != null : "fx:id=\"btnPaths\" was not injected: check your FXML file 'PathsView.fxml'.";
 		assert dateFrom != null : "fx:id=\"dateFrom\" was not injected: check your FXML file 'PathsView.fxml'.";
-		assert dateTo != null : "fx:id=\"dateTo\" was not injected: check your FXML file 'PathsView.fxml'.";
 		assert webView != null : "fx:id=\"webView\" was not injected: check your FXML file 'PathsView.fxml'.";
 		assert btnCentrali != null : "fx:id=\"btnAddMarker\" was not injected: check your FXML file 'PathsView.fxml'.";
+		assert btnMostraOp != null : "fx:id=\"btnMostraOp\" was not injected: check your FXML file 'PathsView.fxml'.";
+		assert btnDistanze != null : "fx:id=\"btnDistanze\" was not injected: check your FXML file 'PathsView.fxml'.";
 
 		engine = webView.getEngine();
 		if (Model.connectionAvaible()) {

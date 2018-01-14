@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 import com.google.maps.model.LatLng;
 
-public class Operation {
+public class Operation extends Nodo {
 
 	private String id;
 	private String priority;

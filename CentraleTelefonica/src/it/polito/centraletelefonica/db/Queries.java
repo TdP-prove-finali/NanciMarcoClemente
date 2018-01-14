@@ -252,4 +252,15 @@ class Queries {
 	public static final String GET_OPERATION_BETWEEN = "select * from operazioni op, tipologie t, centrali c"
 			+ "	where DataSegnalazione between ? and ? and SegnalazioneTipo = t.tipo and op.CentraleID = c.CentraleID;";
 
+	public static final String GET_OPENED_OPERATION = "select * \r\n"
+			+ "from tipologie ti, operazioni op, tempo t, centrali c\r\n"
+			+ "where op.SegnalazioneTipo = ti.tipo and op.DataSegnalazione = t.`data`\r\n"
+			+ "and op.CentraleID = c.CentraleID\r\n" + "and DataSegnalazione between ? and ?\r\n"
+			+ "and Stato = \"Open\"";
+
+	public static final String GET_OPERATION_BY_CENTER_DATE = "select * \r\n"
+			+ "from operazioni op, centrali c, tempo t, tipologie ti\r\n" + "where op.DataSegnalazione = t.`data`\r\n"
+			+ "and op.CentraleID = c.CentraleID\r\n" + "and op.SegnalazioneTipo = ti.tipo\r\n"
+			+ "and op.DataSegnalazione between ? and ?\r\n" + "and Stato = \"Open\";";
+
 }

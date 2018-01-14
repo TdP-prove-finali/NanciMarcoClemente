@@ -4,15 +4,22 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.jgrapht.Graphs;
+
+import com.google.maps.DistanceMatrixApi;
+import com.google.maps.DistanceMatrixApiRequest;
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.errors.ApiException;
+import com.google.maps.model.DistanceMatrix;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.LatLng;
 
@@ -23,9 +30,12 @@ import it.polito.centraletelefonica.db.TipologieDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.PieChart.Data;
-import javafx.util.Callback;
 
 public class Model {
+
+	private static MioGrafo grafo;
+	private static Map<String, OperationCenter> centrali = new HashMap<String, OperationCenter>();
+	private static Map<String, Operation> operazioni = new HashMap<String, Operation>();
 
 	public static boolean connectionAvaible() {
 
@@ -134,7 +144,7 @@ public class Model {
 
 	public static ObservableList<OperationCenter> getAllCenters() {
 		OperationCenterDAO dao = new OperationCenterDAO();
-		return FXCollections.observableArrayList(dao.getAllOperationCenter());
+		return FXCollections.observableArrayList(dao.getAllOperationCenter(centrali));
 	}
 
 	public String validateCenterId(String id) {
@@ -248,7 +258,7 @@ public class Model {
 	}
 
 	public static String initMap() {
-		return MapJS.initMap();
+		return MapJS.initMap(centrali);
 	}
 
 	public static List<Operation> getAllOperations() {
@@ -300,7 +310,7 @@ public class Model {
 
 	private OperationCenter getCloserCenter(LatLng coo) {
 
-		List<OperationCenter> list = new LinkedList<>(new OperationCenterDAO().getAllOperationCenter());
+		List<OperationCenter> list = new LinkedList<>(new OperationCenterDAO().getAllOperationCenter(centrali));
 		OperationCenter result = null;
 
 		for (Iterator<OperationCenter> iterator = list.iterator(); iterator.hasNext();) {
@@ -332,7 +342,92 @@ public class Model {
 
 	public List<Operation> getOperationsFromTo(LocalDate from, LocalDate to) {
 		OperationDAO dao = new OperationDAO();
-		return dao.getOperationBetween(from, to);
+		return dao.getOperationBetween(from, to, operazioni);
+	}
+
+	public static String addMarkers(LocalDate value) {
+
+		String res = MapJS.addMarkers(value);
+		grafo = new MioGrafo();
+		OperationDAO dao = new OperationDAO();
+		OperationCenterDAO centerDao = new OperationCenterDAO();
+		List<Operation> operazioniLista = new LinkedList<>(
+				dao.getOperationBetween(value, value.minusDays(5), operazioni));
+		Graphs.addAllVertices(grafo, operazioniLista);
+		Graphs.addAllVertices(grafo, centerDao.getAllOperationCenter(centrali));
+		archiCentraliOperazioni(value);
+		archiOperazioneOperazione();
+
+		return res;
+	}
+
+	private static void archiOperazioneOperazione() {
+
+		for (Operation operazioneSource : operazioni.values()) {
+
+			for (Operation operazioneTarget : operazioni.values()) {
+				if (!grafo.containsEdge(operazioneSource, operazioneTarget))
+					grafo.addEdge(operazioneSource, operazioneTarget);
+			}
+		}
+
+	}
+
+	private static void archiCentraliOperazioni(LocalDate value) {
+
+		OperationCenterDAO dao = new OperationCenterDAO();
+
+		for (OperationCenter center : centrali.values()) {
+			OperationCenter centerVertex = centrali.get(center.getId());
+			List<Operation> edges = new LinkedList<>(dao.getLinkedOperations(centerVertex, value, operazioni));
+
+			for (Operation operation : edges) {
+				Operation vertex = operazioni.get(operation.getId());
+				if (!grafo.containsEdge(centerVertex, vertex)) {
+					grafo.addEdge(centerVertex, vertex);
+				}
+
+			}
+
+		}
+
+	}
+
+	public static void test() {
+
+		String apiKey = "AIzaSyBTt64RteMQQxOH5hpCYTcrANObd5QNmr8";
+		GeoApiContext context = new GeoApiContext.Builder().apiKey(apiKey).build();
+
+		try {
+			System.out.println("Inizio aggiornamento");
+			OperationDAO dao = new OperationDAO();
+			for (Operation op1 : dao.getAll()) {
+				for (Operation op2 : dao.getAll()) {
+					int existsCount = dao.existsRecord(op1, op2);
+					if (existsCount == 0) {
+						DistanceMatrixApiRequest request = DistanceMatrixApi.newRequest(context);
+						LatLng start = op1.getCoordinate();
+						LatLng end = op2.getCoordinate();
+						DistanceMatrix trix = request.origins(start).destinations(end).await();
+						long secondiImpiegati = trix.rows[0].elements[0].duration.inSeconds;
+						dao.insertDistanze(op1, op2, secondiImpiegati);
+					}
+
+					System.out.println("Fine aggiornamento");
+				}
+			}
+
+		} catch (ApiException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 }

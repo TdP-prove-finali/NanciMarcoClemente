@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import com.google.maps.model.LatLng;
 
@@ -397,7 +398,7 @@ public class OperationDAO extends DAO {
 		return operazioni;
 	}
 
-	public List<Operation> getOperationBetween(LocalDate from, LocalDate to) {
+	public List<Operation> getOperationBetween(LocalDate to, LocalDate from, Map<String, Operation> operazioni2) {
 		List<Operation> operazioni = new LinkedList<>();
 
 		try {
@@ -445,6 +446,7 @@ public class OperationDAO extends DAO {
 					operation.setVarianza(varianza);
 					operation.setOperatoriRichiesti(operatoriRichiesti);
 					operazioni.add(operation);
+					operazioni2.put(id, operation);
 				}
 
 			}
@@ -557,6 +559,113 @@ public class OperationDAO extends DAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return result;
+	}
+
+	public List<Operation> openedOperations(LocalDate value) {
+		
+		List<Operation> operations = new LinkedList<>();
+		try {
+			PreparedStatement preparedStatement = persistentConnection.prepareStatement(Queries.GET_OPENED_OPERATION);
+			preparedStatement.setDate(1, Date.valueOf(value.minusDays(5)));
+			preparedStatement.setDate(2, Date.valueOf(value));
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			while (resultSet.next()) {
+
+				while (resultSet.next()) {
+					String id = resultSet.getString("SegnalazioneID");
+					String tipo = resultSet.getString("SegnalazioneTipo");
+					double media = resultSet.getDouble("durata_media");
+					double varianza = resultSet.getDouble("varianza");
+					int operatoriRichiesti = resultSet.getInt("operatori_richiesti");
+					LatLng coordinate = new LatLng(resultSet.getDouble("op.Latitude"),
+							resultSet.getDouble("op.Longitude"));
+					String idCentrale = resultSet.getString("op.CentraleID");
+					String name = resultSet.getString("nome");
+					String street = resultSet.getString("indirizzo");
+					LatLng latLng = new LatLng(resultSet.getDouble("c.Latitude"), resultSet.getDouble("c.Longitude"));
+					int numOperatori = resultSet.getInt("NumeroOperatori");
+					LocalDate reportingDate = resultSet.getDate("DataSegnalazione").toLocalDate();
+					LocalDate goalDate = resultSet.getDate("DataObiettivo").toLocalDate();
+					Date d = resultSet.getDate("DataChiusura");
+					OperationCenter operationCenter = new OperationCenter(idCentrale, name, street, latLng,
+							numOperatori);
+					Operation operation = new Operation(id, coordinate, operationCenter);
+					LocalDate closingDate = null;
+					String stato = resultSet.getString("Stato");
+					String city = resultSet.getString("Comune");
+					if (d != null) {
+						closingDate = d.toLocalDate();
+						operation.setDataChiusura(closingDate);
+					}
+
+					operation.setDataSegnalazione(reportingDate);
+					operation.setDataObiettivo(goalDate);
+					operation.setStato(stato);
+					operation.setTipo(tipo);
+					operation.setMedia(media);
+					operation.setComune(city);
+					operation.setIndirizzo(resultSet.getString("Indirizzo"));
+					operation.setPriority(resultSet.getString("Priority"));
+					operation.setVarianza(varianza);
+					operation.setOperatoriRichiesti(operatoriRichiesti);
+					operations.add(operation);
+				}
+
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return operations;
+	}
+
+	public void insertDistanze(Operation op1, Operation op2, long secondiImpiegati) {
+		
+		String idStart = op1.getId();
+		String idEnd = op2.getId();
+		String query = "insert into distanze(dist_id,op_id1,op_id2,distanza) values (DEFAULT,?,?,?)";
+		
+		try {
+			PreparedStatement preparedStatement = persistentConnection.prepareStatement(query);
+			preparedStatement.setString(1, idStart);
+			preparedStatement.setString(2, idEnd);
+			preparedStatement.setInt(3, (int) secondiImpiegati);
+			preparedStatement.executeUpdate();
+			System.out.println(preparedStatement.toString());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+	public int existsRecord(Operation op1, Operation op2) {
+		
+		String idStart = op1.getId();
+		String idEnd = op2.getId();
+		int result = 0;
+		String query = "select count(*) num from distanze where op_id1 = ? and op_id2 = ?";
+		
+		try {
+			PreparedStatement preparedStatement = persistentConnection.prepareStatement(query);
+			preparedStatement.setString(1, idStart);
+			preparedStatement.setString(2, idEnd);
+			ResultSet set = preparedStatement.executeQuery();
+			while (set.next()) {
+				result = set.getInt("num");
+			}
+			System.out.println(preparedStatement.toString());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return result;
 	}
 

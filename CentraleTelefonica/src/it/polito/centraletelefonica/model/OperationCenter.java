@@ -2,7 +2,7 @@ package it.polito.centraletelefonica.model;
 
 import com.google.maps.model.LatLng;
 
-public class OperationCenter {
+public class OperationCenter extends Nodo {
 
 	private String id;
 	private String name;
