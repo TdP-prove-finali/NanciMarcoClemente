@@ -13,15 +13,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.jgrapht.Graphs;
+import org.jgrapht.graph.DefaultWeightedEdge;
 
-import com.google.maps.DistanceMatrixApi;
-import com.google.maps.DistanceMatrixApiRequest;
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.errors.ApiException;
-import com.google.maps.model.DistanceMatrix;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.LatLng;
+import com.javadocmd.simplelatlng.LatLngTool;
+import com.javadocmd.simplelatlng.util.LengthUnit;
 
 import it.polito.centraletelefonica.controller.MapJS;
 import it.polito.centraletelefonica.db.OperationCenterDAO;
@@ -357,8 +357,62 @@ public class Model {
 		Graphs.addAllVertices(grafo, centerDao.getAllOperationCenter(centrali));
 		archiCentraliOperazioni(value);
 		archiOperazioneOperazione();
+		setPesi();
 
 		return res;
+	}
+
+	private static void setPesi() {
+
+		for (Nodo source : grafo.vertexSet()) {
+			for (Nodo target : grafo.vertexSet()) {
+				DefaultWeightedEdge edge = grafo.getEdge(source, target);
+				double peso = 0;
+				if ((source instanceof OperationCenter) && (target instanceof Operation)) {
+					OperationCenter center = (OperationCenter) source;
+					Operation operation = (Operation) target;
+					peso = pesoCentraleOperazione(center, operation);
+					grafo.setEdgeWeight(edge, peso);
+				}
+				if ((source instanceof Operation) && (target instanceof Operation)) {
+					Operation op1 = (Operation) source;
+					Operation op2 = (Operation) target;
+					peso = pesoOpOp(op1, op2);
+					grafo.setEdgeWeight(edge, peso);
+				}
+
+			}
+		}
+
+	}
+
+	private static double pesoOpOp(Operation op1, Operation op2) {
+		double peso = 0;
+		double distance = LatLngTool.distance(
+				new com.javadocmd.simplelatlng.LatLng(op1.getCoordinate().lat, op1.getCoordinate().lng),
+				new com.javadocmd.simplelatlng.LatLng(op2.getCoordinate().lat, op2.getCoordinate().lng),
+				LengthUnit.METER);
+		// Supponiamo una velocita' di 14 m/s, un po' piu' di 50 km/h.
+		double secondi = distance / 14;
+		peso = secondi + op2.getMedia() * 60;
+		// peso anche in base al numero di operatori richiesti
+		peso = peso * op2.getOperatoriRichiesti();
+		return peso;
+	}
+
+	private static double pesoCentraleOperazione(OperationCenter center, Operation operation) {
+
+		double peso = 0;
+		double distance = LatLngTool.distance(
+				new com.javadocmd.simplelatlng.LatLng(center.getLatLng().lat, center.getLatLng().lng),
+				new com.javadocmd.simplelatlng.LatLng(operation.getCoordinate().lat, operation.getCoordinate().lng),
+				LengthUnit.METER);
+		// Supponiamo una velocita' di 14 m/s, un po' piu' di 50 km/h.
+		double secondi = distance / 14;
+		peso = secondi + operation.getMedia() * 60;
+		// peso anche in base al numero di operatori richiesti
+		peso = peso * operation.getOperatoriRichiesti();
+		return peso;
 	}
 
 	private static void archiOperazioneOperazione() {
@@ -394,39 +448,6 @@ public class Model {
 	}
 
 	public static void test() {
-
-		String apiKey = "AIzaSyBTt64RteMQQxOH5hpCYTcrANObd5QNmr8";
-		GeoApiContext context = new GeoApiContext.Builder().apiKey(apiKey).build();
-
-		try {
-			System.out.println("Inizio aggiornamento");
-			OperationDAO dao = new OperationDAO();
-			for (Operation op1 : dao.getAll()) {
-				for (Operation op2 : dao.getAll()) {
-					int existsCount = dao.existsRecord(op1, op2);
-					if (existsCount == 0) {
-						DistanceMatrixApiRequest request = DistanceMatrixApi.newRequest(context);
-						LatLng start = op1.getCoordinate();
-						LatLng end = op2.getCoordinate();
-						DistanceMatrix trix = request.origins(start).destinations(end).await();
-						long secondiImpiegati = trix.rows[0].elements[0].duration.inSeconds;
-						dao.insertDistanze(op1, op2, secondiImpiegati);
-					}
-
-					System.out.println("Fine aggiornamento");
-				}
-			}
-
-		} catch (ApiException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
 	}
 

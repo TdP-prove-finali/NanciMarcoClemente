@@ -1,6 +1,8 @@
 package it.polito.centraletelefonica.model;
 
 import java.time.LocalDate;
+import java.util.LinkedList;
+import java.util.List;
 
 import com.google.maps.model.LatLng;
 
@@ -20,11 +22,14 @@ public class Operation extends Nodo {
 	private double media;
 	private double varianza;
 	private int operatoriRichiesti;
+	private List<Operatore> richiedenti, titolari;
 
 	public Operation(String id, LatLng coordinate, OperationCenter operationCenter) {
 		this.id = id;
 		this.coordinate = coordinate;
 		this.operationCenter = operationCenter;
+		richiedenti = new LinkedList<>();
+		titolari = new LinkedList<>();
 	}
 
 	public String getTipo() {
@@ -38,7 +43,6 @@ public class Operation extends Nodo {
 	public void setId(String id) {
 		this.id = id;
 	}
-
 
 	public String getPriority() {
 		return priority;
@@ -132,6 +136,29 @@ public class Operation extends Nodo {
 		this.operatoriRichiesti = operatoriRichiesti;
 	}
 
+	public String getStato() {
+		return stato;
+	}
+
+	public void setStato(String stato) {
+		this.stato = stato;
+	}
+
+	public void addRichiedente(Operatore operatore) {
+		if (stato != "IN_CORSO" && stato != "Closed") {
+			richiedenti.add(operatore);
+			if (richiedenti.size() == operatoriRichiesti) {
+				setTitolari(richiedenti);
+				richiedenti.clear();
+				this.stato = "IN_CORSO";
+			}
+		}
+	}
+
+	public void setTitolari(List<Operatore> operatori) {
+		titolari.addAll(operatori);
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -155,14 +182,6 @@ public class Operation extends Nodo {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}
-
-	public String getStato() {
-		return stato;
-	}
-
-	public void setStato(String stato) {
-		this.stato = stato;
 	}
 
 }

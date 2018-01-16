@@ -136,7 +136,7 @@ function addMarker(latitude, longitude) {
 
 	var opImg = {
 		url : 'http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/building-icon.png',
-		scaledSize : new google.maps.Size(5, 5),
+		scaledSize : new google.maps.Size(5, 10),
 		origin : new google.maps.Point(0, 0),
 		anchor : new google.maps.Point(0, 0)
 	};

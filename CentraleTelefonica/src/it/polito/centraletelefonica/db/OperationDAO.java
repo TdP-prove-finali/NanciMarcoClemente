@@ -563,14 +563,14 @@ public class OperationDAO extends DAO {
 	}
 
 	public List<Operation> openedOperations(LocalDate value) {
-		
+
 		List<Operation> operations = new LinkedList<>();
 		try {
 			PreparedStatement preparedStatement = persistentConnection.prepareStatement(Queries.GET_OPENED_OPERATION);
 			preparedStatement.setDate(1, Date.valueOf(value.minusDays(5)));
 			preparedStatement.setDate(2, Date.valueOf(value));
 			ResultSet resultSet = preparedStatement.executeQuery();
-			
+
 			while (resultSet.next()) {
 
 				while (resultSet.next()) {
@@ -614,59 +614,13 @@ public class OperationDAO extends DAO {
 				}
 
 			}
-			
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 		return operations;
-	}
-
-	public void insertDistanze(Operation op1, Operation op2, long secondiImpiegati) {
-		
-		String idStart = op1.getId();
-		String idEnd = op2.getId();
-		String query = "insert into distanze(dist_id,op_id1,op_id2,distanza) values (DEFAULT,?,?,?)";
-		
-		try {
-			PreparedStatement preparedStatement = persistentConnection.prepareStatement(query);
-			preparedStatement.setString(1, idStart);
-			preparedStatement.setString(2, idEnd);
-			preparedStatement.setInt(3, (int) secondiImpiegati);
-			preparedStatement.executeUpdate();
-			System.out.println(preparedStatement.toString());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
-
-	public int existsRecord(Operation op1, Operation op2) {
-		
-		String idStart = op1.getId();
-		String idEnd = op2.getId();
-		int result = 0;
-		String query = "select count(*) num from distanze where op_id1 = ? and op_id2 = ?";
-		
-		try {
-			PreparedStatement preparedStatement = persistentConnection.prepareStatement(query);
-			preparedStatement.setString(1, idStart);
-			preparedStatement.setString(2, idEnd);
-			ResultSet set = preparedStatement.executeQuery();
-			while (set.next()) {
-				result = set.getInt("num");
-			}
-			System.out.println(preparedStatement.toString());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return result;
 	}
 
 }
