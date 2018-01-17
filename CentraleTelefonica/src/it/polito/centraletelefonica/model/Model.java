@@ -13,7 +13,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.jgrapht.Graphs;
+import org.jgrapht.alg.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
+import org.jgrapht.traverse.ClosestFirstIterator;
 
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
@@ -420,7 +422,8 @@ public class Model {
 		for (Operation operazioneSource : operazioni.values()) {
 
 			for (Operation operazioneTarget : operazioni.values()) {
-				if (!grafo.containsEdge(operazioneSource, operazioneTarget))
+				if (!grafo.containsEdge(operazioneSource, operazioneTarget)
+						&& !operazioneSource.equals(operazioneTarget))
 					grafo.addEdge(operazioneSource, operazioneTarget);
 			}
 		}
@@ -437,7 +440,7 @@ public class Model {
 
 			for (Operation operation : edges) {
 				Operation vertex = operazioni.get(operation.getId());
-				if (!grafo.containsEdge(centerVertex, vertex)) {
+				if (!grafo.containsEdge(centerVertex, vertex) && !centerVertex.equals(vertex)) {
 					grafo.addEdge(centerVertex, vertex);
 				}
 
@@ -447,7 +450,32 @@ public class Model {
 
 	}
 
-	public static void test() {
+	public void generaPercorsi(LocalDate localDate) {
+
+		// Creo gli operatori e li assegno alle centrali
+
+		int opId = 0;
+
+		for (Iterator<OperationCenter> iterator = centrali.values().iterator(); iterator.hasNext();) {
+			OperationCenter center = (OperationCenter) iterator.next();
+			for (int i = 0; i < center.getNumOperatori(); i++) {
+				Operatore operatore = new Operatore("Operatore" + opId++);
+				center.addOp(operatore);
+				operatore.setCenter(center);
+				operatore.setStato("libero");
+			}
+
+		}
+
+		// Inizialmente gli operatori partono dalle centrali e si dirigono verso le
+		// operazioni piu' vicina(peso minimo) fino a svuotare le centrali(se
+		// necessario)
+
+		for (Iterator<OperationCenter> iterator = centrali.values().iterator(); iterator.hasNext();) {
+			OperationCenter center = (OperationCenter) iterator.next();
+			ClosestFirstIterator<Nodo, DefaultWeightedEdge> closest = new ClosestFirstIterator<>(grafo, center);
+
+		}
 
 	}
 

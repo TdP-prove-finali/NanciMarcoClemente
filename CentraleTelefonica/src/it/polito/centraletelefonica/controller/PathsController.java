@@ -51,16 +51,16 @@ public class PathsController extends Controller {
 	private Button btnMostraOp;
 
 	@FXML
-	private Button btnDistanze;
+	private Button btnPercorsi;
 
 	private WebEngine engine;
 
 	@FXML
-	void saveDistance(ActionEvent event) {
-//               engine.executeScript("calcDist()");
-//               String metri = (String) engine.executeScript("add(10)");
-//               System.out.println("Metri: " + metri);
-               Model.test();
+	void generaPercorsi(ActionEvent event) {
+		if (dateFrom.getValue() == null)
+			showAlert("Devi selezionare una data per poter visualizzare le operazioni");
+		else
+			model.generaPercorsi(dateFrom.getValue());
 	}
 
 	@FXML
@@ -70,6 +70,7 @@ public class PathsController extends Controller {
 			showAlert("Devi selezionare una data per poter visualizzare le operazioni");
 		else {
 			engine.executeScript(Model.addMarkers(dateFrom.getValue()));
+			btnPercorsi.setDisable(false);
 		}
 
 	}
@@ -103,7 +104,7 @@ public class PathsController extends Controller {
 		assert webView != null : "fx:id=\"webView\" was not injected: check your FXML file 'PathsView.fxml'.";
 		assert btnCentrali != null : "fx:id=\"btnAddMarker\" was not injected: check your FXML file 'PathsView.fxml'.";
 		assert btnMostraOp != null : "fx:id=\"btnMostraOp\" was not injected: check your FXML file 'PathsView.fxml'.";
-		assert btnDistanze != null : "fx:id=\"btnDistanze\" was not injected: check your FXML file 'PathsView.fxml'.";
+		assert btnPercorsi != null : "fx:id=\"btnDistanze\" was not injected: check your FXML file 'PathsView.fxml'.";
 
 		engine = webView.getEngine();
 		if (Model.connectionAvaible()) {

@@ -1,6 +1,7 @@
 package it.polito.centraletelefonica.model;
 
 import java.time.LocalDate;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -151,12 +152,22 @@ public class Operation extends Nodo {
 				setTitolari(richiedenti);
 				richiedenti.clear();
 				this.stato = "IN_CORSO";
+				operatore.setStato("In viaggio");
 			}
 		}
 	}
 
 	public void setTitolari(List<Operatore> operatori) {
 		titolari.addAll(operatori);
+		for (Iterator<Operatore> iterator = operatori.iterator(); iterator.hasNext();) {
+			Operatore operatore = (Operatore) iterator.next();
+			operatore.setStato("occupato");
+		}
+	}
+
+	@Override
+	public String toString() {
+		return String.join(" ", tipo, indirizzo, dataSegnalazione.toString());
 	}
 
 	@Override

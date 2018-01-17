@@ -1,5 +1,8 @@
 package it.polito.centraletelefonica.model;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import com.google.maps.model.LatLng;
 
 public class OperationCenter extends Nodo {
@@ -9,6 +12,7 @@ public class OperationCenter extends Nodo {
 	private String street;
 	private LatLng latLng;
 	private int numOperatori;
+	private List<Operatore> operatori;
 
 	public OperationCenter(String id, String name, String street, LatLng latLng, int numOperatori) {
 		this.id = id;
@@ -16,7 +20,7 @@ public class OperationCenter extends Nodo {
 		this.street = street;
 		this.latLng = latLng;
 		this.numOperatori = numOperatori;
-
+		this.operatori = new LinkedList<>();
 	}
 
 	public String getId() {
@@ -57,6 +61,15 @@ public class OperationCenter extends Nodo {
 
 	public void setNumOperatori(int numOperatori) {
 		this.numOperatori = numOperatori;
+	}
+
+	public void addOp(Operatore operatore) {
+		if (operatori.size() < numOperatori)
+			operatori.add(operatore);
+	}
+
+	public int getOpInCentrale() {
+		return operatori.size();
 	}
 
 	@Override

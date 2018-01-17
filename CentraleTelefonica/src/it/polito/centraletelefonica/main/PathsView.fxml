@@ -64,7 +64,7 @@
                <children>
                   <Button fx:id="btnCentrali" mnemonicParsing="false" onAction="#mostraCentrali" styleClass="btnMenu" text="Mostra Centrali" />
                   <Button fx:id="btnMostraOp" mnemonicParsing="false" onAction="#mostraOp" styleClass="btnMenu" text="Operazioni in giornata" />
-                  <Button fx:id="btnDistanze" mnemonicParsing="false" onAction="#saveDistance" styleClass="btnMenu" text="Aggiorna distanze" />
+                  <Button fx:id="btnPercorsi" disable="true" mnemonicParsing="false" onAction="#generaPercorsi" styleClass="btnMenu" text="Genera Percorsi" />
                </children>
                <VBox.margin>
                   <Insets />
