@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -369,18 +370,20 @@ public class Model {
 		for (Nodo source : grafo.vertexSet()) {
 			for (Nodo target : grafo.vertexSet()) {
 				DefaultWeightedEdge edge = grafo.getEdge(source, target);
-				double peso = 0;
-				if ((source instanceof OperationCenter) && (target instanceof Operation)) {
-					OperationCenter center = (OperationCenter) source;
-					Operation operation = (Operation) target;
-					peso = pesoCentraleOperazione(center, operation);
-					grafo.setEdgeWeight(edge, peso);
-				}
-				if ((source instanceof Operation) && (target instanceof Operation)) {
-					Operation op1 = (Operation) source;
-					Operation op2 = (Operation) target;
-					peso = pesoOpOp(op1, op2);
-					grafo.setEdgeWeight(edge, peso);
+				if (grafo.containsEdge(edge)) {
+					double peso = 0;
+					if ((source instanceof OperationCenter) && (target instanceof Operation)) {
+						OperationCenter center = (OperationCenter) source;
+						Operation operation = (Operation) target;
+						peso = pesoCentraleOperazione(center, operation);
+						grafo.setEdgeWeight(edge, peso);
+					}
+					if ((source instanceof Operation) && (target instanceof Operation)) {
+						Operation op1 = (Operation) source;
+						Operation op2 = (Operation) target;
+						peso = pesoOpOp(op1, op2);
+						grafo.setEdgeWeight(edge, peso);
+					}
 				}
 
 			}
@@ -468,14 +471,47 @@ public class Model {
 		}
 
 		// Inizialmente gli operatori partono dalle centrali e si dirigono verso le
-		// operazioni piu' vicina(peso minimo) fino a svuotare le centrali(se
+		// operazioni piu' vicine(peso minimo) fino a svuotare le centrali(se
 		// necessario)
+
+		Simulatore simulatore = new Simulatore(grafo);
+		List<Evento> eventi = new LinkedList<>();
 
 		for (Iterator<OperationCenter> iterator = centrali.values().iterator(); iterator.hasNext();) {
 			OperationCenter center = (OperationCenter) iterator.next();
 			ClosestFirstIterator<Nodo, DefaultWeightedEdge> closest = new ClosestFirstIterator<>(grafo, center);
+			// il primo lo mando a vuoto perché corrisponde al nodo di partenza ovvero la
+			// centrale stessa
+			closest.next();
+			// ciclo fino a svuotare la centrale e/o ad esaurire le operazioni giornaliere
+			int assegnate = 0;
+			int daAssegnare = Graphs.neighborListOf(grafo, center).size();
+			while (center.getOperatoriSize() > 0 && assegnate < daAssegnare) {
+				Operation nextOperation = (Operation) closest.next();
+				int opRichiesti = nextOperation.getOperatoriRichiesti();
+				for (int i = 0; i < opRichiesti; i++) {
+					Operatore operatore = center.getOperatore(i);
+					center.removeOp(operatore);
+					DefaultWeightedEdge edge = grafo.getEdge(center, nextOperation);
+					double tempo = grafo.getEdgeWeight(edge) / nextOperation.getOperatoriRichiesti();
+					Evento evento = new Evento(operatore, LocalTime.of(8, 00),
+							LocalTime.of(8, 00).plusSeconds((long) tempo));
+					eventi.add(evento);
+					// una volta mossi verso l'operazione elimino l'arco per evitare di ritornare
+					// sulla stessa operazione, cosa che non avrebbe senso
+					grafo.removeEdge(edge);
+					// delega: l'operatore deve sapere verso quale operazione muoversi e
+					// l'operazione deve conoscere l'operatore richiedente.
+					nextOperation.addRichiedente(operatore);
+					operatore.setOperationTarget(nextOperation);
+				}
+
+			}
 
 		}
+
+		simulatore.inizializzaCoda(eventi);
+		simulatore.run();
 
 	}
 

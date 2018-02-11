@@ -5,6 +5,9 @@ public class Operatore {
 	private String stato;
 	private OperationCenter center;
 	private String nome;
+	// in un qualche modo indica dove si trova l'operatore
+	private Operation operazioneAttuale;
+	private Operation nextOp;
 
 	public Operatore(String nome) {
 		this.nome = nome;
@@ -28,6 +31,10 @@ public class Operatore {
 
 	}
 
+	public String getStato() {
+		return stato;
+	}
+
 	/**
 	 * setta la centrale di appartenenza dell'operatore
 	 * 
@@ -35,6 +42,22 @@ public class Operatore {
 	 */
 	public void setCenter(OperationCenter center) {
 		this.center = center;
+	}
+
+	public Operation getOperazioneAttuale() {
+		return operazioneAttuale;
+	}
+
+	public void setOperazioneAttuale(Operation operazioneAttuale) {
+		this.operazioneAttuale = operazioneAttuale;
+	}
+
+	public void setOperationTarget(Operation nextOp) {
+		this.nextOp = nextOp;
+	}
+	
+	public Operation getOperationTarget() {
+		return nextOp;
 	}
 
 	@Override

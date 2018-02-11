@@ -1,5 +1,7 @@
 package it.polito.centraletelefonica.model;
 
+import java.time.LocalTime;
+
 /**
  * Superclasse evento che descrive gli eventi che fanno riferimento agli
  * operatori
@@ -7,13 +9,13 @@ package it.polito.centraletelefonica.model;
  * @author GJCode
  *
  */
-public class Evento {
+public class Evento implements Comparable<Evento> {
 
 	private Operatore operatore;
-	private int initTime;
-	private int targetTime;
+	private LocalTime initTime;
+	private LocalTime targetTime;
 
-	public Evento(Operatore operatore, int initTime, int targetTime) {
+	public Evento(Operatore operatore, LocalTime initTime, LocalTime targetTime) {
 		this.setOperatore(operatore);
 		this.setInitTime(initTime);
 		this.setTargetTime(targetTime);
@@ -27,25 +29,30 @@ public class Evento {
 		this.operatore = operatore;
 	}
 
-	public int getInitTime() {
+	public LocalTime getInitTime() {
 		return initTime;
 	}
 
-	public void setInitTime(int initTime) {
+	public void setInitTime(LocalTime initTime) {
 		this.initTime = initTime;
 	}
 
-	public int getTargetTime() {
+	public LocalTime getTargetTime() {
 		return targetTime;
 	}
 
-	public void setTargetTime(int targetTime) {
+	public void setTargetTime(LocalTime targetTime) {
 		this.targetTime = targetTime;
 	}
 
 	@Override
 	public String toString() {
 		return String.join(" ", operatore.toString(), String.valueOf(targetTime));
+	}
+
+	@Override
+	public int compareTo(Evento arg0) {
+		return this.initTime.compareTo(arg0.getInitTime());
 	}
 
 }

@@ -152,7 +152,7 @@ public class Operation extends Nodo {
 				setTitolari(richiedenti);
 				richiedenti.clear();
 				this.stato = "IN_CORSO";
-				operatore.setStato("In viaggio");
+				operatore.setStato("in viaggio");
 			}
 		}
 	}
