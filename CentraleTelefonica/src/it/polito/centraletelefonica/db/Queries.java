@@ -250,7 +250,7 @@ class Queries {
 			+ "	where DataSegnalazione <= ? and SegnalazioneTipo = t.tipo and op.CentraleID = c.CentraleID";
 
 	public static final String GET_OPERATION_BETWEEN = "select * from operazioni op, tipologie t, centrali c"
-			+ "	where DataSegnalazione between ? and ? and SegnalazioneTipo = t.tipo and op.CentraleID = c.CentraleID;";
+			+ "	where DataSegnalazione between ? and ? and SegnalazioneTipo = t.tipo and op.CentraleID = c.CentraleID and op.Stato = \"Open\"";
 
 	public static final String GET_OPENED_OPERATION = "select * \r\n"
 			+ "from tipologie ti, operazioni op, tempo t, centrali c\r\n"

@@ -47,7 +47,14 @@ public class Evento implements Comparable<Evento> {
 
 	@Override
 	public String toString() {
-		return String.join(" ", operatore.toString(), String.valueOf(targetTime));
+		String toString = String.join(" ", operatore.toString(), String.valueOf(initTime));
+		if (operatore.getStato() == "in viaggio")
+			toString += " in viaggio verso " + operatore.getOperationTarget().getIndirizzo();
+		if (operatore.getStato() == "occupato")
+			toString += " operatore occupato presso " + operatore.getOperationTarget().getIndirizzo();
+		if (operatore.getStato() == "libero")
+			toString += " operatore conclude operazione in " + operatore.getOperazioneAttuale().getIndirizzo();
+		return toString;
 	}
 
 	@Override

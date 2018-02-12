@@ -423,7 +423,6 @@ public class Model {
 	private static void archiOperazioneOperazione() {
 
 		for (Operation operazioneSource : operazioni.values()) {
-
 			for (Operation operazioneTarget : operazioni.values()) {
 				if (!grafo.containsEdge(operazioneSource, operazioneTarget)
 						&& !operazioneSource.equals(operazioneTarget))
@@ -440,7 +439,6 @@ public class Model {
 		for (OperationCenter center : centrali.values()) {
 			OperationCenter centerVertex = centrali.get(center.getId());
 			List<Operation> edges = new LinkedList<>(dao.getLinkedOperations(centerVertex, value, operazioni));
-
 			for (Operation operation : edges) {
 				Operation vertex = operazioni.get(operation.getId());
 				if (!grafo.containsEdge(centerVertex, vertex) && !centerVertex.equals(vertex)) {
@@ -454,6 +452,8 @@ public class Model {
 	}
 
 	public void generaPercorsi(LocalDate localDate) {
+
+		System.out.println("Numero di operazioni: " + (grafo.vertexSet().size() - 4) + "\n");
 
 		// Creo gli operatori e li assegno alle centrali
 

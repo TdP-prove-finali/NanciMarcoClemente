@@ -188,4 +188,12 @@ public class Operation extends Nodo {
 		return true;
 	}
 
+	public void liberaOperatori() {
+
+		for (int i = 0; i < titolari.size(); i++) {
+			titolari.get(i).setStato("libero");
+		}
+
+	}
+
 }
