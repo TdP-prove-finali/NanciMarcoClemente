@@ -44,6 +44,10 @@ public class Operatore {
 		this.center = center;
 	}
 
+	public OperationCenter getCenter() {
+		return center;
+	}
+
 	public Operation getOperazioneAttuale() {
 		return operazioneAttuale;
 	}
@@ -55,7 +59,7 @@ public class Operatore {
 	public void setOperationTarget(Operation nextOp) {
 		this.nextOp = nextOp;
 	}
-	
+
 	public Operation getOperationTarget() {
 		return nextOp;
 	}

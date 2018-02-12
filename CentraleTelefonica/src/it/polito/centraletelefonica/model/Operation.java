@@ -146,23 +146,16 @@ public class Operation extends Nodo {
 	}
 
 	public void addRichiedente(Operatore operatore) {
-		if (stato != "IN_CORSO" && stato != "Closed") {
-			richiedenti.add(operatore);
-			if (richiedenti.size() == operatoriRichiesti) {
-				setTitolari(richiedenti);
-				richiedenti.clear();
-				this.stato = "IN_CORSO";
-				operatore.setStato("in viaggio");
-			}
+		richiedenti.add(operatore);
+		if (richiedenti.size() == operatoriRichiesti) {
+			setTitolari(richiedenti);
+			richiedenti.clear();
 		}
 	}
 
 	public void setTitolari(List<Operatore> operatori) {
+		this.stato = "IN_CORSO";
 		titolari.addAll(operatori);
-		for (Iterator<Operatore> iterator = operatori.iterator(); iterator.hasNext();) {
-			Operatore operatore = (Operatore) iterator.next();
-			operatore.setStato("occupato");
-		}
 	}
 
 	@Override

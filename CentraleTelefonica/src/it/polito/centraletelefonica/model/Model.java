@@ -462,7 +462,7 @@ public class Model {
 		for (Iterator<OperationCenter> iterator = centrali.values().iterator(); iterator.hasNext();) {
 			OperationCenter center = (OperationCenter) iterator.next();
 			for (int i = 0; i < center.getNumOperatori(); i++) {
-				Operatore operatore = new Operatore("Operatore" + opId++);
+				Operatore operatore = new Operatore("Operatore " + opId++);
 				center.addOp(operatore);
 				operatore.setCenter(center);
 				operatore.setStato("libero");
@@ -493,17 +493,23 @@ public class Model {
 					Operatore operatore = center.getOperatore(i);
 					center.removeOp(operatore);
 					DefaultWeightedEdge edge = grafo.getEdge(center, nextOperation);
-					double tempo = grafo.getEdgeWeight(edge) / nextOperation.getOperatoriRichiesti();
+					// gli operatori partono verso le centrali quindi l'inizio dell'evento
+					// corrisponde alle 8:00 del mattino, mentre il target corrisponde all'orario
+					// d'arrivo sul posto
+					double tempo = (grafo.getEdgeWeight(edge) / nextOperation.getOperatoriRichiesti())
+							- nextOperation.getMedia() * 60;
 					Evento evento = new Evento(operatore, LocalTime.of(8, 00),
 							LocalTime.of(8, 00).plusSeconds((long) tempo));
-					eventi.add(evento);
 					// una volta mossi verso l'operazione elimino l'arco per evitare di ritornare
 					// sulla stessa operazione, cosa che non avrebbe senso
 					grafo.removeEdge(edge);
+					grafo.removeVertex(center);
 					// delega: l'operatore deve sapere verso quale operazione muoversi e
 					// l'operazione deve conoscere l'operatore richiedente.
-					nextOperation.addRichiedente(operatore);
 					operatore.setOperationTarget(nextOperation);
+					operatore.setStato("in viaggio");
+					eventi.add(evento);
+
 				}
 
 			}

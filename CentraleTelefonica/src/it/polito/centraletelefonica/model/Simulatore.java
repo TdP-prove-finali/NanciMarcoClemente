@@ -7,6 +7,9 @@ import java.util.PriorityQueue;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.traverse.ClosestFirstIterator;
 
+import com.javadocmd.simplelatlng.LatLngTool;
+import com.javadocmd.simplelatlng.util.LengthUnit;
+
 public class Simulatore {
 
 	private static final LocalTime INIZIO_SIMULAZIONE = LocalTime.of(8, 00);
@@ -60,6 +63,10 @@ public class Simulatore {
 				continua(op, ev);
 				break;
 
+			case "libero":
+				// assegno all'operatore una nuova destinazione
+				assegna(op, ev);
+
 			default:
 				break;
 			}
@@ -71,9 +78,31 @@ public class Simulatore {
 
 	}
 
-	private void continua(Operatore op, Evento ev) {
+	private void assegna(Operatore op, Evento ev) {
 
-		System.out.println("entro in continua");
+		ClosestFirstIterator<Nodo, DefaultWeightedEdge> closest = new ClosestFirstIterator<Nodo, DefaultWeightedEdge>(
+				grafo, op.getOperazioneAttuale());
+
+		// il primo giro a vuoto perché corrisponde alla partenza
+
+		closest.next();
+		Operation nextOp = (Operation) closest.next();
+
+		double distance = LatLngTool.distance(
+				new com.javadocmd.simplelatlng.LatLng(op.getOperazioneAttuale().getCoordinate().lat,
+						op.getOperazioneAttuale().getCoordinate().lng),
+				new com.javadocmd.simplelatlng.LatLng(op.getOperationTarget().getCoordinate().lat,
+						op.getOperationTarget().getCoordinate().lng),
+				LengthUnit.METER);
+
+		// Supponiamo una velocita' di 14 m/s, un po' piu' di 50 km/h.
+		double secondi = distance / 14;
+		op.setStato("in viaggio");
+		Evento evento = new Evento(op, currentTime, currentTime.plusSeconds((long) secondi));
+
+	}
+
+	private void continua(Operatore op, Evento ev) {
 
 		// se sul posto ci sono già gli operatori richiesti l'operatore deve cambiare
 		// rotta
@@ -96,28 +125,63 @@ public class Simulatore {
 			eventi.add(evento);
 		}
 
+		// se invece l'operazione non ha raggiunto il numero di operatori e l'operatore
+		// arriva sul posto allora l'operazione assume uno stato in corso e l'operatore
+		// diventa occupato
+
+		if (nextOp.getStato() != "IN_CORSO") {
+
+			double distance = 0;
+
+			// inizialmente il punto di partenza è una centrale
+
+			if (op.getCenter() != null) {
+
+				distance = LatLngTool.distance(
+						new com.javadocmd.simplelatlng.LatLng(op.getCenter().getLatLng().lat,
+								op.getCenter().getLatLng().lng),
+						new com.javadocmd.simplelatlng.LatLng(op.getOperationTarget().getCoordinate().lat,
+								op.getOperationTarget().getCoordinate().lng),
+						LengthUnit.METER);
+
+			} else {
+
+				distance = LatLngTool.distance(
+						new com.javadocmd.simplelatlng.LatLng(op.getOperazioneAttuale().getCoordinate().lat,
+								op.getOperazioneAttuale().getCoordinate().lng),
+						new com.javadocmd.simplelatlng.LatLng(op.getOperationTarget().getCoordinate().lat,
+								op.getOperationTarget().getCoordinate().lng),
+						LengthUnit.METER);
+
+			}
+
+			// Supponiamo una velocita' di 14 m/s, un po' piu' di 50 km/h.
+			double secondi = distance / 14;
+
+			if (currentTime.compareTo(ev.getInitTime().plusSeconds((long) secondi)) >= 0) {
+				nextOp.addRichiedente(op);
+				// tempo per il quale l'operatore sarà occupato
+				double secRichiesti = op.getOperationTarget().getMedia() * 60;
+				op.setStato("occupato");
+				Evento eve = new Evento(op, currentTime, currentTime.plusSeconds((long) secRichiesti));
+				eventi.add(eve);
+			}
+
+		}
+
 	}
 
 	private void verifica(Operatore op, Evento ev) {
 
-		System.out.println("entro in verifica");
-
 		// operazione terminata
 		if (currentTime.compareTo(ev.getTargetTime()) >= 0) {
-			// cerco la prossima destinazione
-			ClosestFirstIterator<Nodo, DefaultWeightedEdge> closest = new ClosestFirstIterator<>(grafo,
-					op.getOperazioneAttuale());
-			// salto il primo nodo perché corrisponde alla partenza
-			closest.next();
-			// prossima operazione
-			Operation nextOp = (Operation) closest.next();
-			nextOp.addRichiedente(op);
-			op.setStato("in viaggio");
-			op.setOperationTarget(nextOp);
-			DefaultWeightedEdge edge = grafo.getEdge(op.getOperazioneAttuale(), nextOp);
-			double tempo = grafo.getEdgeWeight(edge) / nextOp.getOperatoriRichiesti();
-			Evento evento = new Evento(op, currentTime, currentTime.plusSeconds((long) tempo));
-			grafo.removeVertex(nextOp);
+			// elimino il nodo
+			grafo.removeVertex(op.getOperazioneAttuale());
+			// l'operazione target diventa la posizione attuale
+			op.setOperazioneAttuale(op.getOperationTarget());
+			// l'operatore diventa libero
+			op.setStato("libero");
+			Evento evento = new Evento(op, currentTime, currentTime);
 			operazioniConcluse++;
 			eventi.add(evento);
 		}
