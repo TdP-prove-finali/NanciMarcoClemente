@@ -46,13 +46,11 @@ public class Simulatore {
 		// clausola d'uscita: operazioni concluse o fine giornata.
 		while (currentTime.compareTo(FINE_SIMULAZIONE) < 0) {
 
-			// scagliono il tempo in secondi
+			// scagliono il tempo in decimi di secondi
 			currentTime = currentTime.plusSeconds(1);
-			
+
 			Evento ev = eventi.poll();
 			Operatore op = ev.getOperatore();
-			
-//			System.out.println(ev);
 
 			switch (op.getStato()) {
 			// se un operatore è occupato verifico se ha completato l'operazione
@@ -165,7 +163,7 @@ public class Simulatore {
 			}
 			// altrimenti re-inserisco l'operazione in coda perché non trattata
 			else
-			eventi.add(new Evento(op, currentTime, ev.getTargetTime()));
+				eventi.add(new Evento(op, currentTime, ev.getTargetTime()));
 
 		}
 
