@@ -24,6 +24,7 @@ public class Operation extends Nodo {
 	private double varianza;
 	private int operatoriRichiesti;
 	private List<Operatore> richiedenti, titolari;
+	private int svuotamentoCount;
 
 	public Operation(String id, LatLng coordinate, OperationCenter operationCenter) {
 		this.id = id;
@@ -158,6 +159,17 @@ public class Operation extends Nodo {
 		titolari.addAll(operatori);
 	}
 
+	public void liberaOperatori() {
+		for (int i = 0; i < titolari.size(); i++) {
+			titolari.get(i).setStato("libero");
+		}
+	}
+	
+	public boolean rimuovi() {
+		svuotamentoCount++;
+		return svuotamentoCount == operatoriRichiesti;
+	}
+
 	@Override
 	public String toString() {
 		return String.join(" ", tipo, indirizzo, dataSegnalazione.toString());
@@ -186,14 +198,6 @@ public class Operation extends Nodo {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}
-
-	public void liberaOperatori() {
-
-		for (int i = 0; i < titolari.size(); i++) {
-			titolari.get(i).setStato("libero");
-		}
-
 	}
 
 }

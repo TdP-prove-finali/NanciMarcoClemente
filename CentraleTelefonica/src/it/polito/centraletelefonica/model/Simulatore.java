@@ -14,7 +14,7 @@ public class Simulatore {
 
 	private static final LocalTime INIZIO_SIMULAZIONE = LocalTime.of(8, 00, 00);
 	private LocalTime currentTime;
-	private static final LocalTime FINE_SIMULAZIONE = LocalTime.of(18, 00, 00);
+	private static final LocalTime FINE_SIMULAZIONE = LocalTime.of(20, 00, 00);
 	private PriorityQueue<Evento> eventi;
 	private MioGrafo grafo;
 
@@ -41,6 +41,8 @@ public class Simulatore {
 
 	public void run() {
 
+		System.out.println("Numero di operazioni: " + grafo.vertexSet().size());
+
 		// clausola d'uscita: operazioni concluse o fine giornata.
 		while (currentTime.compareTo(FINE_SIMULAZIONE) < 0) {
 
@@ -52,8 +54,6 @@ public class Simulatore {
 
 			Evento ev = eventi.poll();
 			Operatore op = ev.getOperatore();
-
-			System.out.println("evento: " + ev.toString() + " timestamp simulazione: " + currentTime);
 
 			switch (op.getStato()) {
 			// se un operatore è occupato verifico se ha completato l'operazione
@@ -82,35 +82,45 @@ public class Simulatore {
 
 		// alla fine stampo statistiche
 		System.out.println(esitoSimulazione);
-		System.out.println(operazioniConcluse);
+		System.out.println("Operazioni concluse: " + operazioniConcluse);
 
 	}
 
 	private void assegna(Operatore op, Evento ev) {
 
+		esitoSimulazione += ev.toString() + " processato al tempo: " + currentTime + "\n";
+
 		ClosestFirstIterator<Nodo, DefaultWeightedEdge> closest = new ClosestFirstIterator<Nodo, DefaultWeightedEdge>(
 				grafo, op.getOperazioneAttuale());
 
+		// quando tutti gli operatori lasciano il luogo dell'operazione elimino il nodo
+		// dal grafo
+		if (op.getOperazioneAttuale().rimuovi())
+			grafo.removeEdge(grafo.getEdge(op.getOperazioneAttuale(), op.getOperationTarget()));
+
 		// il primo giro a vuoto perché corrisponde alla partenza
 
-		closest.next();
-		Operation nextOp = (Operation) closest.next();
+		if (closest.hasNext()) {
 
-		double distance = LatLngTool.distance(
-				new com.javadocmd.simplelatlng.LatLng(op.getOperazioneAttuale().getCoordinate().lat,
-						op.getOperazioneAttuale().getCoordinate().lng),
-				new com.javadocmd.simplelatlng.LatLng(op.getOperationTarget().getCoordinate().lat,
-						op.getOperationTarget().getCoordinate().lng),
-				LengthUnit.METER);
+			closest.next();
+			Operation nextOp = (Operation) closest.next();
 
-		// Supponiamo una velocita' di 14 m/s, un po' piu' di 50 km/h.
-		double secondi = distance / 14;
-		op.setStato("in viaggio");
-		op.setOperationTarget(nextOp);
-		Evento evento = new Evento(op, currentTime, currentTime.plusSeconds((long) secondi));
-		eventi.add(evento);
-		if (evento.toString().contains("Operatore 1 "))
-			esitoSimulazione += evento.toString() + "\n";
+			double distance = LatLngTool.distance(
+					new com.javadocmd.simplelatlng.LatLng(op.getOperazioneAttuale().getCoordinate().lat,
+							op.getOperazioneAttuale().getCoordinate().lng),
+					new com.javadocmd.simplelatlng.LatLng(op.getOperationTarget().getCoordinate().lat,
+							op.getOperationTarget().getCoordinate().lng),
+					LengthUnit.METER);
+
+			// Supponiamo una velocita' di 14 m/s, un po' piu' di 50 km/h.
+			double secondi = distance / 14;
+			op.setStato("in viaggio");
+			op.setOperationTarget(nextOp);
+			Evento evento = new Evento(op, currentTime, currentTime.plusSeconds((long) secondi));
+			esitoSimulazione += evento.toString() + " processato al tempo: " + currentTime + "\n";
+			eventi.add(evento);
+
+		}
 
 	}
 
@@ -137,8 +147,6 @@ public class Simulatore {
 			op.setStato("in viaggio");
 			Evento evento = new Evento(op, currentTime, currentTime.plusSeconds((long) tempo));
 			eventi.add(evento);
-			if (evento.toString().contains("Operatore 1 "))
-				esitoSimulazione += evento.toString() + "\n";
 		}
 
 		// se invece l'operazione non ha raggiunto il numero di operatori e l'operatore
@@ -155,9 +163,8 @@ public class Simulatore {
 				op.setStato("occupato");
 				op.setOperazioneAttuale(nextOp);
 				Evento eve = new Evento(op, currentTime, currentTime.plusSeconds((long) secRichiesti));
+				esitoSimulazione += eve.toString() + " processato al tempo: " + currentTime + "\n";
 				eventi.add(eve);
-				if (eve.toString().contains("Operatore 1 "))
-					esitoSimulazione += eve.toString() + "\n";
 			}
 			// altrimenti re-inserisco l'operazione in coda perché non trattata
 			eventi.add(ev);
@@ -170,18 +177,13 @@ public class Simulatore {
 
 		// operazione terminata
 		if (currentTime.compareTo(ev.getTargetTime()) >= 0) {
-			// elimino il nodo
-			grafo.removeVertex(op.getOperazioneAttuale());
-			// l'operazione target diventa la posizione attuale
-			op.setOperazioneAttuale(op.getOperationTarget());
+			esitoSimulazione += ev.toString() + " processato al tempo: " + currentTime + "\n";
 			// gli operatori diventano liberi
 			op.getOperationTarget().liberaOperatori();
 			op.setStato("libero");
 			Evento evento = new Evento(op, currentTime, currentTime);
 			operazioniConcluse++;
 			eventi.add(evento);
-			if (evento.toString().contains("Operatore 1 "))
-				esitoSimulazione += evento.toString() + "\n";
 		}
 		// altrimenti aggiungo di nuovo l'evento non trattato
 		else

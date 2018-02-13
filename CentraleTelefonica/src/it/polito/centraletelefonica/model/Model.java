@@ -503,7 +503,7 @@ public class Model {
 					// una volta mossi verso l'operazione elimino l'arco per evitare di ritornare
 					// sulla stessa operazione, cosa che non avrebbe senso
 					grafo.removeEdge(edge);
-					grafo.removeVertex(center);
+//					grafo.removeVertex(center);
 					// delega: l'operatore deve sapere verso quale operazione muoversi e
 					// l'operazione deve conoscere l'operatore richiedente.
 					operatore.setOperationTarget(nextOperation);
