@@ -48,12 +48,11 @@ public class Simulatore {
 
 			// scagliono il tempo in secondi
 			currentTime = currentTime.plusSeconds(1);
-
-			// in alcuni momenti la coda potrebbe essere vuota
-			// if (!eventi.isEmpty()) {
-
+			
 			Evento ev = eventi.poll();
 			Operatore op = ev.getOperatore();
+			
+//			System.out.println(ev);
 
 			switch (op.getStato()) {
 			// se un operatore è occupato verifico se ha completato l'operazione
@@ -76,13 +75,11 @@ public class Simulatore {
 				break;
 			}
 
-			// }
-
 		}
 
 		// alla fine stampo statistiche
 		System.out.println(esitoSimulazione);
-		System.out.println("Operazioni concluse: " + operazioniConcluse);
+		System.out.println("Operazioni concluse: " + operazioniConcluse + " esito simulazione: " + currentTime);
 
 	}
 
@@ -156,7 +153,7 @@ public class Simulatore {
 		if (nextOp.getStato() != "IN_CORSO") {
 
 			// se l'operatore arriva sul posto si occupa dell'operazione
-			if (currentTime.compareTo(ev.getTargetTime()) >= 0) {
+			if (currentTime.compareTo(ev.getTargetTime()) >= 0 && op.getStato() != "occupato") {
 				nextOp.addRichiedente(op);
 				// tempo per il quale l'operatore sarà occupato
 				double secRichiesti = op.getOperationTarget().getMedia() * 60;
@@ -167,7 +164,8 @@ public class Simulatore {
 				eventi.add(eve);
 			}
 			// altrimenti re-inserisco l'operazione in coda perché non trattata
-			eventi.add(ev);
+			else
+			eventi.add(new Evento(op, currentTime, ev.getTargetTime()));
 
 		}
 
@@ -187,7 +185,7 @@ public class Simulatore {
 		}
 		// altrimenti aggiungo di nuovo l'evento non trattato
 		else
-			eventi.add(ev);
+			eventi.add(new Evento(op, currentTime, ev.getTargetTime()));
 
 	}
 

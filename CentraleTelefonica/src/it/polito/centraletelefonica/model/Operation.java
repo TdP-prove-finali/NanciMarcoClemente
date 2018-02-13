@@ -160,6 +160,7 @@ public class Operation extends Nodo {
 	}
 
 	public void liberaOperatori() {
+		this.stato = "Closed";
 		for (int i = 0; i < titolari.size(); i++) {
 			titolari.get(i).setStato("libero");
 		}
