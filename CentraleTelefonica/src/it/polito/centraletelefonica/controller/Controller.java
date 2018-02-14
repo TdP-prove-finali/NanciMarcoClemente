@@ -115,6 +115,29 @@ abstract class Controller {
 
 		return false;
 	}
+	
+	boolean showSimulator() {
+		
+		Stage stage = new Stage();
+		FXMLLoader loader = new FXMLLoader(App.class.getResource("EsitoSimulazioneView.fxml"));
+		BorderPane root;
+		Scene scene = null;
+		try {
+			root = loader.load();
+			EsitoSimulazioneController controller = loader.getController();
+			scene = new Scene(root);
+			scene.getStylesheets().add(App.class.getResource("application.css").toExternalForm());
+			stage.setScene(scene);
+			controller.setStage(stage);
+			stage.show();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return false;
+		
+	}
 
 	private Scene createScene(String nodeID) {
 
@@ -139,6 +162,7 @@ abstract class Controller {
 						String cssFileName = getIdCss().get(nodeID);
 						scene.getStylesheets().add(App.class.getResource(cssFileName).toExternalForm());
 						getScenes().put(nodeID, scene);
+						
 						return scene;
 					}
 				} catch (IOException e) {
@@ -201,7 +225,7 @@ abstract class Controller {
 			idFx.put("btnPaths", "PathsView.fxml");
 			idFx.put("btnAdd", "AddCenter.fxml");
 			idFx.put("btnAddOp", "AddOperation.fxml");
-
+            
 		}
 
 		return idFx;

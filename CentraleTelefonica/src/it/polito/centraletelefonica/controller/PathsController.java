@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import it.polito.centraletelefonica.model.Model;
+import it.polito.centraletelefonica.model.Simulatore;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -59,8 +60,11 @@ public class PathsController extends Controller {
 	void generaPercorsi(ActionEvent event) {
 		if (dateFrom.getValue() == null)
 			showAlert("Devi selezionare una data per poter visualizzare le operazioni");
-		else
+		else {
 			model.generaPercorsi(dateFrom.getValue());
+			showSimulator();
+		}
+			
 	}
 
 	@FXML

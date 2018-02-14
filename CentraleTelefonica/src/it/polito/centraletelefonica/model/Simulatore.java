@@ -1,5 +1,6 @@
 package it.polito.centraletelefonica.model;
 
+import java.text.DecimalFormat;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -14,14 +15,14 @@ public class Simulatore {
 
 	private static final LocalTime INIZIO_SIMULAZIONE = LocalTime.of(8, 00, 00);
 	private LocalTime currentTime;
-	private static final LocalTime FINE_SIMULAZIONE = LocalTime.of(20, 00, 00);
+	private static final LocalTime FINE_SIMULAZIONE = LocalTime.of(19, 00, 00);
 	private PriorityQueue<Evento> eventi;
 	private MioGrafo grafo;
 
 	// STATISTICHE
 
 	private int operazioniConcluse;
-	private String esitoSimulazione;
+	public static String esitoSimulazione;
 
 	public Simulatore(MioGrafo grafo) {
 		this.eventi = new PriorityQueue<>();
@@ -39,9 +40,9 @@ public class Simulatore {
 	 * posto della prima operazione da svolgere in giornata
 	 */
 
-	public void run() {
+	public String run() {
 
-		System.out.println("Numero di operazioni: " + grafo.vertexSet().size());
+		int opIniziali = grafo.vertexSet().size();
 
 		// clausola d'uscita: operazioni concluse o fine giornata.
 		while (currentTime.compareTo(FINE_SIMULAZIONE) < 0) {
@@ -76,14 +77,13 @@ public class Simulatore {
 		}
 
 		// alla fine stampo statistiche
-		System.out.println(esitoSimulazione);
-		System.out.println("Operazioni concluse: " + operazioniConcluse + " esito simulazione: " + currentTime);
+		double percentualeConclusa = (double) (operazioniConcluse / (double) opIniziali);
+		esitoSimulazione += "\n Percentuale operazioni portate a termine: " + new DecimalFormat(".##").format(percentualeConclusa)  + " %";
+		return esitoSimulazione;
 
 	}
 
 	private void assegna(Operatore op, Evento ev) {
-
-		esitoSimulazione += ev.toString() + " processato al tempo: " + currentTime + "\n";
 
 		ClosestFirstIterator<Nodo, DefaultWeightedEdge> closest = new ClosestFirstIterator<Nodo, DefaultWeightedEdge>(
 				grafo, op.getOperazioneAttuale());
@@ -112,7 +112,7 @@ public class Simulatore {
 			op.setStato("in viaggio");
 			op.setOperationTarget(nextOp);
 			Evento evento = new Evento(op, currentTime, currentTime.plusSeconds((long) secondi));
-			esitoSimulazione += evento.toString() + " processato al tempo: " + currentTime + "\n";
+			esitoSimulazione += evento.toString() + "\n";
 			eventi.add(evento);
 
 		}
@@ -158,7 +158,7 @@ public class Simulatore {
 				op.setStato("occupato");
 				op.setOperazioneAttuale(nextOp);
 				Evento eve = new Evento(op, currentTime, currentTime.plusSeconds((long) secRichiesti));
-				esitoSimulazione += eve.toString() + " processato al tempo: " + currentTime + "\n";
+				esitoSimulazione += eve.toString() + "\n";
 				eventi.add(eve);
 			}
 			// altrimenti re-inserisco l'operazione in coda perché non trattata
@@ -173,7 +173,7 @@ public class Simulatore {
 
 		// operazione terminata
 		if (currentTime.compareTo(ev.getTargetTime()) >= 0) {
-			esitoSimulazione += ev.toString() + " processato al tempo: " + currentTime + "\n";
+			esitoSimulazione += ev.toString() + "\n";
 			// gli operatori diventano liberi
 			op.getOperationTarget().liberaOperatori();
 			op.setStato("libero");

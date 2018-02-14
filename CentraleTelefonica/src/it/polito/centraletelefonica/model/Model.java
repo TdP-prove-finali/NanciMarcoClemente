@@ -451,7 +451,7 @@ public class Model {
 
 	}
 
-	public void generaPercorsi(LocalDate localDate) {
+	public String generaPercorsi(LocalDate localDate) {
 
 		System.out.println("Numero di operazioni: " + (grafo.vertexSet().size() - 4) + "\n");
 
@@ -516,7 +516,8 @@ public class Model {
 		}
 
 		simulatore.inizializzaCoda(eventi);
-		simulatore.run();
+		String esito = simulatore.run();
+		return esito;
 
 	}
 
