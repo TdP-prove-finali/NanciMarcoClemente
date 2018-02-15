@@ -455,7 +455,7 @@ public class OperationDAO extends DAO {
 			e.printStackTrace();
 		}
 
-		return operazioni;
+		return new LinkedList<>(operazioni2.values());
 	}
 
 	public double mediaSuTrimestre() {

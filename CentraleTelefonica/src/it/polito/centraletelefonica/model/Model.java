@@ -453,8 +453,6 @@ public class Model {
 
 	public String generaPercorsi(LocalDate localDate) {
 
-		System.out.println("Numero di operazioni: " + (grafo.vertexSet().size() - 4) + "\n");
-
 		// Creo gli operatori e li assegno alle centrali
 
 		int opId = 0;

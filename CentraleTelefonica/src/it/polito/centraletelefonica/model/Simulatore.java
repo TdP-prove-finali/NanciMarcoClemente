@@ -53,32 +53,38 @@ public class Simulatore {
 			Evento ev = eventi.poll();
 			Operatore op = ev.getOperatore();
 
-			switch (op.getStato()) {
-			// se un operatore è occupato verifico se ha completato l'operazione
-			case "occupato":
-				verifica(op, ev);
-				break;
+			if (ev.getTargetTime().compareTo(FINE_SIMULAZIONE) <= 0
+					&& ev.getTargetTime().compareTo(INIZIO_SIMULAZIONE) > 0) {
 
-			case "in viaggio":
-				// se un operatore è in viaggio devo controllare che sia ancora necessario che
-				// si muova verso la destinazione, se non più necessario devo fargli cambiare
-				// rotta
-				continua(op, ev);
-				break;
+				switch (op.getStato()) {
+				// se un operatore è occupato verifico se ha completato l'operazione
+				case "occupato":
+					verifica(op, ev);
+					break;
 
-			case "libero":
-				// assegno all'operatore una nuova destinazione
-				assegna(op, ev);
+				case "in viaggio":
+					// se un operatore è in viaggio devo controllare che sia ancora necessario che
+					// si muova verso la destinazione, se non più necessario devo fargli cambiare
+					// rotta
+					continua(op, ev);
+					break;
 
-			default:
-				break;
+				case "libero":
+					// assegno all'operatore una nuova destinazione
+					assegna(op, ev);
+
+				default:
+					break;
+				}
+
 			}
 
 		}
 
 		// alla fine stampo statistiche
 		double percentualeConclusa = (double) (operazioniConcluse / (double) opIniziali);
-		esitoSimulazione += "\n Percentuale operazioni portate a termine: " + new DecimalFormat(".##").format(percentualeConclusa)  + " %";
+		esitoSimulazione += "\n Percentuale operazioni portate a termine: "
+				+ new DecimalFormat(".##").format(percentualeConclusa) + " %";
 		return esitoSimulazione;
 
 	}
@@ -112,12 +118,12 @@ public class Simulatore {
 			op.setStato("in viaggio");
 			op.setOperationTarget(nextOp);
 			Evento evento = new Evento(op, currentTime, currentTime.plusSeconds((long) secondi));
-			esitoSimulazione += evento.toString() + "\n";
-			eventi.add(evento);
+				esitoSimulazione += evento.toString() + "\n";
+				eventi.add(evento);
+			}
 
 		}
 
-	}
 
 	private void continua(Operatore op, Evento ev) {
 
@@ -141,7 +147,7 @@ public class Simulatore {
 					- nextDestination.getMedia() * 60;
 			op.setStato("in viaggio");
 			Evento evento = new Evento(op, currentTime, currentTime.plusSeconds((long) tempo));
-			eventi.add(evento);
+				eventi.add(evento);
 		}
 
 		// se invece l'operazione non ha raggiunto il numero di operatori e l'operatore
@@ -162,8 +168,10 @@ public class Simulatore {
 				eventi.add(eve);
 			}
 			// altrimenti re-inserisco l'operazione in coda perché non trattata
-			else
-				eventi.add(new Evento(op, currentTime, ev.getTargetTime()));
+			else {
+				Evento evento = new Evento(op, currentTime, ev.getTargetTime());
+					eventi.add(evento);
+			}
 
 		}
 
@@ -173,17 +181,19 @@ public class Simulatore {
 
 		// operazione terminata
 		if (currentTime.compareTo(ev.getTargetTime()) >= 0) {
-			esitoSimulazione += ev.toString() + "\n";
 			// gli operatori diventano liberi
 			op.getOperationTarget().liberaOperatori();
 			op.setStato("libero");
 			Evento evento = new Evento(op, currentTime, currentTime);
+			esitoSimulazione += evento.toString() + "\n";
 			operazioniConcluse++;
 			eventi.add(evento);
 		}
 		// altrimenti aggiungo di nuovo l'evento non trattato
-		else
-			eventi.add(new Evento(op, currentTime, ev.getTargetTime()));
+		else {
+			Evento evento = new Evento(op, currentTime, ev.getTargetTime());
+				eventi.add(evento);
+		}
 
 	}
 

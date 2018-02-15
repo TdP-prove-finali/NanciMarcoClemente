@@ -64,7 +64,7 @@ public class PathsController extends Controller {
 			model.generaPercorsi(dateFrom.getValue());
 			showSimulator();
 		}
-			
+
 	}
 
 	@FXML
@@ -73,8 +73,13 @@ public class PathsController extends Controller {
 		if (dateFrom.getValue() == null)
 			showAlert("Devi selezionare una data per poter visualizzare le operazioni");
 		else {
-			engine.executeScript(Model.addMarkers(dateFrom.getValue()));
-			btnPercorsi.setDisable(false);
+			String script = Model.addMarkers(dateFrom.getValue());
+			if (!script.isEmpty()) {
+				engine.executeScript(Model.addMarkers(dateFrom.getValue()));
+				btnPercorsi.setDisable(false);
+			} else
+				showAlert("Nessuna operazione per il periodo selezionato");
+
 		}
 
 	}
