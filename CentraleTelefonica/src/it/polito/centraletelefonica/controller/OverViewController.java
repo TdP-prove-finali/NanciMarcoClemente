@@ -144,9 +144,9 @@ public class OverViewController extends Controller {
 		}
 
 		// Effettuo analisi sui periodi(tabelle)
-		else if (periodoSelezionato.compareTo("Seleziona periodo") != 0) {
-			tabChiusure.setItems(model.getChiusure(periodoSelezionato));
+		 if (periodoSelezionato.compareTo("Seleziona periodo") != 0) {
 			tabNuove.setItems(model.getNuove(periodoSelezionato));
+			tabChiusure.setItems(model.getChiusure(periodoSelezionato));
 		}
 
 		else
