@@ -126,8 +126,7 @@ public class OverViewController extends Controller {
 		LocalDate from = dateFrom.getValue();
 		LocalDate to = dateTo.getValue();
 		String periodoSelezionato = boxPeriodo.getValue();
-
-		System.out.println(model);
+		boolean possibleCombination = false;
 
 		// Effettuo tra i giorni selezionati(grafici)
 		if (from != null && to != null) {
@@ -135,6 +134,7 @@ public class OverViewController extends Controller {
 				if (from.compareTo(LocalDate.now()) <= 0 && to.compareTo(LocalDate.now()) <= 0) {
 					model.getAreaPercentage(from, to, chartArea.getData());
 					model.getTypePercentage(from, to, chartType.getData());
+					possibleCombination = true;
 				} else
 					showAlert("niente previsioni per il futuro!");
 
@@ -144,12 +144,13 @@ public class OverViewController extends Controller {
 		}
 
 		// Effettuo analisi sui periodi(tabelle)
-		 if (periodoSelezionato.compareTo("Seleziona periodo") != 0) {
+		if (periodoSelezionato.compareTo("Seleziona periodo") != 0) {
 			tabNuove.setItems(model.getNuove(periodoSelezionato));
 			tabChiusure.setItems(model.getChiusure(periodoSelezionato));
+			possibleCombination = true;
 		}
 
-		else
+		if (!possibleCombination)
 			showAlert("devi selezionare un periodo");
 
 	}
