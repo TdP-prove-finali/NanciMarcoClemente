@@ -4,215 +4,137 @@
   <class id="1" language="java" name="it.polito.centraletelefonica.model.Operatore" project="CentraleTelefonica" 
     file="/CentraleTelefonica/src/it/polito/centraletelefonica/model/Operatore.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="317" width="228" x="689" y="2060"/>    
+    <position height="-1" width="-1" x="533" y="1334"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="it.polito.centraletelefonica.model.Evento" project="CentraleTelefonica" 
-    file="/CentraleTelefonica/src/it/polito/centraletelefonica/model/Evento.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="2391" y="1043"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="3" language="java" name="it.polito.centraletelefonica.model.Operation" project="CentraleTelefonica" 
+  <class id="2" language="java" name="it.polito.centraletelefonica.model.Operation" project="CentraleTelefonica" 
     file="/CentraleTelefonica/src/it/polito/centraletelefonica/model/Operation.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="1055" width="527" x="1551" y="1216"/>    
+    <position height="1055" width="527" x="1529" y="402"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="it.polito.centraletelefonica.model.Nodo" project="CentraleTelefonica" 
+  <class id="3" language="java" name="it.polito.centraletelefonica.model.Nodo" project="CentraleTelefonica" 
     file="/CentraleTelefonica/src/it/polito/centraletelefonica/model/Nodo.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="83" width="153" x="367" y="-127"/>    
+    <position height="-1" width="-1" x="1165" y="220"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="it.polito.centraletelefonica.model.Model" project="CentraleTelefonica" 
-    file="/CentraleTelefonica/src/it/polito/centraletelefonica/model/Model.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="665" width="442" x="1378" y="188"/>    
-    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="6" language="java" name="it.polito.centraletelefonica.model.OperationCenter" project="CentraleTelefonica" 
+  <class id="4" language="java" name="it.polito.centraletelefonica.model.OperationCenter" project="CentraleTelefonica" 
     file="/CentraleTelefonica/src/it/polito/centraletelefonica/model/OperationCenter.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="431" y="856"/>    
+    <position height="-1" width="-1" x="505" y="710"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="it.polito.centraletelefonica.model.Simulatore" project="CentraleTelefonica" 
-    file="/CentraleTelefonica/src/it/polito/centraletelefonica/model/Simulatore.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="2473" y="100"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <association id="8">    
-    <bendpoint x="515" y="536"/>    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="9" name="centrali">        
-        <position height="0" width="0" x="-76" y="-924"/>      
-      </attribute>      
-      <multiplicity id="10" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="-76" y="-924"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="6" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="11">    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="12" name="operationCenter">        
-        <position height="0" width="0" x="-76" y="-924"/>      
-      </attribute>      
-      <multiplicity id="13" minimum="0" maximum="1">        
-        <position height="0" width="0" x="-76" y="-924"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="6" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="14">    
-    <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="15" name="operatori">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="16" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="17">    
-    <bendpoint x="719" y="1541"/>    
+  <generalization id="5">    
+    <bendpoint x="376" y="536"/>    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <association id="6">    
+    <bendpoint x="740" y="1541"/>    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="18" name="operazioneAttuale">        
-        <position height="0" width="0" x="686" y="664"/>      
+      <attribute id="7" name="nextOp">        
+        <position height="0" width="0" x="664" y="-150"/>      
       </attribute>      
-      <multiplicity id="19" minimum="0" maximum="1">        
-        <position height="0" width="0" x="686" y="664"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="3" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="20">    
-    <end type="SOURCE" refId="7" navigable="false">      
-      <attribute id="21" name="eventi">        
-        <position height="0" width="0" x="1116" y="376"/>      
-      </attribute>      
-      <multiplicity id="22" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="1116" y="376"/>      
+      <multiplicity id="8" minimum="0" maximum="1">        
+        <position height="0" width="0" x="664" y="-150"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="23">    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="24" name="operazioni">        
-        <position height="0" width="0" x="686" y="664"/>      
-      </attribute>      
-      <multiplicity id="25" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="686" y="664"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="3" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="26">    
-    <bendpoint x="698" y="1541"/>    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="27" name="titolari">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="28" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="29">    
-    <bendpoint x="931" y="1541"/>    
+  <generalization id="9">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <association id="10">    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="30" name="operatore">        
-        <position height="0" width="0" x="0" y="0"/>      
+      <attribute id="11" name="operationCenter">        
+        <position height="0" width="0" x="-2" y="-1070"/>      
       </attribute>      
-      <multiplicity id="31" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
+      <multiplicity id="12" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-2" y="-1070"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="13">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="14" name="operatori">        
+        <position height="0" width="0" x="-270" y="-884"/>      
+      </attribute>      
+      <multiplicity id="15" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-270" y="-884"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="32">    
-    <bendpoint x="376" y="536"/>    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="4"/>  
-  </generalization>  
-  <association id="33">    
-    <bendpoint x="740" y="1541"/>    
+  <association id="16">    
+    <bendpoint x="719" y="1541"/>    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="34" name="nextOp">        
-        <position height="0" width="0" x="686" y="664"/>      
+      <attribute id="17" name="operazioneAttuale">        
+        <position height="0" width="0" x="664" y="-150"/>      
       </attribute>      
-      <multiplicity id="35" minimum="0" maximum="1">        
-        <position height="0" width="0" x="686" y="664"/>      
+      <multiplicity id="18" minimum="0" maximum="1">        
+        <position height="0" width="0" x="664" y="-150"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="3" navigable="true"/>    
+    <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="36">    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="4"/>  
-  </generalization>  
-  <association id="37">    
+  <association id="19">    
     <bendpoint x="677" y="1541"/>    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="38" name="richiedenti">        
-        <position height="0" width="0" x="0" y="0"/>      
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="20" name="richiedenti">        
+        <position height="0" width="0" x="-270" y="-884"/>      
       </attribute>      
-      <multiplicity id="39" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
+      <multiplicity id="21" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-270" y="-884"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="40">    
+  <association id="22">    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="41" name="center">        
-        <position height="0" width="0" x="-76" y="-924"/>      
+      <attribute id="23" name="center">        
+        <position height="0" width="0" x="-2" y="-1070"/>      
       </attribute>      
-      <multiplicity id="42" minimum="0" maximum="1">        
-        <position height="0" width="0" x="-76" y="-924"/>      
+      <multiplicity id="24" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-2" y="-1070"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="6" navigable="true"/>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="25">    
+    <bendpoint x="698" y="1541"/>    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="26" name="titolari">        
+        <position height="0" width="0" x="-270" y="-884"/>      
+      </attribute>      
+      <multiplicity id="27" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-270" y="-884"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

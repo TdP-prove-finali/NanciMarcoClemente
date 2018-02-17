@@ -31,7 +31,7 @@ public class EsitoSimulazioneController {
 
 	public void setStage(Stage stage) {
 		this.stage = stage;
-		
+		stage.setResizable(false);
 	}
 
 }

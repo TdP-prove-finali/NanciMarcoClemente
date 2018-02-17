@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import it.polito.centraletelefonica.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -83,11 +84,11 @@ public class AddOperationController extends Controller {
 
 		if (check) {
 			Alert alert = new Alert(AlertType.CONFIRMATION);
-			alert.setHeaderText("Vuoi aggiungere la nuova centrale?");
+			alert.setHeaderText("Vuoi aggiungere la nuova operazione?");
 			Optional<ButtonType> btn = alert.showAndWait();
 			if (btn.get() == ButtonType.OK) {
 				Alert confAlert = new Alert(AlertType.INFORMATION);
-				confAlert.setHeaderText("Centrale aggiunta");
+				confAlert.setHeaderText("Operazione aggiunta");
 				model.creaOperazione(id, tipo, prio, indirizzo);
 				confAlert.show();
 			}
@@ -97,6 +98,14 @@ public class AddOperationController extends Controller {
 
 	@FXML
 	void openRelativeAnalitycs(MouseEvent event) {
+		
+		if (event.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
+
+			Node node = (Node) event.getSource();
+			String nodeID = node.getId();
+			changeScene(nodeID);
+
+		}
 
 	}
 
