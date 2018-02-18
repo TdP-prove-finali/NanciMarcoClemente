@@ -355,16 +355,6 @@ public class Model {
 	public static String addMarkers(LocalDate value) {
 
 		String res = MapJS.addMarkers(value);
-		grafo = new MioGrafo();
-		OperationDAO dao = new OperationDAO();
-		OperationCenterDAO centerDao = new OperationCenterDAO();
-		List<Operation> operazioniLista = new LinkedList<>(
-				dao.getOperationBetween(value, value.minusDays(5), operazioni));
-		Graphs.addAllVertices(grafo, operazioniLista);
-		Graphs.addAllVertices(grafo, centerDao.getAllOperationCenter(centrali));
-		archiCentraliOperazioni(value);
-		archiOperazioneOperazione();
-		setPesi();
 
 		return res;
 	}
@@ -455,7 +445,19 @@ public class Model {
 
 	}
 
-	public String generaPercorsi(LocalDate localDate) {
+	public String generaPercorsi(LocalDate value) {
+		
+		// rigenera il grafo
+		grafo = new MioGrafo();
+		OperationDAO dao = new OperationDAO();
+		OperationCenterDAO centerDao = new OperationCenterDAO();
+		List<Operation> operazioniLista = new LinkedList<>(
+				dao.getOperationBetween(value, value.minusDays(5), operazioni));
+		Graphs.addAllVertices(grafo, operazioniLista);
+		Graphs.addAllVertices(grafo, centerDao.getAllOperationCenter(centrali));
+		archiCentraliOperazioni(value);
+		archiOperazioneOperazione();
+		setPesi();
 
 		// Creo gli operatori e li assegno alle centrali
 
