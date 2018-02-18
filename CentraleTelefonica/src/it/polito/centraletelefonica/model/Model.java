@@ -447,6 +447,8 @@ public class Model {
 
 	public String generaPercorsi(LocalDate value) {
 		
+		long t0 = System.nanoTime();
+		
 		// rigenera il grafo
 		grafo = new MioGrafo();
 		OperationDAO dao = new OperationDAO();
@@ -521,6 +523,9 @@ public class Model {
 
 		simulatore.inizializzaCoda(eventi);
 		String esito = simulatore.run();
+		long t1 = System.nanoTime();
+		double tFinale = ((double) t1 - (double) t0) / 10e8;
+		System.out.println("Tempo di processamento: " + tFinale);
 		return esito;
 
 	}

@@ -45,7 +45,7 @@ public class Simulatore {
 		int opIniziali = grafo.vertexSet().size();
 
 		// clausola d'uscita: operazioni concluse o fine giornata.
-		while (currentTime.compareTo(FINE_SIMULAZIONE) < 0) {
+		while (currentTime.compareTo(FINE_SIMULAZIONE) < 0 && operazioniConcluse < opIniziali) {
 
 			// scagliono il tempo in decimi di secondi
 			currentTime = currentTime.plusSeconds(1);
@@ -82,9 +82,8 @@ public class Simulatore {
 		}
 
 		// alla fine stampo statistiche
-		double percentualeConclusa = (double) (operazioniConcluse / (double) opIniziali);
-		esitoSimulazione += "\n Percentuale operazioni portate a termine: "
-				+ new DecimalFormat(".##").format(percentualeConclusa) + " %";
+		double percentualeConclusa = ((double) operazioniConcluse / (double) opIniziali);
+		esitoSimulazione += "\n Percentuale operazioni portate a termine: " + percentualeConclusa * 100 + " %";
 		return esitoSimulazione;
 
 	}
@@ -96,8 +95,9 @@ public class Simulatore {
 
 		// quando tutti gli operatori lasciano il luogo dell'operazione elimino il nodo
 		// dal grafo
-		if (op.getOperazioneAttuale().rimuovi())
+		if (op.getOperazioneAttuale().rimuovi()) {
 			grafo.removeEdge(grafo.getEdge(op.getOperazioneAttuale(), op.getOperationTarget()));
+		}
 
 		// il primo giro a vuoto perché corrisponde alla partenza
 
@@ -118,12 +118,11 @@ public class Simulatore {
 			op.setStato("in viaggio");
 			op.setOperationTarget(nextOp);
 			Evento evento = new Evento(op, currentTime, currentTime.plusSeconds((long) secondi));
-				esitoSimulazione += evento.toString() + "\n";
-				eventi.add(evento);
-			}
-
+			esitoSimulazione += evento.toString() + "\n";
+			eventi.add(evento);
 		}
 
+	}
 
 	private void continua(Operatore op, Evento ev) {
 
@@ -147,7 +146,7 @@ public class Simulatore {
 					- nextDestination.getMedia() * 60;
 			op.setStato("in viaggio");
 			Evento evento = new Evento(op, currentTime, currentTime.plusSeconds((long) tempo));
-				eventi.add(evento);
+			eventi.add(evento);
 		}
 
 		// se invece l'operazione non ha raggiunto il numero di operatori e l'operatore
@@ -170,7 +169,7 @@ public class Simulatore {
 			// altrimenti re-inserisco l'operazione in coda perché non trattata
 			else {
 				Evento evento = new Evento(op, currentTime, ev.getTargetTime());
-					eventi.add(evento);
+				eventi.add(evento);
 			}
 
 		}
@@ -192,7 +191,7 @@ public class Simulatore {
 		// altrimenti aggiungo di nuovo l'evento non trattato
 		else {
 			Evento evento = new Evento(op, currentTime, ev.getTargetTime());
-				eventi.add(evento);
+			eventi.add(evento);
 		}
 
 	}
