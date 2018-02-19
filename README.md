@@ -10,5 +10,5 @@ user = "root" e nessuna password. </li>
 è impostata per lavorare in locale quindi impostare come host "localhost" o equivalentemente l'indirizzo di loopback.</li>
 </ol>
 <br>
-Per scoprire il resto delle funzionalità guardare il video al link: 
+Per scoprire il resto delle funzionalità guardare il video al link: https://www.youtube.com/watch?v=3NZ_rHV30do&feature=youtu.be
   
